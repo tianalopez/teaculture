@@ -16,18 +16,13 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SQLALCHEMY_ECHO"] = True
 app.secret_key = os.environ.get("APP_SECRET")
 
-# Define metadata, instantiate db
-metadata = MetaData(
-    naming_convention={
-        "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",
-    }
-)
-db = SQLAlchemy(metadata=metadata)
+#! flask-sqlalchemy setup
+db = SQLAlchemy(app)
+#! flask-migrate setup
 migrate = Migrate(app, db)
-db.init_app(app)
-
-# Instantiate REST API
+#! flask-marshmallow setup
+ma = Marshmallow(app)
+#! flask-bcrypt setup
+bcrypt = Bcrypt(app)
+#! flask-restful setup
 api = Api(app)
-
-# Instantiate CORS
-CORS(app)
