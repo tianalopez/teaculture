@@ -17,25 +17,15 @@ class Community(db.Model):
     owner_id = db.Column(db.Integer, db.ForeignKey("users.id", ondelete="CASCADE"))
 
     # relationships
-    user_communities = db.relationship(
-        "UserCommunity", back_populates="community", cascade="all, delete-orphan"
-    )
+    user_communities = db.relationship("UserCommunity", back_populates="community", cascade="all, delete-orphan")
     owner = db.relationship("User", back_populates="community")
+
     users = db.relationship("User", secondary ="user_communities")
     posts = db.relationship("Post", secondary="user_communities", back_populates="community")
 
     # associations
-    # users = association_proxy("user_communities", "user")
-    # users = association_proxy(
-    #     "user_communities",
-    #     "user",
-    #     creator=lambda user_obj: UserCommunity(user=user_obj),
-    # )
-    # posts = association_proxy(
-    #     "user_communities",
-    #     "post",
-    #     creator=lambda post_obj: UserCommunity(post=post_obj),
-    # )
+    users = association_proxy("user_communities", "user")
+    posts = association_proxy("user_communities", "posts")
 
     # validations
     @validates("name")
