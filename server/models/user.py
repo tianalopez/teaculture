@@ -26,6 +26,7 @@ class User(db.Model):
     communities = db.relationship(
         "Community", back_populates="owner", cascade="all, delete-orphan"
     )
+    recipes = db.relationship("Recipe", back_populates="creator", cascade="all, delete-orphan")
     # association
     communities = association_proxy('user_communities', 'community')
 
