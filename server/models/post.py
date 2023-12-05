@@ -17,7 +17,7 @@ class Post(db.Model):
     user_communities_id = db.Column(db.Integer, db.ForeignKey("user_communities.id"))
 
     # relationships
-    user_communities = db.relationship("UserCommunity", back_populates="posts")
+    user_community = db.relationship("UserCommunity", back_populates="posts")
 
     # associations
     user = association_proxy("user_communities", "user")
