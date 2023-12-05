@@ -14,9 +14,7 @@ class UserCommunity(db.Model):
     # relationships
     user = db.relationship("User", back_populates="user_communities")
     community = db.relationship("Community", back_populates="user_communities")
-    post = db.relationship("Post", back_populates="user_communities")
-
-    # associations
+    posts = db.relationship("Post", back_populates="user_communities")
 
     def __repr__(self):
         return f"<UserCommunity #{self.id} />"

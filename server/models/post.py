@@ -17,13 +17,11 @@ class Post(db.Model):
     user_communities_id = db.Column(db.Integer, db.ForeignKey("user_communities.id"))
 
     # relationships
-    user_communities = db.relationship("UserCommunity", back_populates="post")
+    user_communities = db.relationship("UserCommunity", back_populates="posts")
 
     # associations
     user = association_proxy("user_communities", "user")
     community = association_proxy("user_communities", "community")
-
-    # serializations
 
     # validations
     @validates("title")
@@ -41,16 +39,6 @@ class Post(db.Model):
         elif len(value) < 3 or len(value) > 5000:
             raise ValueError(f"Content must be between 3 and 5000 characters")
         return value
-
-    # @validates("user_communities_id")
-    # def validate_user_communities_id(self, _, value):
-    #     if not isinstance(value, int):
-    #         raise TypeError(f"{value} must be an integer")
-    #     elif value < 1:
-    #         raise ValueError(f"{value} must be a positive integer")
-    #     elif not db.session.get(UserCommunity, value):
-    #         raise ValueError(f"{value} has to correspond to an existing user_community")
-    #     return value
 
     def __repr__(self):
         return f"<Post #{self.id} {self.title} />"

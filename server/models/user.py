@@ -20,10 +20,6 @@ class User(db.Model):
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
     # relationships
-    journal = db.relationship(
-        "Journal", back_populates="user", cascade="all, delete-orphan"
-    )
-    todos = db.relationship("Todo", back_populates="user", cascade="all, delete-orphan")
     user_communities = db.relationship(
         "UserCommunity", back_populates="user", cascade="all, delete-orphan"
     )
@@ -31,12 +27,7 @@ class User(db.Model):
         "Community", back_populates="owner", cascade="all, delete-orphan"
     )
     # association
-    # communities = association_proxy('user_communities', 'community')
-    communities = association_proxy(
-        "user_communities",
-        "community",
-        creator=lambda community_obj: UserCommunity(community=community_obj),
-    )
+    communities = association_proxy('user_communities', 'community')
 
     # validations
     @validates("username")
