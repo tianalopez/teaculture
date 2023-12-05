@@ -2,6 +2,7 @@ from sqlalchemy.orm import validates
 import re
 from models.user import User
 from app_setup import db
+from sqlalchemy.ext.associationproxy import association_proxy
 
 
 class Recipe(db.Model):
@@ -20,6 +21,11 @@ class Recipe(db.Model):
 
     # relationships
     creator = db.relationship("User", back_populates="recipes")
+    reviews = db.relationship(
+        "Review", back_populates="recipe", cascade="all, delete-orphan"
+    )
+    # associations
+    reviewers = association_proxy("reviews", "user")
 
     # validations
     @validates("title")
@@ -64,6 +70,7 @@ class Recipe(db.Model):
             raise ValueError(f"Creator id has to correspond to an existing user")
         return value
 
-
     def __repr__(self):
-        return f"<Recipe #{self.id} {self.title} {self.instructions} {self.medicinal} />"
+        return (
+            f"<Recipe #{self.id} {self.title} {self.instructions} {self.medicinal} />"
+        )

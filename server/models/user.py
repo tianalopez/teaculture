@@ -26,9 +26,11 @@ class User(db.Model):
     communities = db.relationship(
         "Community", back_populates="owner", cascade="all, delete-orphan"
     )
-    recipes = db.relationship("Recipe", back_populates="creator", cascade="all, delete-orphan")
+    owned_recipes = db.relationship("Recipe", back_populates="creator", cascade="all, delete-orphan")
+    reviews = db.relationship("Review", back_populates="user", cascade="all, delete-orphan")
     # association
     communities = association_proxy('user_communities', 'community')
+    recipes = association_proxy("reviews", 'recipe')
 
     # validations
     @validates("username")
