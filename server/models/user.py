@@ -23,7 +23,7 @@ class User(db.Model):
     user_communities = db.relationship(
         "UserCommunity", back_populates="user", cascade="all, delete-orphan"
     )
-    community = db.relationship(
+    communities = db.relationship(
         "Community", back_populates="owner", cascade="all, delete-orphan"
     )
     # association
