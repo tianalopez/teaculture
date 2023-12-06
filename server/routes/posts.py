@@ -10,18 +10,18 @@ posts_schema = PostSchema(many=True, session=db.session)
 
 class Posts(Resource):
     def get(self):
-      posts = posts_schema.dump(Post.query)
-      return posts, 200
+        posts = posts_schema.dump(Post.query)
+        return posts, 200
 
     def post(self):
-      try:
-        data = request.json
-        post_schema.validate(data)
-        new_post = post_schema.load(data)
-        db.session.add(new_post)
-        db.session.commit()
-        serialized_post = post_schema.dump(new_post)
-        return serialized_post, 201
-      except Exception as e:
-        db.session.rollback()
-        return {'error': str(e)}, 400
+        try:
+            data = request.json
+            post_schema.validate(data)
+            new_post = post_schema.load(data)
+            db.session.add(new_post)
+            db.session.commit()
+            serialized_post = post_schema.dump(new_post)
+            return serialized_post, 201
+        except Exception as e:
+            db.session.rollback()
+            return {'error': str(e)}, 400
