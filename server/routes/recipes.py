@@ -16,14 +16,14 @@ class Recipes(Resource):
         try:
             data = request.json
             # validate data
-            recipes_schema.validate(data)
+            recipe_schema.validate(data)
             # deserialize with load()
-            new_recipe = recipes_schema.load(data)
+            new_recipe = recipe_schema.load(data)
             # add new recipe to recipe table
             db.session.add(new_recipe)
             db.session.commit()
             # serialize with dump()
-            serialized_recipe = recipes_schema.dump(new_recipe)
+            serialized_recipe = recipe_schema.dump(new_recipe)
             return serialized_recipe, 201
         except Exception as e:
             db.session.rollback()

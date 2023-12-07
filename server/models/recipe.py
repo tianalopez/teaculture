@@ -15,12 +15,12 @@ class Recipe(db.Model):
     tags = db.Column(db.String)
     ingredients = db.Column(db.String)
     medicinal = db.Column(db.Boolean)
-    creator_id = db.Column(db.Integer)
+    creator_id = db.Column(db.Integer, db.ForeignKey("users.id"))
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
     # relationships
-    creator = db.relationship("User", back_populates="recipes")
+    creator = db.relationship("User", back_populates="owned_recipes")
     reviews = db.relationship(
         "Review", back_populates="recipe", cascade="all, delete-orphan"
     )

@@ -7,6 +7,7 @@ from flask_bcrypt import Bcrypt
 from dotenv import load_dotenv
 import os
 
+load_dotenv()
 # Local imports
 
 # Instantiate app, set attributes

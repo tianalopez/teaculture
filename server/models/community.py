@@ -18,7 +18,7 @@ class Community(db.Model):
 
     # relationships
     user_communities = db.relationship("UserCommunity", back_populates="community", cascade="all, delete-orphan")
-    owner = db.relationship("User", back_populates="communities")
+    owner = db.relationship("User", back_populates="owned_communities")
 
     # associations
     users = association_proxy("user_communities", "user")

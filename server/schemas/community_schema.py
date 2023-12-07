@@ -1,7 +1,5 @@
 from marshmallow import fields, validate, validates, ValidationError
 from models.community import Community
-from schemas.user_schema import UserSchema
-from schemas.post_schema import PostSchema
 from app_setup import ma
 
 
@@ -13,5 +11,5 @@ class CommunitySchema(ma.SQLAlchemySchema):
 
     name = fields.String(required=True, validate=validate.Length(min=2, max=80))
     description = fields.String(validate=validate.Length(min=3, max=500))
-    users = fields.List(fields.Nested(UserSchema, only=("id", "username",), many=True))
-    posts = fields.List(fields.Nested(PostSchema, exclude=("user_communities_id",), many=True))
+    users = fields.List(fields.Nested("UserSchema", only=("id", "username",)))
+    posts = fields.List(fields.Nested("PostSchema", exclude=("user_communities_id",), many=True))

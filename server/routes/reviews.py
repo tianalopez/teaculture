@@ -15,11 +15,11 @@ class Reviews(Resource):
     def post(self):
         try:
             data = request.json
-            reviews_schema.validate(data)
-            new_review = reviews_schema.load(data)
+            review_schema.validate(data)
+            new_review = review_schema.load(data)
             db.session.add(new_review)
             db.session.commit()
-            serialized_review = reviews_schema.dump(new_review)
+            serialized_review = review_schema.dump(new_review)
             return serialized_review, 201
         except Exception as e:
             db.session.rollback()
