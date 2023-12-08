@@ -9,13 +9,13 @@ from app_setup import app, db, ma, api
 from routes.check_session import CheckSession
 from routes.communities import Communities
 from routes.community_by_id import CommunityById
-from routes.login import Login
-from routes.logout import Logout
+from server.routes.auth.login import Login
+from server.routes.auth.logout import Logout
 from routes.post_by_id import PostById
 from routes.posts import Posts
 from routes.recipe_by_id import RecipeById
 from routes.recipes import Recipes
-from routes.register import Register
+from server.routes.auth.register import Register
 from routes.review_by_id import ReviewById
 from routes.reviews import Reviews
 from routes.user_by_id import UserById
