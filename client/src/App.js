@@ -12,7 +12,7 @@ const App = () => {
   const [alert, setAlert] = useState(null);
   const [alertType, setAlertType] = useState("");
   const [user, setUser] = useState(null)
-  console.log('navigate back home')
+  console.log('app is mounting')
   const updateUser = (user) => setUser(user);
 
   const handleNewAlert = useCallback((alert) => {

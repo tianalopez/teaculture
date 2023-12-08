@@ -8,14 +8,14 @@ const PubNavbar = ({handleNewAlert}) => {
     <AppBar sx={{ backgroundColor: '#ACCFC9', color: '#FA9E7B'}}position ='static'>
       <Toolbar>
         <IconButton size='medium' edge='start' color='inherit' aria-label='logo'>
-          <img alt="icon" src="%PUBLIC_URL%/images/logo.png" />
+          <img alt="icon"  />
         </IconButton>
         <Typography variant='h5' component='div' sx={{flexGrow: 1}}>
           TEA Culture
         </Typography>
         <Stack direction ='row' spacing={1}>
-          <Button color='inherit' component={Link} to={"/login"} >
-            Login/Register
+          <Button component={Link} to={"/login"} color='inherit'  >
+              Login/Register
           </Button>
         </Stack>
       </Toolbar>

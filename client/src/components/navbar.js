@@ -1,5 +1,5 @@
 import { Link, NavLink } from "react-router-dom";
-import { AppBar, Toolbar, IconButton, Typography, Stack, Button } from '@mui/material';
+import { AppBar, Toolbar,Icon, IconButton, Typography, Stack, Button } from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 const Navbar = ({ user, updateUser, handleNewAlert }) => {
@@ -13,7 +13,7 @@ const Navbar = ({ user, updateUser, handleNewAlert }) => {
     <AppBar sx={{ backgroundColor: '#ACCFC9', color: '#FA9E7B'}}position ='static'>
       <Toolbar>
         <IconButton size='medium' edge='start' color='inherit' aria-label='logo'>
-          <img alt="icon" src="%PUBLIC_URL%/images/logo.png" />
+          <img alt="icon" src="/images/tea-culture-logo.png" style={{ width: '80px' }} />
         </IconButton>
         <Typography variant='h5' component='div' sx={{flexGrow: 0, marginRight:2}}>
           TEA Culture
