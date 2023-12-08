@@ -39,8 +39,11 @@ const App = () => {
             console.log('current user response was okay')
             resp
               .json()
-              .then(updateUser)
-              .then(navigate(`/users/${user.id}/dashboard`));
+              .then((updatedUser => {
+                updateUser(updatedUser)
+                navigate(`/users/${updatedUser.id}/dashboard`)
+              }))
+              // .then(navigate(`/users/${user.id}/dashboard`));
           } else if (resp.status === 401) {
             console.log('current user resonse was not okay')
             fetch("/refresh", {
@@ -85,25 +88,25 @@ const App = () => {
   return (
     <>
       {!user ? (
-        <Authentication />
 
-        // <div id="welcome">
-        //   {/* {alert && (
-        //     <AlertBar
-        //       alert={alert}
-        //       handleNewAlert={handleNewAlert}
-        //       alertType={alertType}
-        //       handleAlertType={handleAlertType}
-        //     />
-        //   )} */}
-        //   <PubNavbar />
-        //   <h1>Welcome to TEA Culture</h1>
-        //   <h3>Discover and enjoy a variety of drinks</h3>
-        //   <div>
-        //     <button onClick={handleDrinkClick}>Drink Lab</button>
-        //   </div>
-        //   <Footer />
-        // </div>
+        <div id="welcome">
+          <Authentication updateUser={updateUser}/>
+          {/* {alert && (
+            <AlertBar
+              alert={alert}
+              handleNewAlert={handleNewAlert}
+              alertType={alertType}
+              handleAlertType={handleAlertType}
+            />
+          )} */}
+          <PubNavbar />
+          <h1>Welcome to TEA Culture</h1>
+          <h3>Discover and enjoy a variety of drinks</h3>
+          <div>
+            <button onClick={handleDrinkClick}>Drink Lab</button>
+          </div>
+          <Footer />
+        </div>
       ) : (
         <div className="app">
           {alert && (

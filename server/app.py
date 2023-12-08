@@ -3,7 +3,8 @@
 # Standard library imports
 
 # Local imports
-from app_setup import app, db, ma, api
+from app_setup import app, db, ma, api, jwt
+from models.user import User
 
 # Route Imports
 # from routes.check_session import CheckSession
@@ -20,7 +21,7 @@ from routes.user_communities import UserCommunities
 from routes.user_community_by_id import UserCommunityById
 from routes.users import Users
 
-#auth routes
+# auth routes
 from routes.auth.register import Register
 from routes.auth.login import Login
 from routes.auth.logout import Logout
@@ -41,7 +42,7 @@ api.add_resource(UserById, "/users/<int:id>")
 api.add_resource(UserCommunities, "/usercommunities")
 api.add_resource(UserCommunityById, "/usercommunities/<int:id>")
 api.add_resource(Users, "/users")
-#Auth Resources
+# Auth Resources
 api.add_resource(Register, "/register")
 api.add_resource(Login, "/login")
 api.add_resource(Logout, "/logout")
@@ -51,9 +52,10 @@ api.add_resource(Refresh, "/refresh")
 # Views go here!
 
 
-@app.route("/")
-def index():
-    return "<h1>Project Server</h1>"
+@jwt.user_lookup_loader
+def user_lookup_callback(_jwt_header, jwt_data):
+    identity = jwt_data["sub"]
+    return db.session.get(User, identity)
 
 
 if __name__ == "__main__":
