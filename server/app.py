@@ -21,11 +21,11 @@ from routes.user_community_by_id import UserCommunityById
 from routes.users import Users
 
 #auth routes
-from server.routes.auth.register import Register
-from server.routes.auth.login import Login
-from server.routes.auth.logout import Logout
-from server.routes.auth.current_user import CurrentUser
-from server.routes.auth.refresh import Refresh
+from routes.auth.register import Register
+from routes.auth.login import Login
+from routes.auth.logout import Logout
+from routes.auth.current_user import CurrentUser
+from routes.auth.refresh import Refresh
 
 # Add Resources
 # api.add_resource(CheckSession, "/checksession")

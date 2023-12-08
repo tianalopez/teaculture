@@ -17,7 +17,7 @@ const routes =[
     children: [
       {
         path: "/login",
-        element: <Authentication />
+        element: <Authentication />,
       },
       {
         path: "users/:id/dashboard",

@@ -34,13 +34,16 @@ class Register(Resource):
             refresh_token = create_refresh_token(identity=new_user.id)
             # serialize user
             serialized_user = user_schema.dump(new_user)
+            import ipdb
+
+            ipdb.set_trace()
             # prepackage the response
             response = jsonify(serialized_user)
             # set both cookies
             set_access_cookies(response, jwt)
             set_refresh_cookies(response, refresh_token)
-            return response, 201
+            import ipdb; ipdb.set_trace()
+            return serialized_user, 201
         except Exception as e:
-            db.session.delete(new_user)
-            db.session.commit()
+            db.session.rollback()
             return {"error": str(e)}, 400

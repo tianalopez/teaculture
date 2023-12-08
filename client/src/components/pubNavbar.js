@@ -8,13 +8,13 @@ const PubNavbar = ({handleNewAlert}) => {
     <nav>
       <div>
         <h1>TEA Culture</h1>
-        <NavLink to={"/"}>
+        <NavLink to="/">
           Home
         </NavLink>
       </div>
       <div>
-        <NavLink to={"/login"}>
-          Login/Register
+        <NavLink to="/login">
+          Login
         </NavLink>
       </div>
     </nav>
