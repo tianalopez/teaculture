@@ -1,9 +1,9 @@
 import React from 'react'
 
-const alertbar = () => {
+const Alertbar = () => {
   return (
-    <div>alertbar</div>
+    <div>Alertbar</div>
   )
 }
 
-export default alertbar
+export default Alertbar
