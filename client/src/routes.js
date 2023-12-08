@@ -1,13 +1,12 @@
 import App from "./App";
-import HomePage from "./pages/homePage";
 import Authentication from "./pages/authentication";
 import Error404 from "./pages/error404";
 import Communities from "./pages/communities";
 import Dashboard from "./pages/dashboard";
 import Profile from "./pages/profile";
 import Recipes from "./pages/recipes";
-import addRecipe from "./pages/addRecipe";
-import recipeCard from "./pages/recipeCard";
+import AddRecipe from "./pages/addRecipe";
+import RecipeCard from "./pages/recipeCard";
 import CommunityPage from "./pages/communityPage";
 
 const routes =[
@@ -16,10 +15,6 @@ const routes =[
     element: <App />,
     errorElement: <Error404 />,
     children: [
-      {
-        path: "/",
-        element: <HomePage />
-      },
       {
         path: "/login",
         element: <Authentication />
@@ -34,7 +29,7 @@ const routes =[
       },
       {
         path: "/users/:id/adddrink",
-        element: <addRecipe />
+        element: <AddRecipe />
       },
       {
         path: "/drinklab",
@@ -42,7 +37,7 @@ const routes =[
       },
       {
         path: "/drinklab/:id",
-        element: <recipeCard />
+        element: <RecipeCard />
       },
       {
         path: "/communities",
