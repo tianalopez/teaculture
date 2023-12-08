@@ -90,13 +90,12 @@ const App = () => {
       {!user ? (
 
         <div id="welcome">
-          <Authentication updateUser={updateUser}/>
           {/* {alert && (
             <AlertBar
-              alert={alert}
-              handleNewAlert={handleNewAlert}
-              alertType={alertType}
-              handleAlertType={handleAlertType}
+            alert={alert}
+            handleNewAlert={handleNewAlert}
+            alertType={alertType}
+            handleAlertType={handleAlertType}
             />
           )} */}
           <PubNavbar />
@@ -105,6 +104,7 @@ const App = () => {
           <div>
             <button onClick={handleDrinkClick}>Drink Lab</button>
           </div>
+          <Authentication updateUser={updateUser}/>
           <Footer />
         </div>
       ) : (

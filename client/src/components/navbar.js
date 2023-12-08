@@ -1,5 +1,6 @@
 import { Link, NavLink } from "react-router-dom";
 import { AppBar, Toolbar, IconButton, Typography, Stack, Button } from '@mui/material';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 const Navbar = ({ user, updateUser, handleNewAlert }) => {
   const handleLogout = () => {
@@ -11,7 +12,7 @@ const Navbar = ({ user, updateUser, handleNewAlert }) => {
   return (
     <AppBar sx={{ backgroundColor: '#ACCFC9', color: '#FA9E7B'}}position ='static'>
       <Toolbar>
-        <IconButton size='large' edge='start' color='inherit' aria-label='logo'>
+        <IconButton size='medium' edge='start' color='inherit' aria-label='logo'>
           <img alt="icon" src="%PUBLIC_URL%/images/logo.png" />
         </IconButton>
         <Typography variant='h5' component='div' sx={{flexGrow: 0, marginRight:2}}>
@@ -34,10 +35,13 @@ const Navbar = ({ user, updateUser, handleNewAlert }) => {
           </Stack>
 
         </Stack>
-        <Stack direction ='row' spacing={2} justifyContent='flex-end'>
-          <Button color='inherit' to={"/"} onClick={handleLogout}>
+        <Stack direction ='row' spacing={1} justifyContent='flex-end'>
+          <Button color='inherit' component={Link} to={"/"} onClick={handleLogout}>
             Logout
           </Button>
+          <IconButton aria-label="profile" size="medium"component={Link} to={`/users/${user.id}/profile`}>
+            <AccountCircleIcon size="inherit" />
+          </IconButton>
         </Stack>
       </Toolbar>
     </AppBar>
