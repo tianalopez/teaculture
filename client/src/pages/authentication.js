@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import { useFormik } from "formik"
 import * as yup from "yup"
 
-function Authentication({ updateUser, handleNewAlert, handleAlertType }) {
+function Authentication({ updateUser }) {
   console.log("Went to authentication")
   const [signUp, setSignUp] = useState(false);
 
   const handleClick = () => setSignUp((signUp) => !signUp);
+  //!callback inside login
 
   const signUpSchema = yup.object().shape({
     username: yup.string().required("Please enter a username"),
@@ -29,6 +30,12 @@ function Authentication({ updateUser, handleNewAlert, handleAlertType }) {
   });
 
   const url = signUp ? "/register" : "/login";
+  //!function starts at fetch and will take in values, you keep the cosnatnt formik stuff inside login and onsubmit, you do values => and pass values into the login function, so you will replace everything after onSubmit with the login/register function
+
+  //!need to pass login the prop for if it is registering or not, since this will change the url
+  //!login function takes two parameters, it takes in values and it takes in signUp (this will be gotten from the login page)
+  //!move the url constant to the login function
+  //^you dont need the schemas, since this seems to be done independently of the login
 
   const formik = useFormik({
     initialValues: {
@@ -69,7 +76,7 @@ function Authentication({ updateUser, handleNewAlert, handleAlertType }) {
   return (
     <div id="account-form">
       <div id='content'>
-        <h1>Welcome to Virtual Planner</h1>
+        <h1>Welcome to TEA Culture</h1>
         <div id="register-switch">
           {signUp ? <button onClick={() => handleClick(true)} >Login</button> : <button id='underline' >Login</button>}
           {signUp ? <button id='underline'  >Register</button> : <button onClick={() => handleClick(false)} >Register</button>}
