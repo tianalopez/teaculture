@@ -1,7 +1,6 @@
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import { GoogleOAuthProvider } from '@react-oauth/google';
-import routes from "./routes";
 import "./styles/index.css";
 import { BrowserRouter } from "react-router-dom";
 import React from "react";

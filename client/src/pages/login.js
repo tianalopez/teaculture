@@ -8,7 +8,6 @@ const Login = () => {
   const [signUp, setSignUp] = useState(false);
   const handleClick = () => setSignUp((signUp) => !signUp);
   const auth = useAuth()
-  const navigate = useNavigate()
 
   const signUpSchema = yup.object().shape({
     username: yup.string().required("Please enter a username"),
@@ -49,7 +48,7 @@ const Login = () => {
   return (
     <div id="account-form">
       <div id='content'>
-        <h1>Welcome to TEA Culture</h1>
+        <h1>Login/Register</h1>
         <div id="register-switch">
           {signUp ? <button onClick={() => handleClick(true)} >Login</button> : <button id='underline' >Login</button>}
           {signUp ? <button id='underline'  >Register</button> : <button onClick={() => handleClick(false)} >Register</button>}

@@ -9,7 +9,6 @@ export const AuthData = () => useContext(AuthContext);
 export const AuthProvider = ({children}) => {
   const navigate = useNavigate()
   const [user, setUser] = useState(null)
-  const [loading, setLoading] = useState(true)
 
   //values is from formik
   //~~~~~~~~~~~~~~~~~~~~LOGIN
@@ -28,7 +27,7 @@ export const AuthProvider = ({children}) => {
           resp.json().then((user) => {
           setUser(user)
           //!double check this navigation, but you do need to navigate at some point
-          navigate(`users/${user.id}/dashboard`)
+          navigate(`users/${user.id}/dashboard`, {replace: true})
           });
           // handleNewAlert("Welcome!");
           // handleAlertType("success");
@@ -112,7 +111,7 @@ export const AuthProvider = ({children}) => {
 
 
   return (
-    <AuthContext.Provider value={{ user, onAuthenticate, onLogout, loading }}>
+    <AuthContext.Provider value={{ user, onAuthenticate, onLogout, }}>
       {children}
     </AuthContext.Provider>
   )
