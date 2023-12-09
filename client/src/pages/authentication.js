@@ -3,7 +3,7 @@ import { useFormik } from "formik"
 import * as yup from "yup"
 
 function Authentication({ updateUser, handleNewAlert, handleAlertType }) {
-
+  console.log("Went to authentication")
   const [signUp, setSignUp] = useState(false);
 
   const handleClick = () => setSignUp((signUp) => !signUp);

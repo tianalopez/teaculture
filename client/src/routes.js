@@ -6,7 +6,7 @@ import Dashboard from "./pages/dashboard";
 import Profile from "./pages/profile";
 import Recipes from "./pages/recipes";
 import AddRecipe from "./pages/addRecipe";
-import RecipeCard from "./pages/recipeCard";
+import RecipePage from "./pages/recipePage";
 import CommunityPage from "./pages/communityPage";
 
 const routes =[
@@ -37,7 +37,7 @@ const routes =[
       },
       {
         path: "/drinklab/:id",
-        element: <RecipeCard />
+        element: <RecipePage />
       },
       {
         path: "/communities",

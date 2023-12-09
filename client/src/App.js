@@ -12,7 +12,7 @@ const App = () => {
   const [alert, setAlert] = useState(null);
   const [alertType, setAlertType] = useState("");
   const [user, setUser] = useState(null)
-  console.log('navigate back home')
+  console.log('app is mounting')
   const updateUser = (user) => setUser(user);
 
   const handleNewAlert = useCallback((alert) => {
@@ -90,13 +90,12 @@ const App = () => {
       {!user ? (
 
         <div id="welcome">
-          <Authentication updateUser={updateUser}/>
           {/* {alert && (
             <AlertBar
-              alert={alert}
-              handleNewAlert={handleNewAlert}
-              alertType={alertType}
-              handleAlertType={handleAlertType}
+            alert={alert}
+            handleNewAlert={handleNewAlert}
+            alertType={alertType}
+            handleAlertType={handleAlertType}
             />
           )} */}
           <PubNavbar />
@@ -105,6 +104,7 @@ const App = () => {
           <div>
             <button onClick={handleDrinkClick}>Drink Lab</button>
           </div>
+          <Authentication updateUser={updateUser}/>
           <Footer />
         </div>
       ) : (
