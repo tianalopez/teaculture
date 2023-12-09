@@ -1,10 +1,13 @@
 import React, { useState } from "react";
+import {useNavigate} from 'react-router-dom';
 import { useFormik } from "formik"
 import * as yup from "yup"
 
-function Authentication({ updateUser, handleNewAlert, handleAlertType }) {
+function Authentication() {
   console.log("Went to authentication")
   const [signUp, setSignUp] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleClick = () => setSignUp((signUp) => !signUp);
 
@@ -49,7 +52,9 @@ function Authentication({ updateUser, handleNewAlert, handleAlertType }) {
           console.log(resp)
           if (resp.ok) {
             console.log("The issue is after a good response")
-            resp.json().then(updateUser);
+            resp.json().then((user) => {
+              navigate(`/`)
+            });
             // handleNewAlert("Welcome!");
             // handleAlertType("success");
           } else {
