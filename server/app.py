@@ -24,6 +24,7 @@ from routes.users import Users
 # auth routes
 from routes.auth.register import Register
 from routes.auth.login import Login
+from routes.auth.google_auth import GAuth
 from routes.auth.logout import Logout
 from routes.auth.current_user import CurrentUser
 from routes.auth.refresh import Refresh
@@ -45,6 +46,7 @@ api.add_resource(Users, "/users")
 # Auth Resources
 api.add_resource(Register, "/register")
 api.add_resource(Login, "/login")
+api.add_resource(GAuth, "/googleauth")
 api.add_resource(Logout, "/logout")
 api.add_resource(CurrentUser, "/current-user")
 api.add_resource(Refresh, "/refresh")

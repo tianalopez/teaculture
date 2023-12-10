@@ -1,14 +1,52 @@
 import { createContext, useContext, useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom";
+import {gapi} from 'gapi-script'
 
 const AuthContext = createContext(null);
 
 export const AuthData = () => useContext(AuthContext);
 
+const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 
 export const AuthProvider = ({children}) => {
   const navigate = useNavigate()
   const [user, setUser] = useState(null)
+
+  //~~~~~~~~~~~~~~~~~~~~GLOGIN or REGISTER
+
+  // useEffect(() => {
+  //   const start = async () => {
+  //     try {
+  //       await gapi.client.init({
+  //         clientId: clientId,
+  //         scope: ""
+  //       });
+  //       console.log("Google API initialized successfully");
+  //     } catch (error) {
+  //       console.error("Error initializing Google API:", error);
+  //       // Handle the initialization error as needed
+  //     }
+  //   };
+
+  //   gapi.load('client:auth2', start);
+  // }, []);
+
+  const onGLogin = async (id_token) => {
+    try {
+      const googleResponse = await fetch('/googlelogin', {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ id_token: id_token }),
+      })
+      //! this will have the user and a response code and you need to conditionally render  this login version inside authProvider, to make it conditional on if this login happens or if the usual login happens
+      const googleData = await googleResponse.json()
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
 
   //values is from formik
   //~~~~~~~~~~~~~~~~~~~~LOGIN
@@ -111,7 +149,7 @@ export const AuthProvider = ({children}) => {
 
 
   return (
-    <AuthContext.Provider value={{ user, onAuthenticate, onLogout, }}>
+    <AuthContext.Provider value={{ user, onAuthenticate, onLogout, onGLogin }}>
       {children}
     </AuthContext.Provider>
   )
