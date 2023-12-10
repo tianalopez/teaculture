@@ -2,15 +2,15 @@ from .. import request, session, Resource, make_response
 from models.user import User
 from schemas.user_schema import UserSchema
 from app_setup import db
+from google.auth.transport import requests
+from google.oauth2 import id_token
+import os
 from flask_jwt_extended import (
     create_access_token,
     create_refresh_token,
     set_access_cookies,
     set_refresh_cookies,
 )
-from google.auth.transport import requests
-from google.oauth2 import id_token
-import os
 
 user_schema = UserSchema(session=db.session)
 CLIENT_ID = os.environ.get("GOOGLE_CLIENT_ID")
@@ -51,7 +51,6 @@ class GAuth(Resource):
                     return response
                 except Exception as e:
                     return {"error": "Invalid Credentials"}, 401
-            #~need some sort of error handling here
             #!REGISTER
             else:
                 try:
