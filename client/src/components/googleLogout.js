@@ -11,11 +11,11 @@ const GLogout = () => {
 
   return (
     <>
-      <GoogleLogout
+      {/* <GoogleLogout
         clientId={clientId}
         buttonText={'Logout'}
         onLogoutSuccess={onLogout}
-      />
+      /> */}
     </>
   )
 }

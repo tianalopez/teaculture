@@ -1,7 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './auth/authProvider';
 import {useEffect } from "react";
-import { loadGoogleApi } from "./googleApi";
+
 
 //page imports
 import Welcome from './pages/welcome';
@@ -18,18 +18,36 @@ import Error404 from './pages/error404';
 import RequireAuth from './auth/requireAuth';
 
 const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
+console.log(clientId)
+console.log('in app')
 const scope ="";
 
 function App() {
 
+  const handleCallbackResponse = (response) => {
+    console.log('Encoded JWT ID token: ' + response)
+  }
+
+  //initialize google api
   useEffect(() => {
-    loadGoogleApi(clientId, scope)
+    /* global google */
+    google.accounts.id.initialize({
+      clientId: clientId,
+      callback: handleCallbackResponse
+    });
+
+    google.accounts.id.renderButton(
+      document.getElementById("signInDiv"),
+      { theme: "outline", size: "large"}
+    )
+
   }, []);
 
   return (
   <>
   <AuthProvider>
     <Navbar />
+    <div id='signInDiv'></div>
     <Routes>
       <Route path="/" element={<Welcome />}/>
       <Route path="login" element={<Login />} />
