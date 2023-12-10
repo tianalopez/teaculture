@@ -3,11 +3,25 @@ import { useFormik } from "formik"
 import * as yup from "yup"
 import { useAuth } from "../auth/authProvider";
 import { Grid, Box, Typography, Button, Fab } from '@mui/material'
+import GLogin from "../components/googleLogin";
+import { GoogleLogin } from '@react-oauth/google';
+
+const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
+
 
 const Login = () => {
   const [signUp, setSignUp] = useState(false);
   const handleClick = () => setSignUp((signUp) => !signUp);
   const auth = useAuth()
+
+  const onSuccess = (googleUser) => {
+    const id_token = googleUser.getAuthResponse().id_token
+    auth.onGLogin(id_token)
+  }
+
+  const onError = () => {
+    console.log("Failed")
+  }
 
   const signUpSchema = yup.object().shape({
     username: yup.string().required("Please enter a username"),
@@ -47,6 +61,14 @@ const Login = () => {
 
   return (
     <>
+      <GoogleLogin
+        clientId={clientId}
+        buttonText="Google Login"
+        onSuccess={onSuccess}
+        onError={onError}
+        cookiePolicy={'single_host_origin'}
+        isSignedIn={true}
+      />
     <Box sx={{ flexGrow: 1, ml: 4, mr: 4, mt: 8 }}>
       <Grid sx={{mt: 12}} container spacing={2} justifyContent='center'>
           <Grid xs={12} sx={{ mx: 'auto', textAlign:'center' }} >

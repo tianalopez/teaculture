@@ -1,24 +1,13 @@
 import { GoogleLogin } from '@react-oauth/google';
+import { useAuth } from "../auth/authProvider";
 
-const clientId = '549250280107-nn1jit4h855pqmdi7fdn443sc7k2fqni.apps.googleusercontent.com'
+const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 
 const GLogin = () => {
+  const auth = useAuth()
 
-  const handleLogin = async (response) => {
-    const {tokenId} = response
-    try {
-      const googleResponse = await fetch('/googlelogin', {
-        method: "POST",
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({tokenId}),
-      })
-      //! this will have the user and a response code and you need to conditionally render  this login version inside authProvider, to make it conditional on if this login happens or if the usual login happens
-      const googleData = await googleResponse.json()
-    } catch (error) {
-      console.log(error)
-    }
+  const onSuccess = (response) => {
+    auth.onGLogin(response)
   }
 
   const handleFailure = () => {
@@ -30,7 +19,7 @@ const GLogin = () => {
     <GoogleLogin
       clientId={clientId}
       buttonText="Google Login"
-      onSuccess={handleLogin}
+      onSuccess={onSuccess}
       onFailure={handleFailure}
       cookiePolicy={'single_host_origin'}
       isSignedIn={true}
