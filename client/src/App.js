@@ -1,7 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './auth/authProvider';
-import { gapi } from 'gapi-script';
 import {useEffect } from "react";
+import { loadGoogleApi } from "./googleApi";
 
 //page imports
 import Welcome from './pages/welcome';
@@ -17,23 +17,13 @@ import Navbar from './components/navbar';
 import Error404 from './pages/error404';
 import RequireAuth from './auth/requireAuth';
 
+const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
+const scope ="";
+
 function App() {
 
   useEffect(() => {
-    const start = async () => {
-      try {
-        await gapi.client.init({
-          clientId: clientId,
-          scope: ""
-        });
-        console.log("Google API initialized successfully");
-      } catch (error) {
-        console.error("Error initializing Google API:", error);
-        // Handle the initialization error as needed
-      }
-    };
-
-    gapi.load('client:auth2', start);
+    loadGoogleApi(clientId, scope)
   }, []);
 
   return (

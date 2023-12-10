@@ -8,9 +8,7 @@ import { loadGoogleApi } from "./googleApi";
 
 const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 const root = ReactDOM.createRoot(document.getElementById("root"));
-const scope = "";
 
-loadGoogleApi(clientId, scope);
 
 root.render(
   <React.StrictMode>
