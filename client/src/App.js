@@ -26,14 +26,15 @@ function App() {
 
   const handleCallbackResponse = (response) => {
     console.log('Encoded JWT ID token: ' + response.credential)
-    fetch('/googlelogin', {
+    fetch('/googleauth', {
       method: "POST",
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
       },
       body: JSON.stringify({ id_token: response.credential }),
     })
-    .then(r => r.json)
+    .then(r => r.json())
     .then(data => console.log(data))
     .catch(err => console.log(err))
 
