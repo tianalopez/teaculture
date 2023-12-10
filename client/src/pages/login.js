@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useFormik } from "formik"
 import * as yup from "yup"
 import { useAuth } from "../auth/authProvider";
-import { useNavigate } from "react-router-dom";
+import { Grid, Box, Typography, Button, Fab } from '@mui/material'
 
 const Login = () => {
   const [signUp, setSignUp] = useState(false);
@@ -46,6 +46,24 @@ const Login = () => {
 //!make values a use state
 
   return (
+    <>
+    <Box sx={{ flexGrow: 1, ml: 4, mr: 4, mt: 8 }}>
+      <Grid sx={{mt: 12}} container spacing={2} justifyContent='center'>
+          <Grid xs={12} sx={{ mx: 'auto', textAlign:'center' }} >
+            <Fab sx={{mr: 1}} variant='extended' onClick={() => handleClick(true)}>
+              Login
+            </Fab>
+            <Fab sx={{ ml: 1 }} variant='extended' onClick={() => handleClick(false)}>
+            Register
+            </Fab>
+        </Grid>
+          <Grid item xs={6} sx={{ mx: 'auto', textAlign: 'center' }}>
+          <Typography>
+            This is where the form would go
+          </Typography>
+        </Grid>
+      </Grid>
+    </Box>
     <div id="account-form">
       <div id='content'>
         <h1>Login/Register</h1>
@@ -75,6 +93,7 @@ const Login = () => {
         </form>
       </div>
     </div>
+    </>
   )
 }
 
