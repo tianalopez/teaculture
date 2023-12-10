@@ -19,6 +19,7 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SQLALCHEMY_ECHO"] = True
 app.secret_key = os.environ.get("APP_SECRET")
 app.config["JWT_SECRET_KEY"] = os.environ.get("JWT_SECRET_KEY")
+app.config["CLIENT_ID"] =os.environ.get('GOOGLE_CLIENT_ID')
 
 app.config["JWT_TOKEN_LOCATION"] = ["headers", "cookies", "json", "query_string"]
 
