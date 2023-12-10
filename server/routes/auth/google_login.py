@@ -20,11 +20,17 @@ class GLogin(Resource):
     def post(self):
         try:
             # get data from google id_token that was sent back
-            token = request.json
+            data = request.json
+            # data is sent back as a dictionary
+            token = data.get("id_token")
             if not token:
-                return {'error': 'Missing ID token'}, 400
+                return {"error": "Missing ID token"}, 400
+            # convert from string to bytes
+            id_token_bytes = token.encode("utf-8")
             # verify and get information about the token
-            id_info = id_token.verify_oauth2_token(token, requests.Request(), CLIENT_ID)
+            id_info = id_token.verify_oauth2_token(
+                id_token_bytes, requests.Request(), CLIENT_ID
+            )
 
             # query data by user email
             user = User.query.filter_by(email=id_info.get("email")).first()
