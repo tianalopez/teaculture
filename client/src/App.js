@@ -25,15 +25,26 @@ const scope ="";
 function App() {
 
   const handleCallbackResponse = (response) => {
-    console.log('Encoded JWT ID token: ' + response)
+    console.log('Encoded JWT ID token: ' + response.credential)
+    fetch('/googlelogin', {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ id_token: response.credential }),
+    })
+    .then(r => r.json)
+    .then(data => console.log(data))
+    .catch(err => console.log(err))
+
   }
 
   //initialize google api
   useEffect(() => {
     /* global google */
     google.accounts.id.initialize({
-      clientId: clientId,
-      callback: handleCallbackResponse
+      client_id: clientId,
+      callback: handleCallbackResponse,
     });
 
     google.accounts.id.renderButton(
