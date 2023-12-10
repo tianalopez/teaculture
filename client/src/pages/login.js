@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useFormik } from "formik"
 import * as yup from "yup"
 import { useAuth } from "../auth/authProvider";
@@ -10,14 +10,13 @@ const Login = () => {
   const handleClick = () => setSignUp((signUp) => !signUp);
   const auth = useAuth()
 
-  const onSuccess = (googleUser) => {
-    const id_token = googleUser.getAuthResponse().id_token
-    auth.onGLogin(id_token)
-  }
+  useEffect(() => {
+    window.google.accounts.id.renderButton(
+      document.getElementById("signInDiv"),
+      {theme: 'outline', size: 'large'}
+    )
 
-  const onError = () => {
-    console.log("Failed")
-  }
+  }, [])
 
   const signUpSchema = yup.object().shape({
     username: yup.string().required("Please enter a username"),
@@ -57,6 +56,7 @@ const Login = () => {
 
   return (
     <>
+    <div id='signInDiv'></div>
     <Box sx={{ flexGrow: 1, ml: 4, mr: 4, mt: 8 }}>
       <Grid sx={{mt: 12}} container spacing={2} justifyContent='center'>
           <Grid xs={12} sx={{ mx: 'auto', textAlign:'center' }} >

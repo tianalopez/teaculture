@@ -24,42 +24,39 @@ const scope ="";
 
 function App() {
 
-  const handleCallbackResponse = (response) => {
-    console.log('Encoded JWT ID token: ' + response.credential)
-    fetch('/googleauth', {
-      method: "POST",
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      body: JSON.stringify({ id_token: response.credential }),
-    })
-    .then(r => r.json())
-    .then(data => console.log(data))
-    .catch(err => console.log(err))
+  // const handleCallbackResponse = (response) => {
+  //   fetch('/googleauth', {
+  //     method: "POST",
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       'Accept': 'application/json'
+  //     },
+  //     body: JSON.stringify({ id_token: response.credential }),
+  //   })
+  //   .then(r => r.json())
+  //   .then(data => console.log(data))
+  //   .catch(err => console.log(err))
+  // }
 
-  }
+  // //initialize google api
+  // useEffect(() => {
+  //   /* global google */
+  //   google.accounts.id.initialize({
+  //     client_id: clientId,
+  //     callback: handleCallbackResponse,
+  //   });
 
-  //initialize google api
-  useEffect(() => {
-    /* global google */
-    google.accounts.id.initialize({
-      client_id: clientId,
-      callback: handleCallbackResponse,
-    });
+  //   google.accounts.id.renderButton(
+  //     document.getElementById("signInDiv"),
+  //     { theme: "outline", size: "large"}
+  //   )
 
-    google.accounts.id.renderButton(
-      document.getElementById("signInDiv"),
-      { theme: "outline", size: "large"}
-    )
-
-  }, []);
+  // }, []);
 
   return (
   <>
   <AuthProvider>
     <Navbar />
-    <div id='signInDiv'></div>
     <Routes>
       <Route path="/" element={<Welcome />}/>
       <Route path="login" element={<Login />} />
