@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom";
-import {gapi} from 'gapi-script'
+
 
 const AuthContext = createContext(null);
 
@@ -14,39 +14,53 @@ export const AuthProvider = ({children}) => {
 
   //~~~~~~~~~~~~~~~~~~~~GLOGIN or REGISTER
 
-  // useEffect(() => {
-  //   const start = async () => {
-  //     try {
-  //       await gapi.client.init({
-  //         clientId: clientId,
-  //         scope: ""
-  //       });
-  //       console.log("Google API initialized successfully");
-  //     } catch (error) {
-  //       console.error("Error initializing Google API:", error);
-  //       // Handle the initialization error as needed
-  //     }
-  //   };
-
-  //   gapi.load('client:auth2', start);
-  // }, []);
-
-  const onGLogin = async (id_token) => {
-    try {
-      const googleResponse = await fetch('/googlelogin', {
-        method: "POST",
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ id_token: id_token }),
+  const handleCallbackResponse = (response) => {
+    fetch('/googleauth', {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({ id_token: response.credential }),
+    })
+      .then(r => r.json())
+      .then(user => {
+        setUser(user)
+        navigate(`users/${user.id}/dashboard`, { replace: true })
       })
-      //! this will have the user and a response code and you need to conditionally render  this login version inside authProvider, to make it conditional on if this login happens or if the usual login happens
-      const googleData = await googleResponse.json()
-    } catch (error) {
-      console.log(error)
+      .catch(err => console.log(err))
+  }
+  const initializeGoogleSignIn = () => {
+    if (window.google && window.google.accounts) {
+      window.google.accounts.id.initialize({
+        client_id: clientId,
+        callback: handleCallbackResponse,
+      });
+    }
+    else {
+      setTimeout(initializeGoogleSignIn, 100)
     }
   }
 
+  useEffect(() => {
+    /* global google */
+
+    const loadGoogleScript = () => {
+      return new Promise((resolve) => {
+        const script = document.createElement("script");
+        script.src = "https://apis.google.com/js/platform.js";
+        script.async = true;
+        script.defer = true;
+        script.onload = resolve;
+        document.head.appendChild(script);
+      });
+    };
+
+    // Load the Google API script and then initialize
+    loadGoogleScript().then(() => {
+      initializeGoogleSignIn();
+    });
+  }, []);
 
   //values is from formik
   //~~~~~~~~~~~~~~~~~~~~LOGIN
@@ -149,7 +163,7 @@ export const AuthProvider = ({children}) => {
 
 
   return (
-    <AuthContext.Provider value={{ user, onAuthenticate, onLogout, onGLogin }}>
+    <AuthContext.Provider value={{ user, onAuthenticate, onLogout }}>
       {children}
     </AuthContext.Provider>
   )

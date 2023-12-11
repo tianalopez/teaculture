@@ -14,10 +14,10 @@ class RecipeSchema(ma.SQLAlchemySchema):
             "tags",
             "ingredients",
             "medicinal",
-            "creator_id",
+            "creator",
             "created_at",
             "updated_at",
-            "reviewers"
+            "average_rating",
         ]
 
     title = fields.String(required=True, validate=validate.Length(min=2, max=80))
@@ -27,4 +27,14 @@ class RecipeSchema(ma.SQLAlchemySchema):
     tags = fields.String(required=True, validate=validate.Length(min=1))
     ingredients = fields.String(required=True, validate=validate.Length(min=1))
     medicinal = fields.Boolean(required=True)
-    reviewers = fields.List(fields.Nested("UserSchema", only=("id", "username",)))
+    creator = fields.Nested("UserSchema", only=("username",))
+    average_rating = fields.Method("calculate_average_rating", dump_only=True)
+
+    # custom method for average_rating
+    def calculate_average_rating(self, obj):
+        reviews = obj.reviews
+        if reviews:
+
+            return int(sum(review.rating for review in reviews) / len(reviews))
+        else:
+            return None
