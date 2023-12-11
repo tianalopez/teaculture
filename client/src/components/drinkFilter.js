@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { styled, Grid, Box, Typography, TextField, FormGroup, FormControlLabel, Switch } from '@mui/material';
-import RatingSwitch from '../styles/SwitchStyles';
+import { Rating, TextField, Typography} from '@mui/material';
+
 
 const DrinkFilter = ({recipes, searchObj, handleSearchChange}) => {
 
@@ -9,8 +9,10 @@ const DrinkFilter = ({recipes, searchObj, handleSearchChange}) => {
   //!search based on title
 
   const onChange = (e) => {
-    console.log(e.target.name, e.target.value)
-    handleSearchChange(e.target.name, e.target.value)
+    const name = e.target.name
+    const value = e.target.value
+    console.log(value, typeof(value))
+    handleSearchChange(name, value)
   }
   //!filter based on number of stars
   //!filter based on tag
@@ -27,12 +29,11 @@ const DrinkFilter = ({recipes, searchObj, handleSearchChange}) => {
           label='Search for Drink'
           type='search'
           variant='standard' />
-        <FormControlLabel
-          sx={{ml:0}}
-          label="Sort by Rating"
-          control={<RatingSwitch sx={{ m: 1 }} />}
-          labelPlacement='start'
-        />
+        <Typography>Filter by Rating:</Typography>
+        <Rating
+          name='avg_rating'
+          value={searchObj.avg_rating}
+          onChange={onChange}/>
     </form>
     </>
   )

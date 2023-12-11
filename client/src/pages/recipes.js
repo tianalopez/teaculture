@@ -5,20 +5,25 @@ import DrinkFilter from '../components/drinkFilter'
 
 const Recipes = () => {
   const [recipes, setRecipes] = useState([])
+  // const [filteredRecipes, setFilteredRecipes] = useState([])
   const defaultSearchObj = {
     search: "",
+    avg_rating: null,
   }
   const [searchObj, setSearchObj] = useState(defaultSearchObj)
-  console.log(searchObj)
 
   //! tons of filtering
   const handleSearchChange = (name, value) => {
-    console.log('changing')
     setSearchObj({...searchObj, [name]: value})
   }
   //!filtered recipes
-  const filteredRecipes = recipes
+
+    const filteredRecipes = recipes
     .filter((recipe) => recipe.title.toLowerCase().includes(searchObj.search.toLowerCase()))
+    .filter((recipe) => recipe.average_rating >= Number(searchObj.avg_rating))
+
+
+
 
   //fetch all recipes
   useEffect(() => {
