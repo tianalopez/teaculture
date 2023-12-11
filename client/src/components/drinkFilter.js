@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Grid, Box, Typography, TextField } from '@mui/material';
+import { styled, Grid, Box, Typography, TextField, FormGroup, FormControlLabel, Switch } from '@mui/material';
+import RatingSwitch from '../styles/SwitchStyles';
 
 const DrinkFilter = ({recipes, searchObj, handleSearchChange}) => {
 
@@ -26,6 +27,12 @@ const DrinkFilter = ({recipes, searchObj, handleSearchChange}) => {
           label='Search for Drink'
           type='search'
           variant='standard' />
+        <FormControlLabel
+          sx={{ml:0}}
+          label="Sort by Rating"
+          control={<RatingSwitch sx={{ m: 1 }} />}
+          labelPlacement='start'
+        />
     </form>
     </>
   )
