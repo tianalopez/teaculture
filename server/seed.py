@@ -2,6 +2,7 @@
 
 # Standard library imports
 from random import randint, choice as rc
+import random
 
 # Remote library imports
 from faker import Faker
@@ -92,6 +93,14 @@ if __name__ == "__main__":
 
         print("Seeding recipes...")
         recipes = []
+        randomImage = [
+            "/images/img1.jpg",
+            "/images/img2.jpg",
+            "/images/img3.jpg",
+            "/images/img4.jpg",
+            "/images/img5.jpg",
+            "/images/img6.jpg",
+            ]
         for u in users:
             for i in range(1):
                 recipes.append(
@@ -101,6 +110,7 @@ if __name__ == "__main__":
                         tags=fake.word(),
                         ingredients=fake.word(),
                         medicinal=fake.random_element(elements=(True, False)),
+                        image = random.choice(randomImage),
                         creator_id=u.id,
                     )
                 )

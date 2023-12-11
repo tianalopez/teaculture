@@ -6,11 +6,6 @@ import { useAuth } from "../auth/authProvider"
 
 const RecipeCard = ({recipe}) => {
   const auth = useAuth()
-  const randomImage = [
-    "/images/img1.jpg",
-    "/images/img2.jpg",
-    "/images/img3.jpg"
-  ]
 
   return (
     <Card sx={{maxWidth: 345}}>
@@ -18,7 +13,7 @@ const RecipeCard = ({recipe}) => {
         component='img'
         alt='random beverage image'
         height='140'
-        image={randomImage[Math.floor(Math.random()*randomImage.length)]}
+        image={recipe.image}
       >
       </CardMedia>
       <CardContent>
