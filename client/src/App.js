@@ -17,41 +17,8 @@ import Navbar from './components/navbar';
 import Error404 from './pages/error404';
 import RequireAuth from './auth/requireAuth';
 
-const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
-console.log(clientId)
-console.log('in app')
-const scope ="";
 
 function App() {
-
-  // const handleCallbackResponse = (response) => {
-  //   fetch('/googleauth', {
-  //     method: "POST",
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       'Accept': 'application/json'
-  //     },
-  //     body: JSON.stringify({ id_token: response.credential }),
-  //   })
-  //   .then(r => r.json())
-  //   .then(data => console.log(data))
-  //   .catch(err => console.log(err))
-  // }
-
-  // //initialize google api
-  // useEffect(() => {
-  //   /* global google */
-  //   google.accounts.id.initialize({
-  //     client_id: clientId,
-  //     callback: handleCallbackResponse,
-  //   });
-
-  //   google.accounts.id.renderButton(
-  //     document.getElementById("signInDiv"),
-  //     { theme: "outline", size: "large"}
-  //   )
-
-  // }, []);
 
   return (
   <>
