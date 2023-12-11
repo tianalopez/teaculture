@@ -24,44 +24,27 @@ export const AuthProvider = ({children}) => {
       body: JSON.stringify({ id_token: response.credential }),
     })
       .then(r => r.json())
-      .then(data => console.log(data))
+      .then(user => {
+        setUser(user)
+        navigate(`users/${user.id}/dashboard`, { replace: true })
+      })
       .catch(err => console.log(err))
   }
   const initializeGoogleSignIn = () => {
-    if (google && google.accounts) {
-      google.accounts.id.initialize({
+    if (window.google && window.google.accounts) {
+      window.google.accounts.id.initialize({
         client_id: clientId,
         callback: handleCallbackResponse,
       });
-
-      // google.accounts.id.renderButton(
-      //   document.getElementById("signInDiv"),
-      //   { theme: "outline", size: "large" }
-      // )
     }
     else {
       setTimeout(initializeGoogleSignIn, 100)
     }
   }
 
-  //initialize google api
   useEffect(() => {
     /* global google */
 
-
-
-    // if (google && google.accounts) {
-    //   google.accounts.id.initialize({
-    //     client_id: clientId,
-    //     callback: handleCallbackResponse,
-    //   });
-
-    // }
-
-    // google.accounts.id.renderButton(
-    //   document.getElementById("signInDiv"),
-    //   { theme: "outline", size: "large" }
-    // )
     const loadGoogleScript = () => {
       return new Promise((resolve) => {
         const script = document.createElement("script");
