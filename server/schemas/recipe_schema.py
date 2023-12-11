@@ -15,6 +15,7 @@ class RecipeSchema(ma.SQLAlchemySchema):
             "ingredients",
             "medicinal",
             "creator",
+            "image",
             "created_at",
             "updated_at",
             "average_rating",
@@ -29,6 +30,7 @@ class RecipeSchema(ma.SQLAlchemySchema):
     medicinal = fields.Boolean(required=True)
     creator = fields.Nested("UserSchema", only=("username",))
     average_rating = fields.Method("calculate_average_rating", dump_only=True)
+    image = fields.String(required=False, validate=validate.Length(min=1, max=255))
 
     # custom method for average_rating
     def calculate_average_rating(self, obj):
