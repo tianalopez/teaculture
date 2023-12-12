@@ -28,19 +28,6 @@ const RecipePage = () => {
         setReviews(reviewsData);
       })
       .catch((err) => console.log(err));
-
-
-  //   fetch(`/recipes/${id}`)
-  //   .then(r => r.json())
-  //   .then(setRecipe)
-  //   .catch(err => console.log(err))
-  // }, [id, render])
-
-  // useEffect(() => {
-  //   fetch(`/reviews/journal${id}`)
-  //   .then(r => r.json())
-  //   .then(setReviews)
-  //   .catch(err => console.log(err))
   },[id, render])
 
   const reviewSchema = yup.object().shape({
@@ -93,28 +80,48 @@ const RecipePage = () => {
   const instructionsArray = instructions.split(/\.\s+/).filter(instruction => instruction.trim() !== "").map((instruction, index) => (
     <li key={index}>{instruction.trim()}</li>
   ));
-  //DELETE REQUEST TO REVIEW
-    const handleDelete = (review_id) => {
-      fetch(`/reviews/${review_id}`, {
-        method: "DELETE",
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-      .then(r => r.json())
-      .catch(err => console.log(err))
-      setRender((status) => !status)
+
+  //EDIT/DELETE REQUEST TO REVIEW
+    const handleEdit = (e, review_id) => {
+      if (e.target.name === 'editButton') {
+        // fetch(`/reviews/${review_id}`, {
+        //   method: "PATCH",
+        //   headers: {
+        //     'Content-Type': 'application/json',
+        //     'Accept': 'application/json'
+        //   },
+        //   body: JSON.stringify({})
+        // })
+        //   .then(r => r.json())
+        //   .catch(err => console.log(err))
+        // setRender((status) => !status)
+        console.log('edit')
+      }
+      else {
+        fetch(`/reviews/${review_id}`, {
+          method: "DELETE",
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(r => r.json())
+          .catch(err => console.log(err))
+        setRender((status) => !status)
+      }
     }
 
   const reviewDisplay = reviews.map((review) => (
     <Card key={review.id} sx={{ mt: 2, mb: 2, display: 'flex', alignItems: 'center', padding: 2, width: '100%', justifyContent: 'space-between' }}>
-      <CardContent style={{ padding: '5px', display: 'flex', flex: 1, alignItems: 'center' }}>
+      <CardContent style={{ padding: '5px', display: 'flex', flex: 1}}>
+        <div className=".edit-review">
+          <Rating value={review.rating} readOnly />
           <Typography>{review.comment}</Typography>
+        </div>
         <div className="edit-review">
         {review.user_id === auth.user.id ? (
             <>
-            <Button>Edit Review</Button>
-            <Button onClick={() => handleDelete(review.id)}>Delete Review</Button>
+            <Button name ='editButton' onClick={(e) => handleEdit(e, review.id)}>Edit Review</Button>
+            <Button name='deleteButton' onClick={(e) => handleEdit(e, review.id)}>Delete Review</Button>
             </>
         ) : (
           null
