@@ -20,6 +20,8 @@ from routes.user_by_id import UserById
 from routes.user_communities import UserCommunities
 from routes.user_community_by_id import UserCommunityById
 from routes.users import Users
+from routes.favorites import Favorites
+from routes.favorite_by_id import FavoriteById
 
 # auth routes
 from routes.auth.register import Register
@@ -43,6 +45,8 @@ api.add_resource(UserById, "/users/<int:id>")
 api.add_resource(UserCommunities, "/usercommunities")
 api.add_resource(UserCommunityById, "/usercommunities/<int:id>")
 api.add_resource(Users, "/users")
+api.add_resource(Favorites, "/favorites")
+api.add_resource(FavoriteById, "/favorites/<int:id>")
 # Auth Resources
 api.add_resource(Register, "/register")
 api.add_resource(Login, "/login")
