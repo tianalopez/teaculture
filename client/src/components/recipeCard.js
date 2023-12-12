@@ -7,8 +7,10 @@ import { useAuth } from "../auth/authProvider"
 
 const RecipeCard = ({recipe}) => {
   const auth = useAuth()
+  //if there is no user, do not calculate
   const [isRecipeInFavorites, setIsRecipeInFavorites] = useState(
-    auth.user.favorites.some((favorite) => favorite.id === recipe.id));
+    auth.user ? auth.user.favorites.some((favorite) => favorite.id === recipe.id) : false
+  );
 
   // useEffect(() => {
   //   setIsRecipeInFavorites(
