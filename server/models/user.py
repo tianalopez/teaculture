@@ -4,7 +4,7 @@ from app_setup import db
 from sqlalchemy.ext.hybrid import hybrid_property
 from app_setup import bcrypt
 from sqlalchemy.ext.associationproxy import association_proxy
-from .user_community import UserCommunity
+
 
 
 class User(db.Model):
@@ -26,11 +26,19 @@ class User(db.Model):
     owned_communities = db.relationship(
         "Community", back_populates="owner", cascade="all, delete-orphan"
     )
-    owned_recipes = db.relationship("Recipe", back_populates="creator", cascade="all, delete-orphan")
-    reviews = db.relationship("Review", back_populates="user", cascade="all, delete-orphan")
+    owned_recipes = db.relationship(
+        "Recipe", back_populates="creator", cascade="all, delete-orphan"
+    )
+    reviews = db.relationship(
+        "Review", back_populates="user", cascade="all, delete-orphan"
+    )
+    favorites = db.relationship(
+        "Favorite", back_populates="user", cascade="all, delete-orphan"
+    )
     # association
-    communities = association_proxy('user_communities', 'community')
-    recipes = association_proxy("reviews", 'recipe')
+    communities = association_proxy("user_communities", "community")
+    recipes = association_proxy("reviews", "recipe")
+    favorite_recipes = association_proxy("favorites", "recipe")
 
     # validations
     @validates("username")

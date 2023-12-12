@@ -2,6 +2,7 @@
 
 # Standard library imports
 from random import randint, choice as rc
+import random
 
 # Remote library imports
 from faker import Faker
@@ -14,6 +15,7 @@ from models.recipe import Recipe
 from models.review import Review
 from models.user_community import UserCommunity
 from models.user import User
+from models.favorite import Favorite
 
 if __name__ == "__main__":
     fake = Faker()
@@ -22,12 +24,13 @@ if __name__ == "__main__":
 
         # Seed code goes here!
         print("Clearing db...")
+        User.query.delete()
         Community.query.delete()
         Post.query.delete()
         UserCommunity.query.delete()
-        User.query.delete()
         Review.query.delete()
         Recipe.query.delete()
+        Favorite.query.delete()
 
         print("Seeding users...")
         users = []
@@ -91,16 +94,27 @@ if __name__ == "__main__":
         db.session.commit()
 
         print("Seeding recipes...")
+        tags_options = ["creamy", "caffeine", "citrusy", "herbal", "spiced"]
         recipes = []
+        randomImage = [
+            "/images/img1.jpg",
+            "/images/img2.jpg",
+            "/images/img3.jpg",
+            "/images/img4.jpg",
+            "/images/img5.jpg",
+            "/images/img6.jpg",
+        ]
         for u in users:
             for i in range(1):
+                selected_tags = random.sample(tags_options, 2)
                 recipes.append(
                     Recipe(
                         title=fake.catch_phrase(),
                         instructions=fake.paragraph(nb_sentences=3),
-                        tags=fake.word(),
+                        tags=','.join(selected_tags),
                         ingredients=fake.word(),
                         medicinal=fake.random_element(elements=(True, False)),
+                        image=random.choice(randomImage),
                         creator_id=u.id,
                     )
                 )

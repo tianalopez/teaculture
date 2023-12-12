@@ -18,7 +18,8 @@ class UserSchema(ma.SQLAlchemySchema):
             "bio",
             "owned_recipes",
             "communities",
-            "reviews"
+            "reviews",
+            "favorites",
         ]
 
     username = fields.String(required=True, validate=validate.Length(min=3, max=20))
@@ -27,3 +28,4 @@ class UserSchema(ma.SQLAlchemySchema):
     owned_recipes = fields.List(fields.Nested("RecipeSchema", only=("id", "title", "creator_id")))
     communities = fields.List(fields.Nested(CommunitySchema, only=("id", "name", "description",)))
     reviews = fields.List(fields.Nested(ReviewSchema, only=("id", "rating", "comment","recipe_id",)))
+    favorites = fields.List(fields.Nested("FavoriteSchema", only=("id","recipe_id",)))

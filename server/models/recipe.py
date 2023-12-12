@@ -16,6 +16,7 @@ class Recipe(db.Model):
     ingredients = db.Column(db.String)
     medicinal = db.Column(db.Boolean)
     creator_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    image = db.Column(db.String)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
@@ -23,6 +24,9 @@ class Recipe(db.Model):
     creator = db.relationship("User", back_populates="owned_recipes")
     reviews = db.relationship(
         "Review", back_populates="recipe", cascade="all, delete-orphan"
+    )
+    favorites = db.relationship(
+        "Favorite", back_populates="recipe", cascade="all, delete-orphan"
     )
     # associations
     reviewers = association_proxy("reviews", "user")
@@ -68,6 +72,14 @@ class Recipe(db.Model):
             raise ValueError(f"Creator id must be a positive integer")
         elif not db.session.get(User, value):
             raise ValueError(f"Creator id has to correspond to an existing user")
+        return value
+
+    @validates("image")
+    def validate_image(self, _, value):
+        if not isinstance(value, str):
+            raise TypeError(f"Image must be a url string")
+        elif len(value) < 1 or len(value) > 255:
+            raise ValueError("Image Url must be between 1 and 255 characters")
         return value
 
     def __repr__(self):
