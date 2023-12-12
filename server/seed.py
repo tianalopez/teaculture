@@ -92,6 +92,7 @@ if __name__ == "__main__":
         db.session.commit()
 
         print("Seeding recipes...")
+        tags_options = ["creamy", "caffeine", "citrusy", "herbal", "spiced"]
         recipes = []
         randomImage = [
             "/images/img1.jpg",
@@ -100,17 +101,18 @@ if __name__ == "__main__":
             "/images/img4.jpg",
             "/images/img5.jpg",
             "/images/img6.jpg",
-            ]
+        ]
         for u in users:
             for i in range(1):
+                selected_tags = random.sample(tags_options, 2)
                 recipes.append(
                     Recipe(
                         title=fake.catch_phrase(),
                         instructions=fake.paragraph(nb_sentences=3),
-                        tags=fake.word(),
+                        tags=','.join(selected_tags),
                         ingredients=fake.word(),
                         medicinal=fake.random_element(elements=(True, False)),
-                        image = random.choice(randomImage),
+                        image=random.choice(randomImage),
                         creator_id=u.id,
                     )
                 )

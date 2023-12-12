@@ -1,6 +1,6 @@
 import { styled, Switch } from '@mui/material';
 
-const RatingSwitch = styled(Switch)(({ theme }) => ({
+export const MedicinalSwitch = styled(Switch)(({ theme }) => ({
   width: 62,
   height: 34,
   padding: 7,
@@ -46,5 +46,3 @@ const RatingSwitch = styled(Switch)(({ theme }) => ({
     borderRadius: 20 / 2,
   },
 }));
-
-export default RatingSwitch
