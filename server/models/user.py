@@ -16,6 +16,7 @@ class User(db.Model):
     _password_hash = db.Column(db.String, nullable=False)
     email = db.Column(db.String, nullable=False, unique=True)
     bio = db.Column(db.String)
+    favorites = db.Column(db.String)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
@@ -26,11 +27,19 @@ class User(db.Model):
     owned_communities = db.relationship(
         "Community", back_populates="owner", cascade="all, delete-orphan"
     )
-    owned_recipes = db.relationship("Recipe", back_populates="creator", cascade="all, delete-orphan")
-    reviews = db.relationship("Review", back_populates="user", cascade="all, delete-orphan")
+    owned_recipes = db.relationship(
+        "Recipe", back_populates="creator", cascade="all, delete-orphan"
+    )
+    reviews = db.relationship(
+        "Review", back_populates="user", cascade="all, delete-orphan"
+    )
+    favorites = db.relationship(
+        "Favorite", back_populates="user", cascade="all, delete-orphan"
+    )
     # association
-    communities = association_proxy('user_communities', 'community')
-    recipes = association_proxy("reviews", 'recipe')
+    communities = association_proxy("user_communities", "community")
+    recipes = association_proxy("reviews", "recipe")
+    favorite_recipes = association_proxy("favorites", 'recipe')
 
     # validations
     @validates("username")

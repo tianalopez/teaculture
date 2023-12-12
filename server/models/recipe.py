@@ -25,6 +25,9 @@ class Recipe(db.Model):
     reviews = db.relationship(
         "Review", back_populates="recipe", cascade="all, delete-orphan"
     )
+    favorites = db.relationship(
+        "Favorite", back_populate="recipe", cascade="all, delete-orphan"
+    )
     # associations
     reviewers = association_proxy("reviews", "user")
 
