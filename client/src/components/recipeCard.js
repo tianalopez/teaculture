@@ -7,8 +7,8 @@ import { useAuth } from "../auth/authProvider"
 
 const RecipeCard = ({recipe}) => {
   const auth = useAuth()
-
-  console.log(auth.user)
+  const [isRecipeInFavorites, setIsRecipeInFavorites] = useState(
+    auth.user.favorites.some((favorite) => favorite.id === recipe.id));
 
   const handleAdd = () => {
     fetch('/favorites', {
@@ -22,11 +22,38 @@ const RecipeCard = ({recipe}) => {
     .then(r => r.json())
     .then((data) => console.log(data))
     .catch(err => console.log(err))
+    setIsRecipeInFavorites(true)
+
   }
 
   const handleDelete = () => {
-    console.log('deleted attempt')
+    fetch(`/favorites/${auth.user.id}/${recipe.id}`, {
+      method: "DELETE",
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      }
+    })
+    .then(r => r.json())
+    .catch(err => console.log(err))
+    setIsRecipeInFavorites(false)
   }
+
+  const renderFavoriteButton = () => {
+    if (isRecipeInFavorites) {
+      return (
+        <IconButton onClick={handleDelete}>
+          <FavoriteIcon sx={{ color: '#FA9E7B' }} />
+        </IconButton>
+      );
+    } else {
+      return (
+        <IconButton onClick={handleAdd} aria-label='add to favorites' size="small">
+          <FavoriteBorderOutlinedIcon />
+        </IconButton>
+      );
+    }
+  };
 
   return (
     <Card sx={{maxWidth: 345}}>
@@ -52,15 +79,7 @@ const RecipeCard = ({recipe}) => {
             <FavoriteIcon />
           </IconButton>
         :
-          (auth.user.favorites.includes(recipe.id) ? (
-            <IconButton onClick={handleDelete}>
-              <FavoriteIcon />
-            </IconButton>
-          ) : (
-            <IconButton onClick={handleAdd} aria-label='add to favorites' size="small">
-                <FavoriteBorderOutlinedIcon />
-            </IconButton>
-          ))
+          renderFavoriteButton()
           }
 
         <Button component={Link} to={`/drinklab/${recipe.id}`}>

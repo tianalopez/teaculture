@@ -10,9 +10,7 @@ favorites_schema = FavoriteSchema(many=True, session=db.session)
 class FavoriteById(Resource):
     def get(self, user_id, recipe_id):
         if (
-            favorite := db.session.get(Favorite)
-            .filter_by(user_id=user_id, recipe_id=recipe_id)
-            .first()
+            favorite:= db.session.query(Favorite).filter_by(user_id=user_id, recipe_id=recipe_id).first()
         ):
             favorite_schema = FavoriteSchema()
             return favorite_schema.dump(favorite), 200
@@ -20,9 +18,7 @@ class FavoriteById(Resource):
 
     def patch(self, user_id, recipe_id):
         if (
-            favorite := db.session.get(Favorite)
-            .filter_by(user_id=user_id, recipe_id=recipe_id)
-            .first()
+            favorite:= db.session.query(Favorite).filter_by(user_id=user_id, recipe_id=recipe_id).first()
         ):
             try:
                 data = request.json
@@ -40,9 +36,7 @@ class FavoriteById(Resource):
     # delete specifically with user_id and recipe_id
     def delete(self, user_id, recipe_id):
         if (
-            favorite := db.session.get(Favorite)
-            .filter_by(user_id=user_id, recipe_id=recipe_id)
-            .first()
+            favorite:= db.session.query(Favorite).filter_by(user_id=user_id, recipe_id=recipe_id).first()
         ):
             try:
                 db.session.delete(favorite)
