@@ -115,7 +115,9 @@ const RecipePage = () => {
           </Typography>
         </Grid>
         <Grid item xs={12} justifyContent="flex-end">
+          {auth.user ?
           <Button onClick={handleOpen} variant='contained'>Add a Review</Button>
+          : null}
           <Modal
             id='modal'
             open={open}
