@@ -4,8 +4,10 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { Box, Modal, TextareaAutosize, Grid, CircularProgress, TextField, Button, Typography, Rating, Paper, } from '@mui/material';
 import "../styles/recipePage.css";
+import { useAuth } from "../auth/authProvider";
 
 const RecipePage = () => {
+  const auth = useAuth()
   const {id} = useParams()
   const [recipe, setRecipe] = useState()
   const [open, setOpen] = useState(false)
@@ -31,14 +33,30 @@ const RecipePage = () => {
     },
     validationSchema: reviewSchema,
     onSubmit: (values) => {
+      const correctValues={
+        rating: values.rating,
+        comment: values.comment,
+        recipe_id: id,
+        user_id: auth.user.id
+      }
+      fetch(`/reviews`, {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(correctValues)
+      })
+      .then(r => r.json())
+      .then((newReview) => console.log(newReview))
+      .catch(err => console.log(err))
+
+      setOpen(false)
+
       //run a POST
-      console.log('submitted', values)
+      console.log('submitted', correctValues)
     }
   })
-
-  useEffect(() => {
-    console.log('Formik State:', formik.values);
-  }, [formik.values]);
 
   if (!recipe) {
     return <CircularProgress />
