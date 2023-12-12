@@ -15,6 +15,7 @@ from models.recipe import Recipe
 from models.review import Review
 from models.user_community import UserCommunity
 from models.user import User
+from models.favorite import Favorite
 
 if __name__ == "__main__":
     fake = Faker()
@@ -23,12 +24,13 @@ if __name__ == "__main__":
 
         # Seed code goes here!
         print("Clearing db...")
+        User.query.delete()
         Community.query.delete()
         Post.query.delete()
         UserCommunity.query.delete()
-        User.query.delete()
         Review.query.delete()
         Recipe.query.delete()
+        Favorite.query.delete()
 
         print("Seeding users...")
         users = []

@@ -10,6 +10,7 @@ const Recipes = () => {
     search: "",
     avg_rating: null,
     medicinal: false,
+    favorited: "",
   }
   const [searchObj, setSearchObj] = useState(defaultSearchObj)
   console.log(selectedTags)

@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Rating, TextField, Typography, FormControlLabel} from '@mui/material';
 import { MedicinalSwitch } from '../styles/SwitchStyles';
+import { useAuth } from "../auth/authProvider";
 
 
-const DrinkFilter = ({recipes, searchObj, handleSearchChange, setSelectedTags, selectedTags}) => {
-
+const DrinkFilter = ({recipes, searchObj, handleSearchChange, setSelectedTags, selectedTags}) =>
+  {
+  const auth = useAuth()
   const onChange = (e) => {
     const name = e.target.name
     const value = (name === 'medicinal' ? e.target.checked: e.target.value)
@@ -70,6 +72,18 @@ const DrinkFilter = ({recipes, searchObj, handleSearchChange, setSelectedTags, s
           variant={selectedTags.includes('spiced') ? 'contained': 'outlined'}
           name="spiced"
           onClick={handleClick}>Spiced</Button>
+        {auth.user ? (
+          <FormControlLabel
+            label="Favorited"
+            labelPlacement='start'
+            sx={{ ml: 0 }}
+            control={<MedicinalSwitch
+              name="medicinal"
+              checked={searchObj.favorited}
+              onChange={onChange}
+            />}
+          />
+        ): null}
     </form>
     </>
   )

@@ -8,18 +8,28 @@ favorites_schema = FavoriteSchema(many=True, session=db.session)
 
 
 class FavoriteById(Resource):
-    def get(self, id):
-        if favorite := db.session.get(Favorite, id):
+    def get(self, user_id, recipe_id):
+        if (
+            favorite := db.session.get(Favorite)
+            .filter_by(user_id=user_id, recipe_id=recipe_id)
+            .first()
+        ):
             favorite_schema = FavoriteSchema()
             return favorite_schema.dump(favorite), 200
         return {"error": "Could not find favorite relationship"}, 404
 
-    def patch(self, id):
-        if favorite := db.session.get(Favorite, id):
+    def patch(self, user_id, recipe_id):
+        if (
+            favorite := db.session.get(Favorite)
+            .filter_by(user_id=user_id, recipe_id=recipe_id)
+            .first()
+        ):
             try:
                 data = request.json
                 favorite_schema.validate(data)
-                updated_favorite = favorite_schema.load(data, instance=favorite, partial=True)
+                updated_favorite = favorite_schema.load(
+                    data, instance=favorite, partial=True
+                )
                 db.session.commit()
                 return favorite_schema.dump(updated_favorite), 200
             except Exception as e:
@@ -27,8 +37,13 @@ class FavoriteById(Resource):
                 return {"error": str(e)}, 400
         return {"error": "Could not find favorite"}, 404
 
-    def delete(self, id):
-        if favorite := db.session.get(Favorite, id):
+    # delete specifically with user_id and recipe_id
+    def delete(self, user_id, recipe_id):
+        if (
+            favorite := db.session.get(Favorite)
+            .filter_by(user_id=user_id, recipe_id=recipe_id)
+            .first()
+        ):
             try:
                 db.session.delete(favorite)
                 db.session.commit()

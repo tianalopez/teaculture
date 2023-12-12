@@ -46,7 +46,7 @@ api.add_resource(UserCommunities, "/usercommunities")
 api.add_resource(UserCommunityById, "/usercommunities/<int:id>")
 api.add_resource(Users, "/users")
 api.add_resource(Favorites, "/favorites")
-api.add_resource(FavoriteById, "/favorites/<int:id>")
+api.add_resource(FavoriteById, "/favorites/<int:user_id>/<int:recipe_id>")
 # Auth Resources
 api.add_resource(Register, "/register")
 api.add_resource(Login, "/login")

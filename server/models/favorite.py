@@ -8,7 +8,7 @@ class Favorite(db.Model):
 
     # Columns for favorites Table
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("users.id", ondelete="CASCADE"))
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
     recipe_id = db.Column(db.Integer, db.ForeignKey("recipes.id"))
 
     # relationships
