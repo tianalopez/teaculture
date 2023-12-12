@@ -2,18 +2,20 @@ import React, {useEffect, useState, useMemo} from 'react'
 import { Grid, Box, Typography, TextField      } from '@mui/material'
 import RecipeCard from '../components/recipeCard'
 import DrinkFilter from '../components/drinkFilter'
+import { useAuth } from "../auth/authProvider"
 
 const Recipes = () => {
+  const auth = useAuth()
   const [recipes, setRecipes] = useState([])
   const [selectedTags, setSelectedTags] = useState([])
   const defaultSearchObj = {
     search: "",
     avg_rating: null,
     medicinal: false,
-    favorited: "",
+    favorited: false,
   }
   const [searchObj, setSearchObj] = useState(defaultSearchObj)
-  console.log(selectedTags)
+  console.log(auth.user)
   //! tons of filtering
   const handleSearchChange = (name, value) => {
     setSearchObj({...searchObj, [name]: value})
@@ -32,6 +34,12 @@ const Recipes = () => {
       })
       .filter((recipe) => selectedTags.every((tag) => recipe.tags.includes(tag)))
     },[searchObj, selectedTags, recipes])
+      .filter((recipe) => {
+        if (searchObj.favorited === false) {
+          return true;
+        }
+        return auth.user.favorites.some((favorite) => favorite.recipe_id === recipe.id)
+      })
 
 
 

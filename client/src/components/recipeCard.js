@@ -87,7 +87,6 @@ const RecipeCard = ({recipe}) => {
         :
           renderFavoriteButton()
           }
-
         <Button component={Link} to={`/drinklab/${recipe.id}`}>
           View Recipe
         </Button>
