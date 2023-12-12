@@ -10,7 +10,13 @@ const RecipeCard = ({recipe}) => {
   const [isRecipeInFavorites, setIsRecipeInFavorites] = useState(
     auth.user.favorites.some((favorite) => favorite.id === recipe.id));
 
-  const handleAdd = () => {
+  // useEffect(() => {
+  //   setIsRecipeInFavorites(
+  //     auth.user.favorites.some((favorite) => favorite.id === recipe.id)
+  //   );
+  // }, [auth.user.favorites, recipe.id]);
+
+    const handleAdd = () => {
     fetch('/favorites', {
       method: 'POST',
       headers: {
