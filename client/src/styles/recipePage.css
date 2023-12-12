@@ -34,3 +34,9 @@
   font-weight: 400;
   margin-bottom: 4px;
 }
+
+.edit-review{
+  display: flex;
+  flex-direction: column;
+  margin-left:auto;
+}
