@@ -110,9 +110,9 @@ if __name__ == "__main__":
                 recipes.append(
                     Recipe(
                         title=fake.catch_phrase(),
-                        instructions=fake.paragraph(nb_sentences=3),
-                        tags=','.join(selected_tags),
-                        ingredients=fake.word(),
+                        instructions=fake.paragraph(nb_sentences=7),
+                        tags=",".join(selected_tags),
+                        ingredients=",".join(fake.words(nb=3)),
                         medicinal=fake.random_element(elements=(True, False)),
                         image=random.choice(randomImage),
                         creator_id=u.id,
