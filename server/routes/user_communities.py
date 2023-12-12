@@ -16,14 +16,14 @@ class UserCommunities(Resource):
         try:
             data = request.json
             #validate data
-            user_communities_schema.validate(data)
+            user_community_schema.validate(data)
             #deserialize with load()
-            new_uc = user_communities_schema.load(data)
+            new_uc = user_community_schema.load(data)
             #add new uc to uc table
             db.session.add(new_uc)
             db.session.commit()
             #serialize with dump()
-            serialized_uc = user_communities_schema.dump(new_uc)
+            serialized_uc = user_community_schema.dump(new_uc)
             return serialized_uc, 201
         except Exception as e:
             db.session.rollback()
