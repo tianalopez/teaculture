@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import React, { useEffect, useState } from 'react';
 import { useFormik} from 'formik';
 import * as yup from 'yup';
-import { Box,Modal, Card, Grid,CardContent, CircularProgress, TextField, Button, Typography, Rating, Paper, } from '@mui/material';
+import { Box, Card, Grid,CardContent, CircularProgress, Button, Typography, Rating, Paper, } from '@mui/material';
 import "../styles/recipePage.css";
 import { useAuth } from "../auth/authProvider";
 import ReviewModal from "../components/reviewModal";
