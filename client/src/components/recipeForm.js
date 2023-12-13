@@ -12,15 +12,16 @@ import {useAuth} from "../auth/authProvider"
 const RecipeForm = ({formik}) => {
   const auth = useAuth()
   const [chipStates, setChipStates] = useState(Array(5).fill(false))
+  const [selectedImg, setSelectedImg] = useState(null)
   const randomImage = [
-    "/images/img1.jpg",
-    "/images/img2.jpg",
-    "/images/img3.jpg",
-    "/images/img4.jpg",
-    "/images/img5.jpg",
-    "/images/img6.jpg",
-    "/images/img7.jpg",
-    "/images/img8.jpg",
+    {img: "/images/img1.jpg"},
+    {img: "/images/img2.jpg"},
+    {img: "/images/img3.jpg"},
+    {img: "/images/img4.jpg"},
+    {img: "/images/img5.jpg"},
+    {img: "/images/img6.jpg"},
+    {img: "/images/img7.jpg"},
+    {img: "/images/img8.jpg"},
   ]
   const tags = ['caffeine', 'creamy', 'spiced', 'citrusy', 'herbal']
 
@@ -99,12 +100,16 @@ const RecipeForm = ({formik}) => {
                 <Typography variant='h6'>Pick Cover Image</Typography>
                 <ImageList sx={{ width: '100%' }} cols={4} rowHeight={164}>
                   {randomImage.map((image) => (
-                    <ImageListItem key={image}>
+                    <ImageListItem
+                      sx={{m:0.5}}
+                      title={image.img} key={image.img}>
                       <img
-                        srcSet={`${image}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                        className={selectedImg === image.img ? 'selectedImg' : 'allImg'}
+                        srcSet={`${image.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
                         alt='drink'
-                        src={`${image}?w=164&h=164&fit=crop&auto=format`}
+                        src={`${image.img}?w=164&h=164&fit=crop&auto=format`}
                         loading='lazy'
+                        onClick={() => setSelectedImg(image.img)}
                       />
                     </ImageListItem>
                   ))}
