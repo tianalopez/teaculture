@@ -15,6 +15,8 @@ const RecipeForm = ({formik}) => {
   const [selectedImg, setSelectedImg] = useState(null)
   const initialIngredients = Array(10).fill("").map((_, index) => ({ index, value: "" }));
   const [ingredients, setIngredients] = useState(initialIngredients)
+  const initialInstructions = Array(10).fill("").map((_, index) => ({ index, value: "" }));
+  const [instructions, setInstructions] = useState(initialInstructions)
   const randomImage = [
     {img: "/images/img1.jpg"},
     {img: "/images/img2.jpg"},
@@ -35,15 +37,27 @@ const RecipeForm = ({formik}) => {
     });
   };
 
-  const handleIngredientChange = (e, index) => {
-    setIngredients(prevIngredients => {
-      // Create a copy of the existing array
-      const newIngredients = [...prevIngredients];
-      // Update the value of the specific ingredient
-      newIngredients[index] = { ...newIngredients[index], value: e.target.value };
-      return newIngredients;
-    });
+  const handleChange = (e, index) => {
+    if (e.target.name === 'ingredients') {
+      setIngredients(prevIngredients => {
+        // Create a copy of the existing array
+        const newIngredients = [...prevIngredients];
+        // Update the value of the specific ingredient
+        newIngredients[index] = { ...newIngredients[index], value: e.target.value };
+        return newIngredients;
+      });
+    }
+    else {
+      setInstructions(prevInstructions => {
+        // Create a copy of the existing array
+        const newInstructions = [...prevInstructions];
+        // Update the value of the specific ingredient
+        newInstructions[index] = { ...newInstructions[index], value: e.target.value };
+        return newInstructions;
+      });
+    }
   }
+
 
   return (
     <form onSubmit={formik.handleSubmit}>
@@ -75,9 +89,9 @@ const RecipeForm = ({formik}) => {
                   </ListItemIcon>
                   <ListItemText>
                     <TextField
-                      onChange={(e) => handleIngredientChange(e, index)}
+                      onChange={(e) => handleChange(e, index)}
                       value={ingredients[index].value}
-                      name={`ingredients[${index}]`}
+                      name='ingredients'
                       fullWidth
                       placeholder="Enter ingredient"
                       variant='standard'
@@ -101,6 +115,9 @@ const RecipeForm = ({formik}) => {
                   </ListItemIcon>
                   <ListItemText>
                     <TextField
+                      onChange={(e) => handleChange(e, index)}
+                      value={instructions[index].value}
+                      name='instructions'
                       fullWidth
                       placeholder="Enter instruction"
                       variant='standard'
