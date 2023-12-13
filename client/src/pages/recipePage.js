@@ -2,14 +2,15 @@ import { useParams } from "react-router-dom";
 import React, { useEffect, useState } from 'react';
 import { useFormik} from 'formik';
 import * as yup from 'yup';
-import { Box,Modal, Card, Grid, CardActions,CardContent, CircularProgress, TextField, Button, Typography, Rating, Paper, } from '@mui/material';
+import { Box,Modal, Card, Grid,CardContent, CircularProgress, TextField, Button, Typography, Rating, Paper, } from '@mui/material';
 import "../styles/recipePage.css";
 import { useAuth } from "../auth/authProvider";
+import ReviewModal from "../components/reviewModal";
 
 const RecipePage = () => {
   const auth = useAuth()
   const {id} = useParams()
-
+  const [edit, setEdit] = useState(false)
   const [recipe, setRecipe] = useState()
   const [reviews, setReviews] = useState()
   const [open, setOpen] = useState(false)
@@ -84,6 +85,7 @@ const RecipePage = () => {
   //EDIT/DELETE REQUEST TO REVIEW
     const handleEdit = (e, review_id) => {
       if (e.target.name === 'editButton') {
+        setEdit(true)
         // fetch(`/reviews/${review_id}`, {
         //   method: "PATCH",
         //   headers: {
@@ -96,6 +98,7 @@ const RecipePage = () => {
         //   .catch(err => console.log(err))
         // setRender((status) => !status)
         console.log('edit')
+        setEdit(false)
       }
       else {
         fetch(`/reviews/${review_id}`, {
@@ -176,34 +179,20 @@ const RecipePage = () => {
           {auth.user ?
           <Button onClick={handleOpen} variant='contained'>Add a Review</Button>
           : null}
-          <Modal
-            id='modal'
+          <ReviewModal
             open={open}
-            onClose={handleClose}
-          >
-            <div id='review-modal'>
-                <h1 className='modal-title'>
-                  Add a Review
-                </h1>
-              <form className='modal-form' onSubmit={formik.handleSubmit}>
-                <Rating
-                  name='rating'
-                  onBlur={formik.handleBlur}
-                  onChange={(event, newValue) => formik.setFieldValue('rating', newValue)}
-                  value={formik.values.rating}
-                  sx={{ mt: 2, alignSelf: 'flex-start' }}/>
-                {formik.errors.rating && formik.touched.rating}
-                <TextField
-                  name='comment'
-                  onBlur={formik.handleBlur}
-                  onChange={(e) => formik.handleChange(e)}
-                  value={formik.values.comment}
-                  sx={{ mt: 2 }} multiline rows={3} placeholder="Add your review here"/>
-                {formik.errors.comment && formik.touched.comment}
-                <Button type='submit' onClick={formik.handleSubmit} sx={{mt: 2}} variant='contained'>Post Review</Button>
-              </form>
-            </div>
-          </Modal>
+            handleClose={handleClose}
+            rating={formik.values.rating}
+            touchedRating={formik.touched.rating}
+            errorRating={formik.errors.rating}
+            comment={formik.values.comment}
+            touchedComment={formik.touched.comment}
+            errorComment={formik.errors.comment}
+            handleBlur={formik.handleBlur}
+            handleChangeRating={formik.setFieldValue}
+            handleChangeComment={formik.handleChange}
+            handleSubmit={formik.handleSubmit}
+          />
             {reviewDisplay}
         </Grid>
       </Grid>
