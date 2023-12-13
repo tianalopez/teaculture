@@ -47,7 +47,7 @@ const RecipePage = () => {
         rating: values.rating,
         comment: values.comment,
         recipe_id: id,
-        user_id: auth.user.id
+        user_id: auth.user && auth.user.id ? auth.user.id : undefined
       }
       let fetchPromise = edit
         ? fetch(`/reviews/${editingReview.id}`, {
@@ -97,23 +97,6 @@ const RecipePage = () => {
 
   //EDIT/DELETE REQUEST TO REVIEW
     const handleEdit = (e, review_id) => {
-      if (e.target.name === 'editButton') {
-        // fetch(`/reviews/${review_id}`, {
-        //   method: "PATCH",
-        //   headers: {
-        //     'Content-Type': 'application/json',
-        //     'Accept': 'application/json'
-        //   },
-        //   body: JSON.stringify({})
-        // })
-        //   .then(r => r.json())
-        //   .catch(err => console.log(err))
-        // setRender((status) => !status)
-        console.log('edit')
-        setEdit(false)
-        handleClose()
-      }
-      else {
         fetch(`/reviews/${review_id}`, {
           method: "DELETE",
           headers: {
@@ -124,7 +107,7 @@ const RecipePage = () => {
           .catch(err => console.log(err))
         setRender((status) => !status)
       }
-    }
+
 
   const reviewDisplay = reviews.map((review) => (
     <Card key={review.id} sx={{ mt: 2, mb: 2, display: 'flex', alignItems: 'center', padding: 2, width: '100%', justifyContent: 'space-between' }}>
@@ -134,7 +117,7 @@ const RecipePage = () => {
           <Typography>{review.comment}</Typography>
         </div>
         <div className="edit-review">
-          {review.user_id === auth.user.id ? (
+          {auth.user && review.user_id === auth.user.id ? (
               <>
               <Button onClick={(e) => {
                 setOpen(true)
