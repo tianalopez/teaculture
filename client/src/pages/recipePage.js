@@ -17,8 +17,8 @@ const RecipePage = () => {
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
   const [render, setRender] = useState(false)
+  const [editingReview, setEditingReview] = useState({})
 
-  console.log(reviews)
   useEffect(() => {
     Promise.all([
       fetch(`/recipes/${id}`).then((r) => r.json()),
@@ -38,30 +38,43 @@ const RecipePage = () => {
 
   const formik = useFormik({
     initialValues: {
-      rating: 0,
-      comment: "",
+      rating: edit ? editingReview.rating: 0,
+      comment: edit ? editingReview.comment: "",
     },
     validationSchema: reviewSchema,
     onSubmit: (values, {resetForm}) => {
-      const correctValues={
+      let correctValues={
         rating: values.rating,
         comment: values.comment,
         recipe_id: id,
         user_id: auth.user.id
       }
-      fetch(`/reviews/journal${id}`, {
-        method: "POST",
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify(correctValues)
-      })
+      let fetchPromise = edit
+        ? fetch(`/reviews/${editingReview.id}`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify(correctValues),
+        })
+        : fetch(`/reviews/journal${id}`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify(correctValues),
+        });
+
+      fetchPromise
       .then(r => r.json())
+      .then((obj) => console.log(obj))
       .catch(err => console.log(err))
 
       resetForm()
       setOpen(false)
+      setEdit(false)
       setRender((status) => !status)
 
       //run a POST
@@ -85,7 +98,6 @@ const RecipePage = () => {
   //EDIT/DELETE REQUEST TO REVIEW
     const handleEdit = (e, review_id) => {
       if (e.target.name === 'editButton') {
-        setEdit(true)
         // fetch(`/reviews/${review_id}`, {
         //   method: "PATCH",
         //   headers: {
@@ -99,6 +111,7 @@ const RecipePage = () => {
         // setRender((status) => !status)
         console.log('edit')
         setEdit(false)
+        handleClose()
       }
       else {
         fetch(`/reviews/${review_id}`, {
@@ -121,15 +134,18 @@ const RecipePage = () => {
           <Typography>{review.comment}</Typography>
         </div>
         <div className="edit-review">
-        {review.user_id === auth.user.id ? (
-            <>
-            <Button name ='editButton' onClick={(e) => handleEdit(e, review.id)}>Edit Review</Button>
-            <Button name='deleteButton' onClick={(e) => handleEdit(e, review.id)}>Delete Review</Button>
-            </>
-        ) : (
-          null
-        )}
-
+          {review.user_id === auth.user.id ? (
+              <>
+              <Button onClick={(e) => {
+                setOpen(true)
+                setEdit(true)
+                setEditingReview(review)
+                }}>Edit Review</Button>
+              <Button name='deleteButton' onClick={(e) => handleEdit(e, review.id)}>Delete Review</Button>
+              </>
+          ) : (
+            null
+          )}
         </div>
       </CardContent>
     </Card>
@@ -179,20 +195,45 @@ const RecipePage = () => {
           {auth.user ?
           <Button onClick={handleOpen} variant='contained'>Add a Review</Button>
           : null}
-          <ReviewModal
-            open={open}
-            handleClose={handleClose}
-            rating={formik.values.rating}
-            touchedRating={formik.touched.rating}
-            errorRating={formik.errors.rating}
-            comment={formik.values.comment}
-            touchedComment={formik.touched.comment}
-            errorComment={formik.errors.comment}
-            handleBlur={formik.handleBlur}
-            handleChangeRating={formik.setFieldValue}
-            handleChangeComment={formik.handleChange}
-            handleSubmit={formik.handleSubmit}
-          />
+          {edit ? (
+            <ReviewModal
+              open={open}
+              handleClose={handleClose}
+              rating={formik.values.rating}
+              touchedRating={formik.touched.rating}
+              errorRating={formik.errors.rating}
+              comment={formik.values.comment}
+              touchedComment={formik.touched.comment}
+              errorComment={formik.errors.comment}
+              handleBlur={formik.handleBlur}
+              handleChangeRating={formik.setFieldValue}
+              handleChangeComment={formik.handleChange}
+              handleSubmit={formik.handleSubmit}
+              edit={edit}
+              handleEdit={handleEdit}
+              editingReview={editingReview}
+              formik={formik}
+            />
+          ) : (
+            <ReviewModal
+              open={open}
+              handleClose={handleClose}
+              rating={formik.values.rating}
+              touchedRating={formik.touched.rating}
+              errorRating={formik.errors.rating}
+              comment={formik.values.comment}
+              touchedComment={formik.touched.comment}
+              errorComment={formik.errors.comment}
+              handleBlur={formik.handleBlur}
+              handleChangeRating={formik.setFieldValue}
+              handleChangeComment={formik.handleChange}
+              handleSubmit={formik.handleSubmit}
+              edit={edit}
+              handleEdit={handleEdit}
+              editingReview={editingReview}
+              formik={formik}
+            />
+          )}
             {reviewDisplay}
         </Grid>
       </Grid>
