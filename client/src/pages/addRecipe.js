@@ -32,6 +32,7 @@ const AddRecipe = () => {
       resetForm();
     },
   });
+  console.log(formik.values)
   return (
     <Box sx={{ flexGrow: 1, ml: 4, mr: 4, mt: 8, mb:8 }}>
         <Grid sx={{mb: 5}} item xs={12}>

@@ -13,6 +13,8 @@ const RecipeForm = ({formik}) => {
   const auth = useAuth()
   const [chipStates, setChipStates] = useState(Array(5).fill(false))
   const [selectedImg, setSelectedImg] = useState(null)
+  const initialIngredients = Array(10).fill("").map((_, index) => ({ index, value: "" }));
+  const [ingredients, setIngredients] = useState(initialIngredients)
   const randomImage = [
     {img: "/images/img1.jpg"},
     {img: "/images/img2.jpg"},
@@ -33,6 +35,15 @@ const RecipeForm = ({formik}) => {
     });
   };
 
+  const handleIngredientChange = (e, index) => {
+    setIngredients(prevIngredients => {
+      // Create a copy of the existing array
+      const newIngredients = [...prevIngredients];
+      // Update the value of the specific ingredient
+      newIngredients[index] = { ...newIngredients[index], value: e.target.value };
+      return newIngredients;
+    });
+  }
 
   return (
     <form onSubmit={formik.handleSubmit}>
@@ -42,6 +53,9 @@ const RecipeForm = ({formik}) => {
             label='Add Title'
             defaultValue='Add Title'
             helperText='Cannot leave title blank'
+            value={formik.values.title}
+            name='title'
+            onChange={formik.handleChange}
           />
           <Button >
             Add Recipe
@@ -54,12 +68,16 @@ const RecipeForm = ({formik}) => {
             </Typography>
             <List sx={{ ml: 1, mr: 1 }} className='ingredients-list'>
               {[...Array(10).keys()].map((index) => (
-                <ListItem key={index} sx={{ pl: 0, pr: 0 }}>
+                <ListItem
+                  key={index} sx={{ pl: 0, pr: 0 }}>
                   <ListItemIcon >
                     <CoffeeTwoToneIcon />
                   </ListItemIcon>
                   <ListItemText>
                     <TextField
+                      onChange={(e) => handleIngredientChange(e, index)}
+                      value={ingredients[index].value}
+                      name={`ingredients[${index}]`}
                       fullWidth
                       placeholder="Enter ingredient"
                       variant='standard'
