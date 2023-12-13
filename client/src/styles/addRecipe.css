@@ -1,11 +1,14 @@
 
 .recipe-container {
   background-color: #F4CBB5;
-  box-shadow: 10px
-  10px 10px #EDF8EE;
+  box-shadow: 10px 10px 10px #F77159;
 }
 
 .ingredients-list {
   max-height: 50vh;
   overflow-y: auto;
+}
+
+.filledChip {
+  background-color: red;
 }
