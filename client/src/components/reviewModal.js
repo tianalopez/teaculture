@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Modal, TextField, Button,  Rating,  } from '@mui/material';
 
 const ReviewModal = ({
@@ -14,7 +14,20 @@ const ReviewModal = ({
   handleChangeRating,
   handleChangeComment,
   handleSubmit,
+  edit,
+  handleEdit,
+  editingReview,
+  formik,
 }) => {
+
+  useEffect(() => {
+    // Set initial values when editingReview changes
+    formik.setValues({
+      rating: editingReview.rating,
+      comment: editingReview.comment,
+    });
+  }, [editingReview, edit]);
+
   return (
     <Modal
       id='modal'
@@ -22,9 +35,15 @@ const ReviewModal = ({
       onClose={handleClose}
     >
       <div id='review-modal'>
-        <h1 className='modal-title'>
-          Add a Review
-        </h1>
+        {edit ? (
+          <h1 className='modal-title'>
+            Update Review
+          </h1>
+        ): (
+          <h1 className='modal-title'>
+            Add a Review
+          </h1>
+        )}
         <form className='modal-form' onSubmit={handleSubmit}>
           <Rating
             name='rating'
@@ -40,7 +59,12 @@ const ReviewModal = ({
             value={comment}
             sx={{ mt: 2 }} multiline rows={3} placeholder="Add your review here" />
           {errorComment && touchedComment}
-          <Button type='submit' onClick={handleSubmit} sx={{ mt: 2 }} variant='contained'>Post Review</Button>
+          {edit ? (
+            <Button name='editButton' type='submit' onClick={handleEdit} sx={{ mt: 2 }} variant='contained'>Update Review</Button>
+          ) : (
+            <Button type='submit' onClick={handleSubmit} sx={{ mt: 2 }} variant='contained'>Post Review</Button>
+
+          )}
         </form>
       </div>
     </Modal>
