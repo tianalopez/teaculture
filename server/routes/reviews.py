@@ -8,11 +8,12 @@ review_schema = ReviewSchema(session=db.session)
 
 
 class Reviews(Resource):
-    def get(self):
-        reviews = reviews_schema.dump(Review.query)
-        return reviews, 200
+    def get(self, recipe_id):
+        reviews = Review.query.filter_by(recipe_id=recipe_id).all()
+        result = reviews_schema.dump(reviews)
+        return result, 200
 
-    def post(self):
+    def post(self, recipe_id):
         try:
             data = request.json
             review_schema.validate(data)

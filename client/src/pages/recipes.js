@@ -15,7 +15,7 @@ const Recipes = () => {
     favorited: false,
   }
   const [searchObj, setSearchObj] = useState(defaultSearchObj)
-  console.log(auth.user)
+
   //! tons of filtering
   const handleSearchChange = (name, value) => {
     setSearchObj({...searchObj, [name]: value})

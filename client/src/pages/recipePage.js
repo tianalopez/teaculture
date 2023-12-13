@@ -1,23 +1,35 @@
 import { useParams } from "react-router-dom";
 import React, { useEffect, useState } from 'react';
-import { useFormik } from 'formik';
+import { useFormik} from 'formik';
 import * as yup from 'yup';
-import { Box, Modal, TextareaAutosize, Grid, CircularProgress, TextField, Button, Typography, Rating, Paper, } from '@mui/material';
+import { Box,Modal, Card, Grid,CardContent, CircularProgress, TextField, Button, Typography, Rating, Paper, } from '@mui/material';
 import "../styles/recipePage.css";
+import { useAuth } from "../auth/authProvider";
+import ReviewModal from "../components/reviewModal";
 
 const RecipePage = () => {
+  const auth = useAuth()
   const {id} = useParams()
+  const [edit, setEdit] = useState(false)
   const [recipe, setRecipe] = useState()
+  const [reviews, setReviews] = useState()
   const [open, setOpen] = useState(false)
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
+  const [render, setRender] = useState(false)
 
+  console.log(reviews)
   useEffect(() => {
-    fetch(`/recipes/${id}`)
-    .then(r => r.json())
-    .then(setRecipe)
-    .catch(err => console.log(err))
-  }, [id])
+    Promise.all([
+      fetch(`/recipes/${id}`).then((r) => r.json()),
+      fetch(`/reviews/journal${id}`).then((r) => r.json()),
+    ])
+      .then(([recipeData, reviewsData]) => {
+        setRecipe(recipeData);
+        setReviews(reviewsData);
+      })
+      .catch((err) => console.log(err));
+  },[id, render])
 
   const reviewSchema = yup.object().shape({
     rating: yup.number().required('Please enter a rating'),
@@ -30,20 +42,37 @@ const RecipePage = () => {
       comment: "",
     },
     validationSchema: reviewSchema,
-    onSubmit: (values) => {
+    onSubmit: (values, {resetForm}) => {
+      const correctValues={
+        rating: values.rating,
+        comment: values.comment,
+        recipe_id: id,
+        user_id: auth.user.id
+      }
+      fetch(`/reviews/journal${id}`, {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(correctValues)
+      })
+      .then(r => r.json())
+      .catch(err => console.log(err))
+
+      resetForm()
+      setOpen(false)
+      setRender((status) => !status)
+
       //run a POST
-      console.log('submitted', values)
+      console.log('submitted', correctValues)
     }
   })
 
-  useEffect(() => {
-    console.log('Formik State:', formik.values);
-  }, [formik.values]);
-
-  if (!recipe) {
+  if (!recipe || !reviews) {
     return <CircularProgress />
   }
-  //after you have recipe, destructure
+  //after you have recipe and reviews, destructure
   const {title, creator, average_rating, ingredients, image, instructions, tags, medicinal} = recipe
   const ingredientArray = ingredients.split(",").map((ingredient) => (
     <li>{ingredient}</li>
@@ -53,8 +82,58 @@ const RecipePage = () => {
     <li key={index}>{instruction.trim()}</li>
   ));
 
+  //EDIT/DELETE REQUEST TO REVIEW
+    const handleEdit = (e, review_id) => {
+      if (e.target.name === 'editButton') {
+        setEdit(true)
+        // fetch(`/reviews/${review_id}`, {
+        //   method: "PATCH",
+        //   headers: {
+        //     'Content-Type': 'application/json',
+        //     'Accept': 'application/json'
+        //   },
+        //   body: JSON.stringify({})
+        // })
+        //   .then(r => r.json())
+        //   .catch(err => console.log(err))
+        // setRender((status) => !status)
+        console.log('edit')
+        setEdit(false)
+      }
+      else {
+        fetch(`/reviews/${review_id}`, {
+          method: "DELETE",
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(r => r.json())
+          .catch(err => console.log(err))
+        setRender((status) => !status)
+      }
+    }
 
+  const reviewDisplay = reviews.map((review) => (
+    <Card key={review.id} sx={{ mt: 2, mb: 2, display: 'flex', alignItems: 'center', padding: 2, width: '100%', justifyContent: 'space-between' }}>
+      <CardContent style={{ padding: '5px', display: 'flex', flex: 1}}>
+        <div className=".edit-review">
+          <Rating value={review.rating} readOnly />
+          <Typography>{review.comment}</Typography>
+        </div>
+        <div className="edit-review">
+        {review.user_id === auth.user.id ? (
+            <>
+            <Button name ='editButton' onClick={(e) => handleEdit(e, review.id)}>Edit Review</Button>
+            <Button name='deleteButton' onClick={(e) => handleEdit(e, review.id)}>Delete Review</Button>
+            </>
+        ) : (
+          null
+        )}
 
+        </div>
+      </CardContent>
+    </Card>
+  ))
 
 
   return (
@@ -92,45 +171,29 @@ const RecipePage = () => {
           </Paper>
         </Grid>
         <Grid item xs={12}>
-          <Typography>
+          <Typography variant='h6'>
             Comments
           </Typography>
         </Grid>
         <Grid item xs={12} justifyContent="flex-end">
+          {auth.user ?
           <Button onClick={handleOpen} variant='contained'>Add a Review</Button>
-          <Modal
-            id='modal'
+          : null}
+          <ReviewModal
             open={open}
-            onClose={handleClose}
-          >
-            <div id='review-modal'>
-                <h1 className='modal-title'>
-                  Add a Review
-                </h1>
-              <form className='modal-form' onSubmit={formik.handleSubmit}>
-                <Rating
-                  name='rating'
-                  onBlur={formik.handleBlur}
-                  onChange={(event, newValue) => formik.setFieldValue('rating', newValue)}
-                  value={formik.values.rating}
-                  sx={{ mt: 2, alignSelf: 'flex-start' }}/>
-                {formik.errors.rating && formik.touched.rating}
-                <TextField
-                  name='comment'
-                  onBlur={formik.handleBlur}
-                  onChange={(e) => formik.handleChange(e)}
-                  value={formik.values.comment}
-                  sx={{ mt: 2 }} multiline rows={3} placeholder="Add your review here"/>
-                {formik.errors.comment && formik.touched.comment}
-                <Button type='button' onClick={formik.handleSubmit} sx={{mt: 2}} variant='contained'>Post Review</Button>
-              </form>
-            </div>
-          </Modal>
-          <Paper sx={{ display: 'flex', alignItems: 'center', padding: 2, width: '100%', justifyContent: 'space-between' }}>
-            <TextareaAutosize style={{ flex: 1, mr: 2, width: '100%' }}  minRows={3} placeholder='Add a new comment'/>
-            {/* <TextField sx={{m:2}}multiline rows={3} placeholder="Add a new comment"/> */}
-            <Button sx={{ml:2}} variant='contained'>Add Comment</Button>
-          </Paper>
+            handleClose={handleClose}
+            rating={formik.values.rating}
+            touchedRating={formik.touched.rating}
+            errorRating={formik.errors.rating}
+            comment={formik.values.comment}
+            touchedComment={formik.touched.comment}
+            errorComment={formik.errors.comment}
+            handleBlur={formik.handleBlur}
+            handleChangeRating={formik.setFieldValue}
+            handleChangeComment={formik.handleChange}
+            handleSubmit={formik.handleSubmit}
+          />
+            {reviewDisplay}
         </Grid>
       </Grid>
     </Box>
