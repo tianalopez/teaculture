@@ -43,25 +43,38 @@ const RecipePage = () => {
     },
     validationSchema: reviewSchema,
     onSubmit: (values, {resetForm}) => {
-      const correctValues={
+      let correctValues={
         rating: values.rating,
         comment: values.comment,
         recipe_id: id,
         user_id: auth.user.id
       }
-      fetch(`/reviews/journal${id}`, {
-        method: "POST",
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify(correctValues)
-      })
+      let fetchPromise = edit
+        ? fetch(`/reviews/${editingReview.id}`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify(correctValues),
+        })
+        : fetch(`/reviews/journal${id}`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify(correctValues),
+        });
+
+      fetchPromise
       .then(r => r.json())
+      .then((obj) => console.log(obj))
       .catch(err => console.log(err))
 
       resetForm()
       setOpen(false)
+      setEdit(false)
       setRender((status) => !status)
 
       //run a POST

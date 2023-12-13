@@ -15,7 +15,6 @@ const ReviewModal = ({
   handleChangeComment,
   handleSubmit,
   edit,
-  handleEdit,
   editingReview,
   formik,
 }) => {
@@ -60,7 +59,7 @@ const ReviewModal = ({
             sx={{ mt: 2 }} multiline rows={3} placeholder="Add your review here" />
           {errorComment && touchedComment}
           {edit ? (
-            <Button name='editButton' type='submit' onClick={handleEdit} sx={{ mt: 2 }} variant='contained'>Update Review</Button>
+            <Button name='editButton' type='submit' onClick={handleSubmit} sx={{ mt: 2 }} variant='contained'>Update Review</Button>
           ) : (
             <Button type='submit' onClick={handleSubmit} sx={{ mt: 2 }} variant='contained'>Post Review</Button>
 
