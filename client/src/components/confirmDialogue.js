@@ -1,27 +1,26 @@
 import React from 'react'
 import { DialogContentText, DialogContent, DialogTitle, DialogActions, Dialog, Button} from '@mui/material';
 
-const ConfirmDialogue = () => {
+const ConfirmDialogue = ({open, handleOpen, handleClose, recipe_id}) => {
+
+  const handleDelete = () => {
+    handleClose()
+  }
+
   return (
       <Dialog
         open={open}
         onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
+        aria-labelledby="confirm-deletion"
+        aria-describedby="confirm-deletion"
       >
-        <DialogTitle id="alert-dialog-title">
-          {"Use Google's location service?"}
+        <DialogTitle >
+          {"Are you sure you want to delete this recipe?"}
         </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Let Google help apps determine location. This means sending anonymous
-            location data to Google, even when no apps are running.
-          </DialogContentText>
-        </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Disagree</Button>
-          <Button onClick={handleClose} autoFocus>
-            Agree
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleDelete} autoFocus>
+            Confirm Deletion
           </Button>
         </DialogActions>
       </Dialog>

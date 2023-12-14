@@ -6,6 +6,7 @@ import { Box, Card, Grid,CardContent, CircularProgress, Button, Typography, Rati
 import "../styles/recipePage.css";
 import { useAuth } from "../auth/authProvider";
 import ReviewModal from "../components/reviewModal";
+import ConfirmDialogue from "../components/confirmDialogue";
 
 const RecipePage = () => {
   const auth = useAuth()
@@ -13,6 +14,7 @@ const RecipePage = () => {
   const [edit, setEdit] = useState(false)
   const [recipe, setRecipe] = useState()
   const [reviews, setReviews] = useState()
+  const [dialogue, setDialogueOpen] = useState(false)
   const [open, setOpen] = useState(false)
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
@@ -134,6 +136,12 @@ const RecipePage = () => {
     </Card>
   ))
 
+  const openDialogue = () => {
+    setDialogueOpen(true)
+  }
+  const closeDialogue = () => {
+    setDialogueOpen(false)
+  }
 
   return (
     <Box sx={{ flexGrow: 1, ml: 4, mr: 4, mt: 8 }}>
@@ -178,6 +186,10 @@ const RecipePage = () => {
           {auth.user ?
           <Button onClick={handleOpen} variant='contained'>Add a Review</Button>
           : null}
+          {auth.user && auth.user.id === recipe.creator_id ?
+          <Button sx={{ml:2}} onClick={openDialogue} variant='contained'>Delete Review</Button>
+          : null}
+          {dialogue ? <ConfirmDialogue open={dialogue} handleOpen={openDialogue} handleClose={closeDialogue} recipe_id={recipe.id} />: null}
           {edit ? (
             <ReviewModal
               open={open}
