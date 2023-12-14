@@ -14,6 +14,7 @@ class RecipeSchema(ma.SQLAlchemySchema):
             "tags",
             "ingredients",
             "medicinal",
+            "creator_id",
             "creator",
             "image",
             "created_at",

@@ -3,7 +3,7 @@ import { AppBar, Toolbar,Icon, IconButton, Typography, Stack, Button } from '@mu
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useAuth } from "../auth/authProvider";
 
-const Navbar = ({ user, updateUser, handleNewAlert }) => {
+const Navbar = () => {
   const auth = useAuth()
   const handleLogout = () => {
     auth.onLogout()
@@ -11,7 +11,7 @@ const Navbar = ({ user, updateUser, handleNewAlert }) => {
   };
 
   return (
-    <AppBar sx={{ backgroundColor: '#ACCFC9', color: '#FA9E7B'}}position ='static'>
+    <AppBar sx={{ backgroundColor: '#EDF8EE', color: '#6BA6A4'}}position ='static'>
       <Toolbar>
         <IconButton component={Link} to='/' size='medium' edge='start' color='inherit' aria-label='logo'>
           <img alt="icon" src="/images/tea-culture-logo.png" style={{ width: '80px' }} />

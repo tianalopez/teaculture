@@ -1,18 +1,21 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from 'react';
 import { useFormik} from 'formik';
 import * as yup from 'yup';
-import { Box,Modal, Card, Grid,CardContent, CircularProgress, TextField, Button, Typography, Rating, Paper, } from '@mui/material';
+import { Box, Card, Grid,CardContent, CircularProgress, Button, Typography, Rating, Paper, } from '@mui/material';
 import "../styles/recipePage.css";
 import { useAuth } from "../auth/authProvider";
 import ReviewModal from "../components/reviewModal";
+import ConfirmDialogue from "../components/confirmDialogue";
 
 const RecipePage = () => {
   const auth = useAuth()
+  const navigate = useNavigate()
   const {id} = useParams()
   const [edit, setEdit] = useState(false)
   const [recipe, setRecipe] = useState()
   const [reviews, setReviews] = useState()
+  const [dialogue, setDialogueOpen] = useState(false)
   const [open, setOpen] = useState(false)
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
@@ -54,7 +57,7 @@ const RecipePage = () => {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
-            Accept: "application/json",
+            "Accept": "application/json",
           },
           body: JSON.stringify(correctValues),
         })
@@ -62,7 +65,7 @@ const RecipePage = () => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Accept: "application/json",
+            "Accept": "application/json",
           },
           body: JSON.stringify(correctValues),
         });
@@ -134,6 +137,16 @@ const RecipePage = () => {
     </Card>
   ))
 
+  const openDialogue = () => {
+    setDialogueOpen(true)
+  }
+  const closeDialogue = () => {
+    setDialogueOpen(false)
+  }
+  const handleEditRecipe = () => {
+    const recipeObj = recipe
+    navigate(`/users/${auth.user.id}/adddrink`, {state: {recipeObj}})
+  }
 
   return (
     <Box sx={{ flexGrow: 1, ml: 4, mr: 4, mt: 8 }}>
@@ -175,9 +188,16 @@ const RecipePage = () => {
           </Typography>
         </Grid>
         <Grid item xs={12} justifyContent="flex-end">
-          {auth.user ?
+          {auth.user && auth.user.id !== recipe.creator_id ?
           <Button onClick={handleOpen} variant='contained'>Add a Review</Button>
           : null}
+          {auth.user && auth.user.id === recipe.creator_id ?
+          <Button sx={{ml:2}} onClick={openDialogue} variant='contained'>Delete Recipe</Button>
+          : null}
+          {auth.user && auth.user.id === recipe.creator_id ?
+          <Button sx={{ml:2}} onClick={handleEditRecipe} variant='contained'>Edit Recipe</Button>
+          : null}
+          {dialogue ? <ConfirmDialogue open={dialogue} handleOpen={openDialogue} handleClose={closeDialogue} recipe_id={recipe.id} />: null}
           {edit ? (
             <ReviewModal
               open={open}
