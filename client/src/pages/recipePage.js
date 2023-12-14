@@ -56,7 +56,7 @@ const RecipePage = () => {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
-            Accept: "application/json",
+            "Accept": "application/json",
           },
           body: JSON.stringify(correctValues),
         })
@@ -64,7 +64,7 @@ const RecipePage = () => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Accept: "application/json",
+            "Accept": "application/json",
           },
           body: JSON.stringify(correctValues),
         });

@@ -1,10 +1,19 @@
-import React from 'react'
-import { DialogContentText, DialogContent, DialogTitle, DialogActions, Dialog, Button} from '@mui/material';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { DialogTitle, DialogActions, Dialog, Button} from '@mui/material';
 
 const ConfirmDialogue = ({open, handleOpen, handleClose, recipe_id}) => {
-
+  const navigate = useNavigate()
   const handleDelete = () => {
-    handleClose()
+    fetch(`/recipes/${recipe_id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(r => r.json())
+    .catch(err => console.log(err))
+    navigate('/drinklab')
   }
 
   return (
