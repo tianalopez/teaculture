@@ -10,7 +10,6 @@ const DrinkFilter = ({recipes, searchObj, handleSearchChange, setSelectedTags, s
   const onChange = (e) => {
     const name = e.target.name
     const value = (name === 'medicinal' || name === 'favorited' ? e.target.checked: e.target.value)
-    console.log(name, value)
     handleSearchChange(name, value)
   }
 

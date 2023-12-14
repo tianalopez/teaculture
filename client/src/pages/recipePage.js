@@ -90,8 +90,8 @@ const RecipePage = () => {
   }
   //after you have recipe and reviews, destructure
   const {title, creator, average_rating, ingredients, image, instructions, tags, medicinal} = recipe
-  const ingredientArray = ingredients.split(",").map((ingredient) => (
-    <li>{ingredient}</li>
+  const ingredientArray = ingredients.split(",").map((ingredient, index) => (
+    <li key={index}>  {ingredient}</li>
   ))
   //!MUST PUT USER INSTRUCTIONS FOR EDITING (USE SNACKBAR?POPUP)
   const instructionsArray = instructions.split(/\.\s+/).filter(instruction => instruction.trim() !== "").map((instruction, index) => (

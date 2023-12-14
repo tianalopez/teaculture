@@ -1,8 +1,15 @@
 import React from 'react'
-
+import { Box, Grid, Button, Typography, Rating, Paper, } from '@mui/material';
 const CommunityPage = () => {
   return (
-    <div>CommunityPage</div>
+    <Box sx={{ flexGrow: 1, ml: 4, mr: 4, mt: 8 }}>
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <Typography variant='h3'>SipHub</Typography>
+          <Typography variant='h6'>Create Connections with other tea and coffee lovers!</Typography>
+        </Grid>
+      </Grid>
+    </Box>
   )
 }
 
