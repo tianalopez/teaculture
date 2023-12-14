@@ -65,24 +65,22 @@ const RecipeForm = ({formik}) => {
 
   //set the formik form with the gathered values as they change
   useEffect(() => {
-    const ingredientString = ingredients.map((item) => item.value).filter(Boolean).join(",")
-    const instructionString = instructions.map((item) => item.value).filter(Boolean).join(",")
+    const ingredientString = ingredients.map((item) => item.value.trim()).filter(Boolean).map((ingredient) => ingredient.replace(/[.,]$/, '')).join(",")
+    const instructionString = instructions.map((item) => item.value.trim()).filter(Boolean).map((ingredient) => ingredient.replace(/[.,]$/, '')).join(".")
     const tagString = chipStates.filter((chipObj) => chipObj.value === true).map(chipObj => chipObj.name).join(",")
     //grab the image from selectedImg
 
   },[ingredients, instructions, chipStates,formik])
 
-  const handleSubmit = () => {
-    const ingredientString = ingredients.map((item) => item.value).filter(Boolean).join(",")
-    const instructionString = instructions.map((item) => item.value).filter(Boolean).join(",")
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    const ingredientString = ingredients.map((item) => item.value.trim()).filter(Boolean).map((ingredient) => ingredient.replace(/[.,]$/, '')).join(",")
+    const instructionString = instructions.map((item) => item.value.trim()).filter(Boolean).map((ingredient) => ingredient.replace(/[.,]$/, '')).join(".")
     const tagString = chipStates.filter((chipObj) => chipObj.value === true).map(chipObj => chipObj.name).join(",")
-
-    formik.setFieldValue({
-      ingredients: ingredientString,
-      instructions: instructionString,
-      tags: tagString,
-      image: selectedImg
-    })
+    formik.setFieldValue('ingredients', ingredientString);
+    formik.setFieldValue('instructions', instructionString);
+    formik.setFieldValue('tags', tagString);
+    formik.setFieldValue('image', selectedImg);
 
     formik.handleSubmit()
   }
@@ -92,6 +90,7 @@ const RecipeForm = ({formik}) => {
       <Grid className='recipe-container' container spacing={2}>
         <Grid item xs={12}>
           <TextField
+            required
             label='Add Title'
             defaultValue='Add Title'
             helperText='Cannot leave title blank'
@@ -99,7 +98,7 @@ const RecipeForm = ({formik}) => {
             name='title'
             onChange={formik.handleChange}
           />
-          <Button >
+          <Button type='submit'>
             Add Recipe
           </Button>
         </Grid>

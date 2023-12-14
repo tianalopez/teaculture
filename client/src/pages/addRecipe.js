@@ -23,7 +23,7 @@ const AddRecipe = () => {
       instructions: '',
       tags: '',
       ingredients: '',
-      medicinal: null,
+      medicinal: false,
       image: '',
     },
     validationSchema: recipeSchema,
