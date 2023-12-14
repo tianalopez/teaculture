@@ -1,7 +1,7 @@
 
 import React, { createContext, useContext, useState, useCallback } from 'react';
 
-const UIContext = createContext();
+const UIContext = createContext(null);
 
 export const UIProvider = ({ children }) => {
   const [alert, setAlert] = useState(null);

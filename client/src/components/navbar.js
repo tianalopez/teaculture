@@ -3,7 +3,7 @@ import { AppBar, Toolbar,Icon, IconButton, Typography, Stack, Button } from '@mu
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useAuth } from "../auth/authProvider";
 
-const Navbar = ({ user, updateUser, handleNewAlert }) => {
+const Navbar = () => {
   const auth = useAuth()
   const handleLogout = () => {
     auth.onLogout()

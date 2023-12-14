@@ -1,6 +1,8 @@
 import { Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './auth/authProvider';
+import { UIProvider } from './components/UIContext';
 import {useEffect } from "react";
+import AlertBar from './components/alertbar';
 
 
 //page imports
@@ -23,19 +25,22 @@ function App() {
   return (
   <>
   <AuthProvider>
-    <Navbar />
-    <Routes>
-      <Route path="/" element={<Welcome />}/>
-      <Route path="login" element={<Login />} />
-      <Route path="drinklab" element={<Recipes />} />
-      <Route path="drinklab/:id" element={<RecipePage />} />
-      <Route path="users/:id/dashboard" element={<RequireAuth><Dashboard /></RequireAuth> } />
-      <Route path="users/:id/profile" element={<RequireAuth><Profile /></RequireAuth>} />
-      <Route path="users/:id/adddrink" element={<RequireAuth><AddRecipe /></RequireAuth>} />
-      <Route path="communities" element={<RequireAuth><Communities /></RequireAuth>} />
-      <Route path="communities/:id" element={<RequireAuth><CommunityPage /></RequireAuth>} />
-      <Route path="*" element={<Error404 />} />
-    </Routes>
+    <UIProvider>
+      <AlertBar />
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Welcome />}/>
+        <Route path="login" element={<Login />} />
+        <Route path="drinklab" element={<Recipes />} />
+        <Route path="drinklab/:id" element={<RecipePage />} />
+        <Route path="users/:id/dashboard" element={<RequireAuth><Dashboard /></RequireAuth> } />
+        <Route path="users/:id/profile" element={<RequireAuth><Profile /></RequireAuth>} />
+        <Route path="users/:id/adddrink" element={<RequireAuth><AddRecipe /></RequireAuth>} />
+        <Route path="communities" element={<RequireAuth><Communities /></RequireAuth>} />
+        <Route path="communities/:id" element={<RequireAuth><CommunityPage /></RequireAuth>} />
+        <Route path="*" element={<Error404 />} />
+      </Routes>
+    </UIProvider>
   </AuthProvider>
 
   </>

@@ -79,7 +79,7 @@ const RecipeCard = ({recipe}) => {
       <Typography variant='body2' color='text.secondary'>
         Creator: {recipe.creator['username']}
       </Typography>
-      <Rating name='read-only' value={recipe.average_rating} readOnly />
+      <Rating name='read-only' value={recipe.average_rating ? recipe.average_rating: null} readOnly />
       </CardContent>
       <CardActions>
         {!auth.user ?

@@ -7,9 +7,11 @@ import DoneIcon from '@mui/icons-material/Done'
 import { MedicinalSwitch } from '../styles/SwitchStyles';
 import {useAuth} from "../auth/authProvider"
 import _ from 'lodash'
+import { useUI } from './UIContext';
 
 const RecipeForm = ({formik}) => {
   const auth = useAuth()
+  const { handleNewAlert, handleAlertType } = useUI()
   const tags = ['caffeine', 'creamy', 'spiced', 'citrusy', 'herbal']
   const initialChips = Array(5).fill("").map((_,index) => ({name:tags[index], value:false}))
   const [chipStates, setChipStates] = useState(initialChips)
@@ -28,7 +30,7 @@ const RecipeForm = ({formik}) => {
     {img: "/images/img7.jpg"},
     {img: "/images/img8.jpg"},
   ]
-
+  console.log(auth.user.id)
   //grab the values of any ingredient or instruction input
   const handleChange = (e, index) => {
       if (e.target.name === 'ingredients') {
@@ -62,18 +64,7 @@ const RecipeForm = ({formik}) => {
 
   }
 
-
-  //set the formik form with the gathered values as they change
   useEffect(() => {
-    const ingredientString = ingredients.map((item) => item.value.trim()).filter(Boolean).map((ingredient) => ingredient.replace(/[.,]$/, '')).join(",")
-    const instructionString = instructions.map((item) => item.value.trim()).filter(Boolean).map((ingredient) => ingredient.replace(/[.,]$/, '')).join(".")
-    const tagString = chipStates.filter((chipObj) => chipObj.value === true).map(chipObj => chipObj.name).join(",")
-    //grab the image from selectedImg
-
-  },[ingredients, instructions, chipStates,formik])
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
     const ingredientString = ingredients.map((item) => item.value.trim()).filter(Boolean).map((ingredient) => ingredient.replace(/[.,]$/, '')).join(",")
     const instructionString = instructions.map((item) => item.value.trim()).filter(Boolean).map((ingredient) => ingredient.replace(/[.,]$/, '')).join(".")
     const tagString = chipStates.filter((chipObj) => chipObj.value === true).map(chipObj => chipObj.name).join(",")
@@ -81,12 +72,40 @@ const RecipeForm = ({formik}) => {
     formik.setFieldValue('instructions', instructionString);
     formik.setFieldValue('tags', tagString);
     formik.setFieldValue('image', selectedImg);
+    formik.setFieldValue('creator_id', auth.user.id)
+  },[chipStates, ingredients,instructions,selectedImg])
 
-    formik.handleSubmit()
-  }
+  //set the formik form with the gathered values as they change
+
+  // const handleSubmit = (e) => {
+  //   e.preventDefault()
+
+  //     const ingredientString = ingredients.map((item) => item.value.trim()).filter(Boolean).map((ingredient) => ingredient.replace(/[.,]$/, '')).join(",")
+  //     const instructionString = instructions.map((item) => item.value.trim()).filter(Boolean).map((ingredient) => ingredient.replace(/[.,]$/, '')).join(".")
+  //     const tagString = chipStates.filter((chipObj) => chipObj.value === true).map(chipObj => chipObj.name).join(",")
+  //     formik.setFieldValue('ingredients', ingredientString);
+  //     formik.setFieldValue('instructions', instructionString);
+  //     formik.setFieldValue('tags', tagString);
+  //     formik.setFieldValue('image', selectedImg);
+  //     formik.setFieldValue('creator_id', auth.user.id)
+
+  //     formik.submitForm()
+  //     // formik.handleSubmit()
+  //     // setChipStates(initialChips)
+  //     // setIngredients(initialIngredients)
+  //     // setInstructions(initialInstructions)
+  //     // setSelectedImg(null)
+  // }
+  // useEffect(() => {
+  //   if (formik.errors.ingredients && formik.touched.ingredients) {
+  //     handleNewAlert('Please fill in ');
+  //     handleAlertType('error')
+  //   }
+
+  // }, [formik.errors.ingredients, formik.touched.ingredients, handleNewAlert]);
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={formik.handleSubmit}>
       <Grid className='recipe-container' container spacing={2}>
         <Grid item xs={12}>
           <TextField
@@ -98,6 +117,7 @@ const RecipeForm = ({formik}) => {
             name='title'
             onChange={formik.handleChange}
           />
+          {/* {formik.errors.title && formik.touched.title ? <div>{formik.errors.title}</div> : null} */}
           <Button type='submit'>
             Add Recipe
           </Button>
@@ -123,6 +143,7 @@ const RecipeForm = ({formik}) => {
                       placeholder="Enter ingredient"
                       variant='standard'
                     />
+                    {/* {formik.errors.ingredients && formik.touched.ingredients ? <div>{formik.errors.ingredients}</div> : null} */}
                   </ListItemText>
                 </ListItem>
               ))}
@@ -149,6 +170,7 @@ const RecipeForm = ({formik}) => {
                       placeholder="Enter instruction"
                       variant='standard'
                     />
+                    {/* {formik.errors.instructions && formik.touched.instructions ? <div>{formik.errors.instructions}</div> : null} */}
                   </ListItemText>
                 </ListItem>
               ))}

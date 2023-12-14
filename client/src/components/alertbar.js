@@ -1,12 +1,14 @@
 import { useState, forwardRef } from "react";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
+import { useUI } from "./UIContext";
 
 const Alert = forwardRef((props, ref) => (
   <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
 ));
 
-const AlertBar = ({ alert, handleNewAlert, alertType, handleAlertType }) => {
+const AlertBar = () => {
+  const { alert, handleNewAlert, alertType, handleAlertType } = useUI()
   const [open, setOpen] = useState(true);
 
   const handleClose = (e, reason) => {
