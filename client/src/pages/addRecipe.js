@@ -1,4 +1,5 @@
-import React, {useState, TransitionGroup } from 'react'
+import React, {useState, TransitionGroup } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Box,  Grid, Typography, } from '@mui/material';
 import RecipeForm from '../components/recipeForm';
 import * as yup from 'yup';
@@ -8,7 +9,10 @@ import { useUI } from '../components/UIContext';
 
 
 const AddRecipe = () => {
+  const navigate = useNavigate()
   const { handleNewAlert, handleAlertType } = useUI()
+  const [edit, setEdit] = useState(false)
+  const [recipeId, setRecipeId] = useState()
   const recipeSchema = yup.object().shape({
     title: yup.string().required('Please enter a recipe title'),
     instructions: yup.string().required('Please enter in some instructions'),
@@ -31,19 +35,38 @@ const AddRecipe = () => {
     },
     validationSchema: recipeSchema,
     onSubmit: (values, { resetForm }) => {
-      fetch('/recipes', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify(values)
-      })
-      .then(r => r.json())
-      .then((data) => console.log(data))
-      .catch((err) => {
-        console.log(err)})
-      resetForm();
+      if (!edit) {
+        fetch('/recipes', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify(values)
+        })
+        .then(r => r.json())
+        .then((data) => console.log(data))
+        .catch((err) => {
+          console.log(err)})
+        resetForm();
+        navigate('/drinklab')
+      }
+      else {
+        fetch(`/recipes/${recipeId}`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify(values)
+        })
+        .then(r => r.json())
+        .then((data) => console.log(data))
+        .catch((err) => console.log(err))
+        resetForm()
+        setEdit(false)
+        navigate('/drinklab')
+      }
       // try {
       //   console.log('build out a fetch POST', 'submitted');
       //   console.log('these are the form values:', values)
@@ -57,13 +80,13 @@ const AddRecipe = () => {
       // }
     },
   });
-
+  console.log(edit)
   return (
     <Box sx={{ flexGrow: 1, ml: 4, mr: 4, mt: 8, mb:8 }}>
         <Grid sx={{mb: 5}} item xs={12}>
           <Typography variant='h3'>Create a New Recipe</Typography>
         </Grid>
-      <RecipeForm formik={formik} />
+      <RecipeForm formik={formik} setEdit={setEdit} setRecipeId={setRecipeId}/>
     </Box>
   )
 }

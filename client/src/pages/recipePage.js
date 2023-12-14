@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from 'react';
 import { useFormik} from 'formik';
 import * as yup from 'yup';
@@ -10,6 +10,7 @@ import ConfirmDialogue from "../components/confirmDialogue";
 
 const RecipePage = () => {
   const auth = useAuth()
+  const navigate = useNavigate()
   const {id} = useParams()
   const [edit, setEdit] = useState(false)
   const [recipe, setRecipe] = useState()
@@ -142,6 +143,10 @@ const RecipePage = () => {
   const closeDialogue = () => {
     setDialogueOpen(false)
   }
+  const handleEditRecipe = () => {
+    const recipeObj = recipe
+    navigate(`/users/${auth.user.id}/adddrink`, {state: {recipeObj}})
+  }
 
   return (
     <Box sx={{ flexGrow: 1, ml: 4, mr: 4, mt: 8 }}>
@@ -183,11 +188,14 @@ const RecipePage = () => {
           </Typography>
         </Grid>
         <Grid item xs={12} justifyContent="flex-end">
-          {auth.user ?
+          {auth.user && auth.user.id !== recipe.creator_id ?
           <Button onClick={handleOpen} variant='contained'>Add a Review</Button>
           : null}
           {auth.user && auth.user.id === recipe.creator_id ?
-          <Button sx={{ml:2}} onClick={openDialogue} variant='contained'>Delete Review</Button>
+          <Button sx={{ml:2}} onClick={openDialogue} variant='contained'>Delete Recipe</Button>
+          : null}
+          {auth.user && auth.user.id === recipe.creator_id ?
+          <Button sx={{ml:2}} onClick={handleEditRecipe} variant='contained'>Edit Recipe</Button>
           : null}
           {dialogue ? <ConfirmDialogue open={dialogue} handleOpen={openDialogue} handleClose={closeDialogue} recipe_id={recipe.id} />: null}
           {edit ? (

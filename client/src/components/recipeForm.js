@@ -1,25 +1,25 @@
 import React, {useState, useEffect} from 'react'
-import { ImageList, Chip, FormControlLabel, ImageListItem, List, ListItem, ListItemIcon, ListItemText, Box, TextField, Grid, Typography, Button, Paper, } from '@mui/material';
+import { ImageList, Chip, FormControlLabel, ImageListItem, List, ListItem, ListItemIcon, ListItemText,TextField, Grid, Typography, Button, Paper, } from '@mui/material';
 import '../styles/addRecipe.css'
 import EditIcon from '@mui/icons-material/Edit';
 import CoffeeTwoToneIcon from '@mui/icons-material/CoffeeTwoTone';
 import DoneIcon from '@mui/icons-material/Done'
 import { MedicinalSwitch } from '../styles/SwitchStyles';
 import {useAuth} from "../auth/authProvider"
-import _ from 'lodash'
-import { useUI } from './UIContext';
+import { useLocation } from 'react-router-dom';
 
-const RecipeForm = ({formik}) => {
+const RecipeForm = ({formik , setEdit, setRecipeId}) => {
   const auth = useAuth()
-  const { handleNewAlert, handleAlertType } = useUI()
+  const location = useLocation()
   const tags = ['caffeine', 'creamy', 'spiced', 'citrusy', 'herbal']
   const initialChips = Array(5).fill("").map((_,index) => ({name:tags[index], value:false}))
   const [chipStates, setChipStates] = useState(initialChips)
-  const [selectedImg, setSelectedImg] = useState(null)
+  const [selectedImg, setSelectedImg] = useState()
   const initialIngredients = Array(10).fill("").map((_, index) => ({ index, value: "" }));
   const [ingredients, setIngredients] = useState(initialIngredients)
   const initialInstructions = Array(10).fill("").map((_, index) => ({ index, value: "" }));
   const [instructions, setInstructions] = useState(initialInstructions)
+  const [editingRecipe, setEditingRecipe] = useState()
   const randomImage = [
     {img: "/images/img1.jpg"},
     {img: "/images/img2.jpg"},
@@ -30,7 +30,6 @@ const RecipeForm = ({formik}) => {
     {img: "/images/img7.jpg"},
     {img: "/images/img8.jpg"},
   ]
-  console.log(auth.user.id)
   //grab the values of any ingredient or instruction input
   const handleChange = (e, index) => {
       if (e.target.name === 'ingredients') {
@@ -104,6 +103,46 @@ const RecipeForm = ({formik}) => {
 
   // }, [formik.errors.ingredients, formik.touched.ingredients, handleNewAlert]);
 
+
+  //!When you navigate here, after clicking edit recipe button
+  useEffect(() => {
+    setEditingRecipe(location.state.recipeObj)
+
+    if (editingRecipe) {
+      setEdit(true)
+      setRecipeId(editingRecipe.id)
+      setIngredients((oldIngredients) => {
+        return oldIngredients.map((obj, index) => {
+          if (editingRecipe.ingredients.split(",")[index]) {
+            obj.value = editingRecipe.ingredients.split(",")[index];
+          }
+          return obj;
+        });
+      });
+      setInstructions((oldInstructions) => {
+        return oldInstructions.map((obj, index) => {
+          if (editingRecipe.instructions.split(".")[index]) {
+            obj.value = editingRecipe.instructions.split(".")[index]
+          }
+          return obj
+        })
+      })
+      setSelectedImg((oldImg) => editingRecipe.image)
+      setChipStates(prevChips => {
+        return prevChips.map((chip, index) => {
+          if (chip.name === editingRecipe.tags.split(",")[index]) {
+            return { ...chip, value: !chip.value }
+          }
+          return chip
+        })
+      })
+      formik.setValues({
+        title: editingRecipe.title,
+        medicinal: editingRecipe.medicinal,
+      })
+    }
+  }, [location.state, editingRecipe])
+
   return (
     <form onSubmit={formik.handleSubmit}>
       <Grid className='recipe-container' container spacing={2}>
@@ -118,9 +157,7 @@ const RecipeForm = ({formik}) => {
             onChange={formik.handleChange}
           />
           {/* {formik.errors.title && formik.touched.title ? <div>{formik.errors.title}</div> : null} */}
-          <Button type='submit'>
-            Add Recipe
-          </Button>
+          {!editingRecipe ? <Button type='submit'>Add Recipe</Button>: <Button type='submit'> Update Recipe</Button>}
         </Grid>
         <Grid sx={{ pl: 2, }} item xs={4}>
           <Paper sx={{ p: 3 }} elevation={4}>
