@@ -1,17 +1,18 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { ImageList, Chip, FormControlLabel, ImageListItem, List, ListItem, ListItemIcon, ListItemText, Box, TextField, Grid, Typography, Button, Paper, } from '@mui/material';
 import '../styles/addRecipe.css'
 import EditIcon from '@mui/icons-material/Edit';
 import CoffeeTwoToneIcon from '@mui/icons-material/CoffeeTwoTone';
 import DoneIcon from '@mui/icons-material/Done'
 import { MedicinalSwitch } from '../styles/SwitchStyles';
-import * as yup from 'yup';
-import { useFormik } from "formik";
 import {useAuth} from "../auth/authProvider"
+import _ from 'lodash'
 
 const RecipeForm = ({formik}) => {
   const auth = useAuth()
-  const [chipStates, setChipStates] = useState(Array(5).fill(false))
+  const tags = ['caffeine', 'creamy', 'spiced', 'citrusy', 'herbal']
+  const initialChips = Array(5).fill("").map((_,index) => ({name:tags[index], value:false}))
+  const [chipStates, setChipStates] = useState(initialChips)
   const [selectedImg, setSelectedImg] = useState(null)
   const initialIngredients = Array(10).fill("").map((_, index) => ({ index, value: "" }));
   const [ingredients, setIngredients] = useState(initialIngredients)
@@ -27,18 +28,10 @@ const RecipeForm = ({formik}) => {
     {img: "/images/img7.jpg"},
     {img: "/images/img8.jpg"},
   ]
-  const tags = ['caffeine', 'creamy', 'spiced', 'citrusy', 'herbal']
 
-  const handleChipClick = (index) => {
-    setChipStates((prevStates) => {
-      const newStates = [...prevStates];
-      newStates[index] = !newStates[index];
-      return newStates;
-    });
-  };
-
+  //grab the values of any ingredient or instruction input
   const handleChange = (e, index) => {
-    if (e.target.name === 'ingredients') {
+      if (e.target.name === 'ingredients') {
       setIngredients(prevIngredients => {
         // Create a copy of the existing array
         const newIngredients = [...prevIngredients];
@@ -47,7 +40,7 @@ const RecipeForm = ({formik}) => {
         return newIngredients;
       });
     }
-    else {
+    else if (e.target.name === 'instructions') {
       setInstructions(prevInstructions => {
         // Create a copy of the existing array
         const newInstructions = [...prevInstructions];
@@ -56,11 +49,46 @@ const RecipeForm = ({formik}) => {
         return newInstructions;
       });
     }
+    else {
+      setChipStates(prevChips => {
+        return prevChips.map((chip) => {
+          if (chip.name === e.target.textContent) {
+            return {...chip, value: !chip.value}
+          }
+          return chip
+        })
+      })
+    }
+
   }
 
 
+  //set the formik form with the gathered values as they change
+  useEffect(() => {
+    const ingredientString = ingredients.map((item) => item.value).filter(Boolean).join(",")
+    const instructionString = instructions.map((item) => item.value).filter(Boolean).join(",")
+    const tagString = chipStates.filter((chipObj) => chipObj.value === true).map(chipObj => chipObj.name).join(",")
+    //grab the image from selectedImg
+
+  },[ingredients, instructions, chipStates,formik])
+
+  const handleSubmit = () => {
+    const ingredientString = ingredients.map((item) => item.value).filter(Boolean).join(",")
+    const instructionString = instructions.map((item) => item.value).filter(Boolean).join(",")
+    const tagString = chipStates.filter((chipObj) => chipObj.value === true).map(chipObj => chipObj.name).join(",")
+
+    formik.setFieldValue({
+      ingredients: ingredientString,
+      instructions: instructionString,
+      tags: tagString,
+      image: selectedImg
+    })
+
+    formik.handleSubmit()
+  }
+
   return (
-    <form onSubmit={formik.handleSubmit}>
+    <form onSubmit={handleSubmit}>
       <Grid className='recipe-container' container spacing={2}>
         <Grid item xs={12}>
           <TextField
@@ -153,14 +181,15 @@ const RecipeForm = ({formik}) => {
               <Grid item xs={3}>
                 <Typography variant='h6'>Select Relevant Tags</Typography>
                 <Grid sx={{ mt: 1, mb: 4 }} container spacing={2}>
-                  {chipStates.map((isFilled, index) => (
+                  {chipStates.map((chipObj, index) => (
                     <Grid item key={index}>
                       <Chip
+                        name={tags[index]}
                         label={tags[index]}
-                        onClick={() => handleChipClick(index)}
+                        onClick={(e) => handleChange(e, index)}
                         variant='outlined'
-                        icon={isFilled ? <DoneIcon /> : null}
-                        style={{ padding: '15px', fontSize: '18px', borderColor: '#9C9C9C', backgroundColor: isFilled ? 'rgba(172, 207, 201, 0.5)' : '' }}
+                        icon={chipObj.value ? <DoneIcon /> : null}
+                        style={{ padding: '15px', fontSize: '18px', borderColor: '#9C9C9C', backgroundColor: chipObj.value ? 'rgba(172, 207, 201, 0.5)' : '' }}
                       />
                     </Grid>
                   ))}
@@ -171,8 +200,8 @@ const RecipeForm = ({formik}) => {
                   sx={{ ml: 0 }}
                   control={<MedicinalSwitch
                     name="medicinal"
-                  // checked={searchObj.medicinal}
-                  // onChange={onChange}
+                    checked={formik.values.medicinal}
+                    onChange={(e) => formik.setFieldValue('medicinal', e.target.checked)}
                   />}
                 />
               </Grid>

@@ -29,6 +29,7 @@ const AddRecipe = () => {
     validationSchema: recipeSchema,
     onSubmit: (values, { resetForm }) => {
       console.log('build out a fetch POST', 'submitted');
+      console.log('these are the form values:', values)
       resetForm();
     },
   });
