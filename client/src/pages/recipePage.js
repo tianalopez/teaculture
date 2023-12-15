@@ -130,12 +130,13 @@ const RecipePage = () => {
         setRender((status) => !status)
       }
 
-
+      console.log(reviews)
   const reviewDisplay = reviews.map((review) => (
     <Card key={review.id} sx={{ mt: 2, mb: 2, display: 'flex', alignItems: 'center', padding: 2, width: '100%', justifyContent: 'space-between' }}>
       <CardContent style={{ padding: '5px', display: 'flex', flex: 1}}>
         <div className=".edit-review">
           <Rating value={review.rating} readOnly />
+          <Typography>Author: {review.user.username}</Typography>
           <Typography>{review.comment}</Typography>
         </div>
         <div className="edit-review">
