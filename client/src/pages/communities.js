@@ -80,9 +80,11 @@ const Communities = () => {
               <h1 className="modal-title">Add a New Community</h1>
               <form className='modal-form'>
                 <Typography sx={{mt:2}}>Add the name of your new community</Typography>
-                <Input value={formik.values.name} onChange={formik.handleChange} variant='outlined' sx={{mb:2}} placeholder='Community name...' name='name'/>
+                <Input onBlur={formik.handleBlur} value={formik.values.name} onChange={formik.handleChange} variant='outlined' sx={{mb:2}} placeholder='Community name...' name='name'/>
+                {formik.errors.name && formik.touched.name ? <div>{formik.errors.name}</div> : null}
                 <Typography>Give a short description about your community</Typography>
-                <Textarea value={formik.values.description} onChange={formik.handleChange} className='com-input' placeholder='Add your description...' variant='outlined' minRows={4} name='description' />
+                <Textarea onBlur={formik.handleBlur} value={formik.values.description} onChange={formik.handleChange} className='com-input' placeholder='Add your description...' variant='outlined' minRows={4} name='description' />
+                {formik.errors.description && formik.touched.description ? <div>{formik.errors.description}</div> : null}
                 <Button onClick={formik.handleSubmit} sx={{mt:2}} variant='contained' type='submit'>Add Community</Button>
               </form>
             </div>

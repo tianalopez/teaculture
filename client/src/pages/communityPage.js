@@ -115,9 +115,9 @@ const CommunityPage = () => {
         .then(r => r.json())
         .then(() => {
           setRender((status) => !status)
-          navigate('/communities')
-          handleNewAlert('Deleted Community!')
+          handleNewAlert('Community Deleted!')
           handleAlertType('success')
+          navigate('/communities')
         })
         .catch(err => {
           handleNewAlert(err.error)
