@@ -45,4 +45,4 @@ class FavoriteById(Resource):
             except Exception as e:
                 db.session.rollback()
                 return {"error": str(e)}, 400
-        return {"error": "Could not find favorite"}
+        return {"error": "Could not find favorite"}, 404

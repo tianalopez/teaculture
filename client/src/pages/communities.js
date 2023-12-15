@@ -20,7 +20,7 @@ const Communities = () => {
     .then(r => r.json())
     .then(setCommunities)
     .catch(err => console.log(err))
-  },[render])
+  },[])
 
     const communityCards = communities && communities.map((community) => (
       <Grid key={community.id} item xs={12} sm={6} md={4} lg={3}>
