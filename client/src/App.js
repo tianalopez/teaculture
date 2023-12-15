@@ -19,7 +19,7 @@ import Navbar from './components/navbar';
 import Error404 from './pages/error404';
 import RequireAuth from './auth/requireAuth';
 
-
+//! UI above auth
 function App() {
 
   return (

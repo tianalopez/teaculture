@@ -35,6 +35,9 @@ const AddRecipe = () => {
     },
     validationSchema: recipeSchema,
     onSubmit: (values, { resetForm }) => {
+      //! add the checktoken route, if repsonse is good, do the POST
+      //!if checktoken is bad, refresh is good, do the POST
+      //!else navigate/logout/DELETE
       if (!edit) {
         fetch('/recipes', {
           method: 'POST',
@@ -80,7 +83,7 @@ const AddRecipe = () => {
       // }
     },
   });
-  console.log(edit)
+
   return (
     <Box sx={{ flexGrow: 1, ml: 4, mr: 4, mt: 8, mb:8 }}>
         <Grid sx={{mb: 5}} item xs={12}>
