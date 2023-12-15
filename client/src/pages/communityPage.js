@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import { useParams, useNavigate } from "react-router-dom";
 import { Box, Avatar, Divider, Grid, Button, Typography, Rating, Paper, CircularProgress } from '@mui/material';
-
+import '../styles/communityPage.css'
 
 const CommunityPage = () => {
   const {id} = useParams()
@@ -19,7 +19,12 @@ const CommunityPage = () => {
     return <CircularProgress />
   }
   console.log(community.users)
-  const members = community.users
+  const members = community.users.map((user) => (
+    <Grid key={user.id} sx={{ m: 1, display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+      <Avatar size='sm' variant='outlined' />
+      <Typography sx={{ pl: 3 }}>{user.username} </Typography>
+    </Grid>
+  ))
 
   return (
     <Box sx={{ flexGrow: 1, ml: 4, mr: 4, mt: 8 }}>
@@ -38,12 +43,13 @@ const CommunityPage = () => {
         <Grid item xs={6}>
           <Typography>Post Area</Typography>
         </Grid>
-        <Grid sx={{backgroundColor: 'white', justifyContent: 'center' }} item xs={3}>
+        <Grid className='member-display' sx={{ justifyContent: 'center' }} item xs={3}>
             <Grid sx={{ m: 1, display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-              <Avatar variant ='soft'></Avatar>
+              <Avatar size='lg' variant ='outlined' />
               <Typography sx={{pl:3}}>{community.owner.username} (Owner)</Typography>
             </Grid>
             <Divider>Members</Divider>
+            {members}
         </Grid>
 
         </Grid>

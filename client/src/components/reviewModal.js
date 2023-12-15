@@ -29,11 +29,11 @@ const ReviewModal = ({
 
   return (
     <Modal
-      id='modal'
+      id='review-modal'
       open={open}
       onClose={handleClose}
     >
-      <div id='review-modal'>
+      <div className='modal-container'>
         {edit ? (
           <h1 className='modal-title'>
             Update Review
