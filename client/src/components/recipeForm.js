@@ -106,7 +106,9 @@ const RecipeForm = ({formik , setEdit, setRecipeId}) => {
 
   //!When you navigate here, after clicking edit recipe button
   useEffect(() => {
-    setEditingRecipe(location.state.recipeObj)
+    if (location.state && location.state.recipeObj) {
+      setEditingRecipe(location.state.recipeObj)
+    }
 
     if (editingRecipe) {
       setEdit(true)

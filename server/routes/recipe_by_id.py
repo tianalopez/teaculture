@@ -13,8 +13,9 @@ class RecipeById(Resource):
             recipe_schema = RecipeSchema()
             return recipe_schema.dump(recipe), 200
         return {"error", "Could not find recipe"}, 404
-
+#!JWT REQUIRED HOOK
     def patch(self, id):
+        #!if recipe is the user's recipe, else raise alert
         if recipe := db.session.get(Recipe, id):
             try:
                 data = request.json

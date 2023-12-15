@@ -1,4 +1,4 @@
-import { useState, forwardRef } from "react";
+import { useState, useEffect,forwardRef } from "react";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import { useUI } from "./UIContext";
@@ -9,7 +9,11 @@ const Alert = forwardRef((props, ref) => (
 
 const AlertBar = () => {
   const { alert, handleNewAlert, alertType, handleAlertType } = useUI()
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(Boolean(alert));
+
+  useEffect(() => {
+    setOpen(Boolean(alert))
+  },[alert])
 
   const handleClose = (e, reason) => {
     if (reason === "clickaway") {
@@ -21,7 +25,7 @@ const AlertBar = () => {
   };
 
   return (
-    <Snackbar open={open} autoHideDuration={5000} onClose={handleClose}>
+    <Snackbar open={open} autoHideDuration={4000} onClose={handleClose}>
       <Alert onClose={handleClose} severity={alertType} sx={{ width: "100%" }}>
         {alert}
       </Alert>

@@ -7,4 +7,6 @@ class UserCommunitySchema(ma.SQLAlchemySchema):
     class Meta:
         model = UserCommunity
         load_instance = True
-        fields = ["id", "user_id", "community_id"]
+        fields = ["id", "user_id", "user","community_id"]
+
+    user = fields.Nested("UserSchema", only=("id", "username",))

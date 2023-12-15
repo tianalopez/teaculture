@@ -1,0 +1,14 @@
+
+.member-display {
+  box-shadow: 6px 6px #6BA6A4;
+  background-color: #CBE1DE;
+}
+
+#community-modal {
+  position: fixed;
+  z-index: 1300;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

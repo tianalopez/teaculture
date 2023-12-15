@@ -2,13 +2,15 @@ import React, { useState, useEffect } from "react";
 import { useFormik } from "formik"
 import * as yup from "yup"
 import { useAuth } from "../auth/authProvider";
-import { Grid, Box, Typography, Button, Fab } from '@mui/material'
+import { Grid, Box, Typography, Button, Fab } from '@mui/material';
+
 
 
 const Login = () => {
   const [signUp, setSignUp] = useState(false);
   const handleClick = () => setSignUp((signUp) => !signUp);
   const auth = useAuth()
+
 
   useEffect(() => {
     window.google.accounts.id.renderButton(
