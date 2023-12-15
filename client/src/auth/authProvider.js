@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom";
+import { useUI } from "../components/UIContext";
 
 
 const AuthContext = createContext(null);
@@ -11,6 +12,7 @@ const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 export const AuthProvider = ({children}) => {
   const navigate = useNavigate()
   const [user, setUser] = useState(null)
+  const { handleNewAlert, handleAlertType } = useUI()
 
   //~~~~~~~~~~~~~~~~~~~~GLOGIN or REGISTER
 
@@ -27,6 +29,8 @@ export const AuthProvider = ({children}) => {
       .then(user => {
         setUser(user)
         navigate(`users/${user.id}/dashboard`, { replace: true })
+        handleNewAlert('Login Successful!')
+        handleAlertType('success')
       })
       .catch(err => console.log(err))
   }

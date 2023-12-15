@@ -24,10 +24,10 @@ function App() {
 
   return (
   <>
-  <AuthProvider>
-    <UIProvider>
-      <AlertBar />
+  <UIProvider>
+    <AuthProvider>
       <Navbar />
+      <AlertBar />
       <Routes>
         <Route path="/" element={<Welcome />}/>
         <Route path="login" element={<Login />} />
@@ -40,8 +40,8 @@ function App() {
         <Route path="communities/:id" element={<RequireAuth><CommunityPage /></RequireAuth>} />
         <Route path="*" element={<Error404 />} />
       </Routes>
-    </UIProvider>
-  </AuthProvider>
+    </AuthProvider>
+  </UIProvider>
 
   </>
   );
