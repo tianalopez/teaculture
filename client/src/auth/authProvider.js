@@ -29,10 +29,13 @@ export const AuthProvider = ({children}) => {
       .then(user => {
         setUser(user)
         navigate(`users/${user.id}/dashboard`, { replace: true })
-        handleNewAlert('Login Successful!')
+        handleNewAlert('Welcome!')
         handleAlertType('success')
       })
-      .catch(err => console.log(err))
+      .catch(err => {
+        handleNewAlert(`${err.error}`)
+        handleAlertType('error')
+      })
   }
   const initializeGoogleSignIn = () => {
     if (window.google && window.google.accounts) {
@@ -79,19 +82,17 @@ export const AuthProvider = ({children}) => {
       .then((resp) => {
         console.log(resp)
         if (resp.ok) {
-          console.log("The issue is after a good response")
           resp.json().then((user) => {
           setUser(user)
           //!double check this navigation, but you do need to navigate at some point
           navigate(`users/${user.id}/dashboard`, {replace: true})
           });
-          // handleNewAlert("Welcome!");
-          // handleAlertType("success");
+          handleNewAlert("Welcome!");
+          handleAlertType("success");
         } else {
           resp.json().then((errorObj) => {
-            console.log("There was a bad response")
-            // handleNewAlert(errorObj.error);
-            // handleAlertType("error");
+            handleNewAlert(errorObj.error);
+            handleAlertType("error");
           });
         }
       })

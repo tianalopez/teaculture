@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import { Modal, TextField, Button,  Rating,  } from '@mui/material';
+import { Modal, TextField, Button,  Rating, Backdrop } from '@mui/material';
 
 const ReviewModal = ({
   open,
@@ -32,6 +32,13 @@ const ReviewModal = ({
       id='review-modal'
       open={open}
       onClose={handleClose}
+      // closeAfterTransition
+      // BackdropComponent={(props) => (
+      //   <Backdrop {...props} onClick={() => {
+      //     handleClose()
+      //     setEdit(false)
+      //   }} />
+      // )}
     >
       <div className='modal-container'>
         {edit ? (
@@ -50,14 +57,14 @@ const ReviewModal = ({
             onChange={(event, newValue) => handleChangeRating('rating', newValue)}
             value={rating}
             sx={{ mt: 2, alignSelf: 'flex-start' }} />
-          {errorComment && touchedComment}
+          {errorRating && touchedRating ? <div>{errorRating}</div> : null}
           <TextField
             name='comment'
             onBlur={handleBlur}
             onChange={(e) => handleChangeComment(e)}
             value={comment}
             sx={{ mt: 2 }} multiline rows={3} placeholder="Add your review here" />
-          {errorComment && touchedComment}
+          {errorComment && touchedComment ? <div>{errorComment}</div> : null}
           {edit ? (
             <Button name='editButton' type='submit' onClick={handleSubmit} sx={{ mt: 2 }} variant='contained'>Update Review</Button>
           ) : (

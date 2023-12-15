@@ -7,6 +7,7 @@ import "../styles/recipePage.css";
 import { useAuth } from "../auth/authProvider";
 import ReviewModal from "../components/reviewModal";
 import ConfirmDialogue from "../components/confirmDialogue";
+import { useUI } from "../components/UIContext";
 
 const RecipePage = () => {
   const auth = useAuth()
@@ -21,6 +22,8 @@ const RecipePage = () => {
   const handleClose = () => setOpen(false)
   const [render, setRender] = useState(false)
   const [editingReview, setEditingReview] = useState({})
+  const { handleNewAlert, handleAlertType } = useUI()
+
 
   useEffect(() => {
     Promise.all([
@@ -72,18 +75,27 @@ const RecipePage = () => {
 
       fetchPromise
       .then(r => r.json())
-      .then((obj) => console.log(obj))
-      .catch(err => console.log(err))
+      .then(() => {
+        handleNewAlert('Success!')
+        handleAlertType('success')
+        resetForm()
+      })
+      .catch(err => {
+        handleNewAlert(err.error)
+        handleAlertType('error')
+        resetForm()
+      })
 
-      resetForm()
       setOpen(false)
       setEdit(false)
       setRender((status) => !status)
-
-      //run a POST
-      console.log('submitted', correctValues)
     }
   })
+  useEffect(() => {
+    if (!edit) {
+      formik.handleReset();
+    }
+  }, [edit]);
 
   if (!recipe || !reviews) {
     return <CircularProgress />
@@ -107,7 +119,14 @@ const RecipePage = () => {
           }
         })
           .then(r => r.json())
-          .catch(err => console.log(err))
+          .then(() => {
+            handleNewAlert('Review Deleted!')
+            handleAlertType('success')
+          })
+          .catch(err => {
+            handleNewAlert(err.error)
+            handleAlertType('error')
+          })
         setRender((status) => !status)
       }
 
@@ -147,6 +166,7 @@ const RecipePage = () => {
     const recipeObj = recipe
     navigate(`/users/${auth.user.id}/adddrink`, {state: {recipeObj}})
   }
+
 
   return (
     <Box sx={{ flexGrow: 1, ml: 4, mr: 4, mt: 8 }}>
@@ -189,7 +209,11 @@ const RecipePage = () => {
         </Grid>
         <Grid item xs={12} justifyContent="flex-end">
           {auth.user && auth.user.id !== recipe.creator_id ?
-          <Button onClick={handleOpen} variant='contained'>Add a Review</Button>
+          <Button onClick={() => {
+            setEdit(false)
+            formik.handleReset()
+            setOpen(true)
+          }} variant='contained'>Add a Review</Button>
           : null}
           {auth.user && auth.user.id === recipe.creator_id ?
           <Button sx={{ml:2}} onClick={openDialogue} variant='contained'>Delete Recipe</Button>
