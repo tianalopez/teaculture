@@ -1,8 +1,10 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { DialogTitle, DialogActions, Dialog, Button} from '@mui/material';
+import { useUI } from './UIContext';
 
 const ConfirmDialogue = ({open, handleOpen, handleClose, recipe_id}) => {
+  const { handleNewAlert, handleAlertType } = useUI()
   const navigate = useNavigate()
   const handleDelete = () => {
     fetch(`/recipes/${recipe_id}`, {
@@ -12,7 +14,14 @@ const ConfirmDialogue = ({open, handleOpen, handleClose, recipe_id}) => {
       }
     })
     .then(r => r.json())
-    .catch(err => console.log(err))
+    .then(() => {
+      handleNewAlert('Recipe Deleted!')
+      handleAlertType('success')
+    })
+    .catch(err => {
+      handleNewAlert(err.error)
+      handleAlertType('error')
+    })
     navigate('/drinklab')
   }
 

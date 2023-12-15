@@ -47,10 +47,20 @@ const AddRecipe = () => {
           },
           body: JSON.stringify(values)
         })
-        .then(r => r.json())
-        .then((data) => console.log(data))
+        .then(r => {
+          r.json()
+          if (!r.ok) {
+            console.log(r)
+          }
+        })
+        .then((data) => {
+          handleNewAlert('Recipe Added!')
+          handleAlertType('success')
+        })
         .catch((err) => {
-          console.log(err)})
+          handleNewAlert(err.error)
+          handleAlertType('error')
+        })
         resetForm();
         navigate('/drinklab')
       }
@@ -64,23 +74,18 @@ const AddRecipe = () => {
           body: JSON.stringify(values)
         })
         .then(r => r.json())
-        .then((data) => console.log(data))
-        .catch((err) => console.log(err))
+        .then((data) => {
+          handleNewAlert('Recipe Updated!')
+          handleAlertType('success')
+        })
+        .catch((err) => {
+          handleNewAlert(err.error)
+          handleAlertType('error')
+        })
         resetForm()
         setEdit(false)
         navigate('/drinklab')
       }
-      // try {
-      //   console.log('build out a fetch POST', 'submitted');
-      //   console.log('these are the form values:', values)
-      //   resetForm();
-      //   handleNewAlert('Recipe submitted successfully!')
-      //   handleAlertType('success')
-      // } catch (error){
-      //   handleNewAlert('Form submission failed. Please check your entries.')
-      //   handleAlertType('error')
-      //   console.log(error)
-      // }
     },
   });
 

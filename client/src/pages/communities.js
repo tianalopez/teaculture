@@ -5,10 +5,12 @@ import {Textarea, Input} from '@mui/joy';
 import { useFormik } from "formik"
 import * as yup from "yup";
 import { useAuth } from '../auth/authProvider';
+import { useUI } from '../components/UIContext';
 
 
 const Communities = () => {
-  const auth = useAuth()
+  const auth = useAuth();
+  const { handleNewAlert, handleAlertType } = useUI();
   const [communities, setCommunities] = useState([])
   const [open, setOpen] = useState(false)
   const handleOpen = () => setOpen(true)
@@ -51,8 +53,15 @@ const Communities = () => {
         body: JSON.stringify(values)
       })
       .then(r => r.json())
-      .then((newCom) => setCommunities([...communities, newCom]))
-      .catch(err => console.log(err))
+      .then((newCom) => {
+        setCommunities([...communities, newCom])
+        handleNewAlert('Community Added!')
+        handleAlertType('success')
+      })
+      .catch(err => {
+        handleNewAlert(err.error)
+        handleAlertType('error')
+      })
       setRender(true)
       handleClose()
       formik.handleReset()

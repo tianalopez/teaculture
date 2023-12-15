@@ -6,6 +6,7 @@ import { useAuth } from '../auth/authProvider';
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { Textarea, Input } from '@mui/joy';
+import { useUI } from '../components/UIContext';
 
 const CommunityPage = () => {
   const auth = useAuth()
@@ -16,6 +17,7 @@ const CommunityPage = () => {
   const [open, setOpen] = useState(false)
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
+  const { handleNewAlert, handleAlertType } = useUI()
 
   useEffect(() => {
     Promise.all([
@@ -55,8 +57,15 @@ const CommunityPage = () => {
         body: JSON.stringify(values)
       })
       .then(r => r.json)
-      .then(() => setRender((status) => !status))
-      .catch((err) => console.log(err))
+      .then(() => {
+        setRender((status) => !status)
+        handleNewAlert('Community Updated!')
+        handleAlertType('success')
+      })
+      .catch((err) => {
+        handleNewAlert(err.error)
+        handleAlertType('error')
+      })
       handleClose()
       formik.handleReset()
     }
@@ -82,8 +91,15 @@ const CommunityPage = () => {
       body: JSON.stringify({user_id: auth.user.id, community_id: community.id})
     })
     .then(r => r.json())
-    .then((newUC) => setRender((status) => !status))
-    .catch((err) => console.log(err))
+    .then((newUC) => {
+      setRender((status) => !status)
+      handleNewAlert('Joined Community!')
+      handleAlertType('success')
+    })
+    .catch((err) => {
+      handleNewAlert(err.error)
+      handleAlertType('error')
+    })
 
   }
 
@@ -100,8 +116,13 @@ const CommunityPage = () => {
         .then(() => {
           setRender((status) => !status)
           navigate('/communities')
+          handleNewAlert('Deleted Community!')
+          handleAlertType('success')
         })
-        .catch(err => console.log(err))
+        .catch(err => {
+          handleNewAlert(err.error)
+          handleAlertType('error')
+        })
     }
     else {
       fetch(`/usercommunities/${auth.user.id}/${community.id}`, {
@@ -111,8 +132,15 @@ const CommunityPage = () => {
         }
       })
       .then(r => r.json())
-      .then(() => setRender((status) => !status))
-      .catch(err => console.log(err))
+      .then(() => {
+        setRender((status) => !status)
+        handleNewAlert('Left Community...Come back soon!')
+        handleAlertType('success')
+      })
+      .catch(err => {
+        handleNewAlert(err.error)
+        handleAlertType('error')
+      })
     }
   }
 
