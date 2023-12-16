@@ -19,7 +19,9 @@ const CommunityPage = () => {
   const [open, setOpen] = useState(false)
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
+  const [edit, setEdit] = useState(false)
   const { handleNewAlert, handleAlertType } = useUI()
+
 
 
   useEffect(() => {
@@ -82,6 +84,7 @@ const CommunityPage = () => {
   const postSchema = yup.object().shape({
     content: yup.string().required("Please enter a valid post").min(3, "Post must be at least 3 characters").max(5000, "Post cannot exceed 5000 characters")
   })
+
   const postFormik = useFormik({
     initialValues: {
       content: "",
@@ -190,7 +193,7 @@ const CommunityPage = () => {
   //!POSTS SECTION
   //display posts
   const postCards = posts.map((post) => (
-    <PostCard key={post.id} post={post}/>
+    <PostCard key={post.id} post={post} handleEdit={setEdit} edit={edit} postFormik={postFormik}/>
   ))
     console.log(posts)
   return (
