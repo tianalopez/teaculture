@@ -35,6 +35,9 @@ class User(db.Model):
     favorites = db.relationship(
         "Favorite", back_populates="user", cascade="all, delete-orphan"
     )
+    owned_posts = db.relationship(
+        "Post", back_populates="author", cascade="all, delete-orphan"
+    )
     # association
     communities = association_proxy("user_communities", "community")
     recipes = association_proxy("reviews", "recipe")

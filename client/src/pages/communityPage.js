@@ -88,7 +88,26 @@ const CommunityPage = () => {
     },
     validationSchema: postSchema,
     onSubmit: (values) => {
-      console.log('submitted:', values)
+      //!CONDITIONAL LOGIC IF EDIT
+      fetch(`/communities/${id}/posts`, {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(values)
+      })
+      .then(r => r.json())
+      .then((newPost) => {
+        setPosts([...posts, newPost])
+        handleNewAlert('Post Added!')
+        handleAlertType('success')
+      })
+      .catch(err => {
+        handleNewAlert(err.error)
+        handleAlertType('error')
+      })
+      postFormik.handleReset()
     }
   })
   if (!community ) {
@@ -171,7 +190,7 @@ const CommunityPage = () => {
     <PostCard key={post.id} post={post}/>
   ))
 
-
+    console.log(posts)
   return (
     <Box sx={{ flexGrow: 1, ml: 4, mr: 4, mt: 8 }}>
       <Grid container spacing={2}>
@@ -197,7 +216,7 @@ const CommunityPage = () => {
           <Card sx={{p:1, mb:3}}>
             <CardContent sx={{ pb: 0,display: 'flex', alignItems: 'center' }}>
               <Avatar size='lg' variant='outlined' />
-              <Textarea value={postFormik.values.content} sx={{ flexGrow: 1, ml: 2 }} minRows={2} placeholder="What's on your mind?"/>
+              <Textarea name='content' onChange={postFormik.handleChange} value={postFormik.values.content} sx={{ flexGrow: 1, ml: 2 }} minRows={2} placeholder="What's on your mind?" aria-label='input text'/>
                 <Button onClick={postFormik.handleSubmit} type='submit' sx={{ marginLeft: 'auto' }}>Post</Button>
             </CardContent>
           </Card>

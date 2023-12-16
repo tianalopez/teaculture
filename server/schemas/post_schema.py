@@ -7,8 +7,8 @@ class PostSchema(ma.SQLAlchemySchema):
     class Meta:
         model = Post
         load_instance = True
-        fields = ["id", "content", "user", "created_at", "user_communities_id"]
+        fields = ["id", "content", "author", "created_at", "user_communities_id"]
 
     # title = fields.String(required=True, validate=validate.Length(min=2, max=80))
     content = fields.String(required=True, validate=validate.Length(min=3, max=5000))
-    user = fields.Nested('UserSchema', only=("id", "username",))
+    author = fields.Nested('UserSchema', only=("id", "username",))
