@@ -85,10 +85,12 @@ const CommunityPage = () => {
   const postFormik = useFormik({
     initialValues: {
       content: "",
+      author_id: auth.user?auth.user.id:null
     },
     validationSchema: postSchema,
     onSubmit: (values) => {
       //!CONDITIONAL LOGIC IF EDIT
+      console.log(values)
       fetch(`/communities/${id}/posts`, {
         method: "POST",
         headers: {
@@ -99,6 +101,7 @@ const CommunityPage = () => {
       })
       .then(r => r.json())
       .then((newPost) => {
+        console.log(newPost)
         setPosts([...posts, newPost])
         handleNewAlert('Post Added!')
         handleAlertType('success')
@@ -189,7 +192,6 @@ const CommunityPage = () => {
   const postCards = posts.map((post) => (
     <PostCard key={post.id} post={post}/>
   ))
-
     console.log(posts)
   return (
     <Box sx={{ flexGrow: 1, ml: 4, mr: 4, mt: 8 }}>

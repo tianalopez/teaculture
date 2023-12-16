@@ -15,7 +15,7 @@ const PostCard = ({post}) => {
     <Card sx={{ mb:2, p: 1 }}>
       <CardContent sx={{ pb: 0, display: 'flex', alignItems: 'center' }}>
         <Avatar size='lg' variant='outlined' />
-        <Typography sx={{ pl: 3 }}>{post.user.username}</Typography>
+        <Typography sx={{ pl: 3 }}>{post.author.username}</Typography>
         <Typography sx={{ marginLeft: 'auto' }}>{new Date(post.created_at).toLocaleString('en-US', {
           month: 'long', day: 'numeric', year: 'numeric',
         })}</Typography>
