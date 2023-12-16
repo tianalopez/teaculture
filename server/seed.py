@@ -83,12 +83,12 @@ if __name__ == "__main__":
                 uc = rc(user_communities)
                 posts.append(
                     Post(
-                        title=fake.catch_phrase(),
+
                         content=fake.paragraph(nb_sentences=3),
                         user_communities_id=uc.id,
                     )
                 )
-            if len(posts) >= 10:
+            if len(posts) >= 20:
                 break
         db.session.add_all(posts)
         db.session.commit()
