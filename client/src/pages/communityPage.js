@@ -214,7 +214,7 @@ const CommunityPage = () => {
       .then(r => r.json())
       .then(() => {
         setRender((status) => !status)
-        handleNewAlert('Left Community...Come back soon!')
+        handleNewAlert(`Left ${community.name}...Come back soon!`)
         handleAlertType('success')
       })
       .catch(err => {
@@ -255,8 +255,12 @@ const CommunityPage = () => {
           <Card sx={{p:1, mb:3}}>
             <CardContent sx={{ pb: 0,display: 'flex', alignItems: 'center' }}>
               <Avatar size='lg' variant='outlined' />
-              <Textarea name='content' onChange={postFormik.handleChange} value={edit?"":postFormik.values.content} sx={{ flexGrow: 1, ml: 2 }} minRows={2} placeholder="What's on your mind?" aria-label='input text'/>
-                <Button onClick={postFormik.handleSubmit} type='submit' sx={{ marginLeft: 'auto' }}>Post</Button>
+                <Textarea
+                  disabled={community.users.find((userObj) => userObj.id === auth.user.id) ? false : true}
+                  name='content' onChange={postFormik.handleChange} value={edit?"":postFormik.values.content} sx={{ flexGrow: 1, ml: 2 }} minRows={2} placeholder="What's on your mind?" aria-label='input text'/>
+                <Button
+                  disabled={community.users.find((userObj) => userObj.id === auth.user.id)? false: true}
+                  onClick={postFormik.handleSubmit} type='submit' sx={{ marginLeft: 'auto' }}>Post</Button>
             </CardContent>
           </Card>
           {postCards}
