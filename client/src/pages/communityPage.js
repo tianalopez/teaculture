@@ -158,7 +158,7 @@ const CommunityPage = () => {
   const postCards = posts.map((post) => (
     <PostCard key={post.id} post={post}/>
   ))
-
+    console.log(posts)
 
   return (
     <Box sx={{ flexGrow: 1, ml: 4, mr: 4, mt: 8 }}>
@@ -189,7 +189,7 @@ const CommunityPage = () => {
               <Button sx={{ marginLeft: 'auto' }}>Post</Button>
             </CardContent>
           </Card>
-          {/* {postCards} */}
+          {postCards}
         </Grid>
         <Grid className='member-display' sx={{ justifyContent: 'center' }} item xs={3}>
             <Grid sx={{ m: 1, display: 'flex', flexDirection: 'row', alignItems: 'center' }}>

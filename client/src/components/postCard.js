@@ -12,14 +12,16 @@ const PostCard = ({post}) => {
 
 
   return (
-    <Card sx={{ p: 1 }}>
+    <Card sx={{ mb:2, p: 1 }}>
       <CardContent sx={{ pb: 0, display: 'flex', alignItems: 'center' }}>
         <Avatar size='lg' variant='outlined' />
-        <Typography sx={{ pl: 3 }}>Username</Typography>
-        <Typography sx={{ marginLeft: 'auto' }}>Date</Typography>
+        <Typography sx={{ pl: 3 }}>{post.user.username}</Typography>
+        <Typography sx={{ marginLeft: 'auto' }}>{new Date(post.created_at).toLocaleString('en-US', {
+          month: 'long', day: 'numeric', year: 'numeric',
+        })}</Typography>
       </CardContent>
       <CardContent >
-        <Typography>This would be the content of whatever the post is</Typography>
+        <Typography>{post.content}</Typography>
       </CardContent>
       <Divider></Divider>
       <CardContent style={{ paddingBottom: 2 }} sx={{ pb: 0, display: 'flex', alignItems: 'center' }}>
