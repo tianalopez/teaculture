@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { useParams, useNavigate } from "react-router-dom";
-import { Box, Avatar, Modal, Divider, Grid, Button, Typography, Paper, CircularProgress } from '@mui/material';
+import { Box, Card, CardContent, Avatar, Modal, Divider, Grid, Button, Typography, Paper, CircularProgress } from '@mui/material';
 import '../styles/communityPage.css';
 import { useAuth } from '../auth/authProvider';
 import { useFormik } from "formik";
@@ -18,6 +18,7 @@ const CommunityPage = () => {
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
   const { handleNewAlert, handleAlertType } = useUI()
+  const drawerWidth = 240;
 
   useEffect(() => {
     Promise.all([
@@ -39,7 +40,7 @@ const CommunityPage = () => {
     description: yup.string().required("Please enter a valid description").min(3, 'Description must be at least 3 characters')
   })
 
-
+  console.log(community)
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -151,8 +152,9 @@ const CommunityPage = () => {
     <Box sx={{ flexGrow: 1, ml: 4, mr: 4, mt: 8 }}>
       <Grid container spacing={2}>
         <Grid item xs={9}>
-          <Typography variant='h3'>{community.name}</Typography>
-          <Typography>{community.users.length} Member(s) | Created XX/XX</Typography>
+          <Typography variant='h4'>{community.name}</Typography>
+          <Typography variant ='h6'>{community.users.length} Member(s) | Created: {new Date(community.created_at).toLocaleString('en-US', {
+            month: 'long', day: 'numeric', year: 'numeric',})}</Typography>
         </Grid>
         <Grid sx={{display: 'flex', alignSelf:'center', alignContent:'flex-end'}} item xs={3}>
           {community.users.find((userObj) => userObj.id === auth.user.id) && community.owner_id === auth.user.id?
@@ -167,8 +169,23 @@ const CommunityPage = () => {
             <Typography sx={{p: 1}}>{community.description}</Typography>
           </Paper>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={6} sx={{pr:2, display: 'flex', flexDirection:'column'}}>
           <Typography>Post Area</Typography>
+          <Card sx={{p:1}}>
+            <CardContent sx={{ pb: 0,display: 'flex', alignItems: 'center' }}>
+              <Avatar size='lg' variant='outlined' />
+              <Typography sx={{ pl: 3 }}>Username</Typography>
+              <Typography sx={{ marginLeft: 'auto' }}>Date</Typography>
+            </CardContent>
+            <CardContent >
+              <Typography>This would be the content of whatever the post is</Typography>
+            </CardContent>
+              <Divider></Divider>
+            <CardContent style={{ paddingBottom:2 }} sx={{pb:0, display: 'flex', alignItems: 'center' }}>
+              <Button sx={{ marginLeft: 'auto' }}>Edit</Button>
+              <Button>Delete</Button>
+            </CardContent>
+          </Card>
         </Grid>
         <Grid className='member-display' sx={{ justifyContent: 'center' }} item xs={3}>
             <Grid sx={{ m: 1, display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
