@@ -43,12 +43,11 @@ const CommunityPage = () => {
 
   },[id, render])
 
+  //!COMMUNITY ACTIONS
   const communitySchema = yup.object().shape({
     name: yup.string().required("Please enter a valid name").min(2, 'Name must be at least 2 characters'),
     description: yup.string().required("Please enter a valid description").min(3, 'Description must be at least 3 characters')
   })
-
-  console.log(community)
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -77,6 +76,19 @@ const CommunityPage = () => {
       })
       handleClose()
       formik.handleReset()
+    }
+  })
+  //!POST ACTIONS
+  const postSchema = yup.object().shape({
+    content: yup.string().required("Please enter a valid post").min(3, "Post must be at least 3 characters").max(5000, "Post cannot exceed 5000 characters")
+  })
+  const postFormik = useFormik({
+    initialValues: {
+      content: "",
+    },
+    validationSchema: postSchema,
+    onSubmit: (values) => {
+      console.log('submitted:', values)
     }
   })
   if (!community ) {
@@ -158,7 +170,7 @@ const CommunityPage = () => {
   const postCards = posts.map((post) => (
     <PostCard key={post.id} post={post}/>
   ))
-    console.log(posts)
+
 
   return (
     <Box sx={{ flexGrow: 1, ml: 4, mr: 4, mt: 8 }}>
@@ -185,8 +197,8 @@ const CommunityPage = () => {
           <Card sx={{p:1, mb:3}}>
             <CardContent sx={{ pb: 0,display: 'flex', alignItems: 'center' }}>
               <Avatar size='lg' variant='outlined' />
-              <Textarea sx={{ flexGrow: 1, ml: 2 }} minRows={2} placeholder="What's on your mind?"/>
-              <Button sx={{ marginLeft: 'auto' }}>Post</Button>
+              <Textarea value={postFormik.values.content} sx={{ flexGrow: 1, ml: 2 }} minRows={2} placeholder="What's on your mind?"/>
+                <Button onClick={postFormik.handleSubmit} type='submit' sx={{ marginLeft: 'auto' }}>Post</Button>
             </CardContent>
           </Card>
           {postCards}
