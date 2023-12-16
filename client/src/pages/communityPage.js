@@ -93,39 +93,63 @@ const CommunityPage = () => {
     },
     validationSchema: postSchema,
     onSubmit: (values) => {
-      //!CONDITIONAL LOGIC IF EDIT
-      console.log(values)
-      fetch(`/communities/${id}/posts`, {
-        method: "POST",
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify(values)
-      })
-      .then(r => r.json())
-      .then((newPost) => {
-        console.log(newPost)
-        setPosts([...posts, newPost])
-        handleNewAlert('Post Added!')
-        handleAlertType('success')
-      })
-      .catch(err => {
-        handleNewAlert(err.error)
-        handleAlertType('error')
-      })
-      postFormik.handleReset()
+      if (edit) {
+        fetch(`/posts/${selectedPost.id}`, {
+          method: "PATCH",
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify(values)
+        })
+        .then(r => r.json())
+        .then(() => {
+          setRender((status) => !status)
+          setEdit(false)
+          handleNewAlert('Post Updated!')
+          handleAlertType('success')
+          setSelectedPost(null)
+          postFormik.handleReset()
+        })
+        .catch((err) => {
+          handleNewAlert(err.error)
+          handleAlertType('error')
+        })
+
+      }
+      else {
+        fetch(`/communities/${id}/posts`, {
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify(values)
+        })
+        .then(r => r.json())
+        .then((newPost) => {
+          console.log(newPost)
+          setPosts([...posts, newPost])
+          handleNewAlert('Post Added!')
+          handleAlertType('success')
+        })
+        .catch(err => {
+          handleNewAlert(err.error)
+          handleAlertType('error')
+        })
+        postFormik.handleReset()
+      }
     }
   })
-
+  console.log(edit)
   // fill form if editing
   useEffect(() => {
     postFormik.setValues({
-      content: selectedPost ? selectedPost.content : null,
+      content: selectedPost ? selectedPost.content : "",
       author_id: auth.user.id
     })
   }, [edit])
-
+  console.log(postFormik.values)
   if (!community ) {
     return <CircularProgress />
   }
@@ -203,7 +227,7 @@ const CommunityPage = () => {
   //!POSTS SECTION
   //display posts
   const postCards = posts.map((post) => (
-    <PostCard key={post.id} post={post} handleEdit={setEdit} edit={edit} postFormik={postFormik} setSelectedPost={setSelectedPost} setRender={setRender}/>
+    <PostCard key={post.id} post={post} handleEdit={setEdit} edit={edit} postFormik={postFormik} setSelectedPost={setSelectedPost} setRender={setRender} selectedPost={selectedPost}/>
   ))
     console.log(posts)
   return (
@@ -231,7 +255,7 @@ const CommunityPage = () => {
           <Card sx={{p:1, mb:3}}>
             <CardContent sx={{ pb: 0,display: 'flex', alignItems: 'center' }}>
               <Avatar size='lg' variant='outlined' />
-              <Textarea name='content' onChange={postFormik.handleChange} value={postFormik.values.content} sx={{ flexGrow: 1, ml: 2 }} minRows={2} placeholder="What's on your mind?" aria-label='input text'/>
+              <Textarea name='content' onChange={postFormik.handleChange} value={edit?"":postFormik.values.content} sx={{ flexGrow: 1, ml: 2 }} minRows={2} placeholder="What's on your mind?" aria-label='input text'/>
                 <Button onClick={postFormik.handleSubmit} type='submit' sx={{ marginLeft: 'auto' }}>Post</Button>
             </CardContent>
           </Card>

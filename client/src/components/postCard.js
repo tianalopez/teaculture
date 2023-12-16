@@ -9,6 +9,7 @@ import { useUI } from '../components/UIContext';
 const PostCard = ({post, handleEdit, edit, postFormik, setSelectedPost, setRender}) => {
   const auth = useAuth()
   const { handleNewAlert, handleAlertType } = useUI()
+  const [thisPost, setThisPost] = useState()
 
 
   const handleDelete = () => {
@@ -29,7 +30,7 @@ const PostCard = ({post, handleEdit, edit, postFormik, setSelectedPost, setRende
       handleAlertType('error')
     })
   }
-
+  console.log(edit, thisPost, post)
   return (
     <Card sx={{ mb:2, p: 1 }}>
       <CardContent sx={{ pb: 0, display: 'flex', alignItems: 'center' }}>
@@ -40,7 +41,7 @@ const PostCard = ({post, handleEdit, edit, postFormik, setSelectedPost, setRende
         })}</Typography>
       </CardContent>
       <CardContent >
-        {edit ? <Textarea name='content' onChange={postFormik.handleChange} value={postFormik.values.content} sx={{ flexGrow: 1, ml: 2 }} minRows={2} placeholder="What's on your mind?" aria-label='input text' />
+        {edit && thisPost && thisPost.id === post.id ? <Textarea name='content' onChange={postFormik.handleChange} value={postFormik.values.content} sx={{ flexGrow: 1, ml: 2 }} minRows={2} onBlur={postFormik.handleSubmit} aria-label='input text' />
 
         :<Typography>{post.content}</Typography>}
       </CardContent>
@@ -49,6 +50,7 @@ const PostCard = ({post, handleEdit, edit, postFormik, setSelectedPost, setRende
         {auth.user && auth.user.id === post.author_id ? <Button sx={{ marginLeft: 'auto' }} onClick={() => {
           handleEdit(true)
           setSelectedPost(post)
+          setThisPost(post)
           }}>Edit</Button> : null}
         {auth.user && auth.user.id === post.author_id ? <Button
           onClick={handleDelete}
