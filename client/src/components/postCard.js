@@ -10,13 +10,6 @@ const PostCard = ({post, handleEdit, edit, postFormik, setSelectedPost, setRende
   const auth = useAuth()
   const { handleNewAlert, handleAlertType } = useUI()
 
-  //fill form if editing PUT IN PARENT
-  // useEffect(() => {
-  //   postFormik.setValues({
-  //     content: post.content,
-  //     author_id: auth.user.id
-  //   })
-  // }, [edit])
 
   const handleDelete = () => {
     fetch(`/posts/${post.id}`, {
@@ -29,6 +22,7 @@ const PostCard = ({post, handleEdit, edit, postFormik, setSelectedPost, setRende
     .then(() => {
       handleNewAlert('Post Deleted!')
       handleAlertType('success')
+      setRender((status) => !status)
     })
     .catch((err) => {
       handleNewAlert(err.error)

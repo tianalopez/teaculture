@@ -20,6 +20,7 @@ const CommunityPage = () => {
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
   const [edit, setEdit] = useState(false)
+  const [selectedPost, setSelectedPost] = useState()
   const { handleNewAlert, handleAlertType } = useUI()
 
 
@@ -116,6 +117,15 @@ const CommunityPage = () => {
       postFormik.handleReset()
     }
   })
+
+  // fill form if editing
+  useEffect(() => {
+    postFormik.setValues({
+      content: selectedPost ? selectedPost.content : null,
+      author_id: auth.user.id
+    })
+  }, [edit])
+
   if (!community ) {
     return <CircularProgress />
   }
@@ -193,7 +203,7 @@ const CommunityPage = () => {
   //!POSTS SECTION
   //display posts
   const postCards = posts.map((post) => (
-    <PostCard key={post.id} post={post} handleEdit={setEdit} edit={edit} postFormik={postFormik}/>
+    <PostCard key={post.id} post={post} handleEdit={setEdit} edit={edit} postFormik={postFormik} setSelectedPost={setSelectedPost} setRender={setRender}/>
   ))
     console.log(posts)
   return (
