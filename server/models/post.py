@@ -11,7 +11,7 @@ class Post(db.Model):
 
     # Columns for posts Table
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String, nullable=False)
+    # title = db.Column(db.String, nullable=False)
     content = db.Column(db.String, nullable=False)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     user_communities_id = db.Column(db.Integer, db.ForeignKey("user_communities.id"))
@@ -24,13 +24,13 @@ class Post(db.Model):
     community = association_proxy("user_communities", "community")
 
     # validations
-    @validates("title")
-    def validate_title(self, _, value):
-        if not isinstance(value, str):
-            raise TypeError(f"Title must be a string")
-        elif len(value) < 2 or len(value) > 80:
-            raise ValueError(f"Title must be between 2 and 80 characters")
-        return value
+    # @validates("title")
+    # def validate_title(self, _, value):
+    #     if not isinstance(value, str):
+    #         raise TypeError(f"Title must be a string")
+    #     elif len(value) < 2 or len(value) > 80:
+    #         raise ValueError(f"Title must be between 2 and 80 characters")
+    #     return value
 
     @validates("content")
     def validate_content(self, _, value):
@@ -41,4 +41,4 @@ class Post(db.Model):
         return value
 
     def __repr__(self):
-        return f"<Post #{self.id} {self.title} />"
+        return f"<Post #{self.id} {self.content} />"

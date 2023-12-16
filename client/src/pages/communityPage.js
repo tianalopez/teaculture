@@ -7,18 +7,20 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import { Textarea, Input } from '@mui/joy';
 import { useUI } from '../components/UIContext';
+import PostCard from '../components/postCard';
 
 const CommunityPage = () => {
   const auth = useAuth()
   const {id} = useParams()
   const [community, setCommunity] = useState()
+  const [posts, setPosts] = useState()
   const [render, setRender] = useState(false)
   const navigate = useNavigate();
   const [open, setOpen] = useState(false)
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
   const { handleNewAlert, handleAlertType } = useUI()
-  const drawerWidth = 240;
+
 
   useEffect(() => {
     Promise.all([
@@ -33,6 +35,12 @@ const CommunityPage = () => {
       });
     })
     .catch(err => console.log(err))
+
+    fetch(`/communities/${id}/posts`)
+    .then(r => r.json())
+    .then(setPosts)
+    .catch((err) => console.log(err))
+
   },[id, render])
 
   const communitySchema = yup.object().shape({
@@ -145,7 +153,11 @@ const CommunityPage = () => {
     }
   }
 
-
+  //!POSTS SECTION
+  //display posts
+  const postCards = posts.map((post) => (
+    <PostCard key={post.id} post={post}/>
+  ))
 
 
   return (
@@ -170,22 +182,14 @@ const CommunityPage = () => {
           </Paper>
         </Grid>
         <Grid item xs={6} sx={{pr:2, display: 'flex', flexDirection:'column'}}>
-          <Typography>Post Area</Typography>
-          <Card sx={{p:1}}>
+          <Card sx={{p:1, mb:3}}>
             <CardContent sx={{ pb: 0,display: 'flex', alignItems: 'center' }}>
               <Avatar size='lg' variant='outlined' />
-              <Typography sx={{ pl: 3 }}>Username</Typography>
-              <Typography sx={{ marginLeft: 'auto' }}>Date</Typography>
-            </CardContent>
-            <CardContent >
-              <Typography>This would be the content of whatever the post is</Typography>
-            </CardContent>
-              <Divider></Divider>
-            <CardContent style={{ paddingBottom:2 }} sx={{pb:0, display: 'flex', alignItems: 'center' }}>
-              <Button sx={{ marginLeft: 'auto' }}>Edit</Button>
-              <Button>Delete</Button>
+              <Textarea sx={{ flexGrow: 1, ml: 2 }} minRows={2} placeholder="What's on your mind?"/>
+              <Button sx={{ marginLeft: 'auto' }}>Post</Button>
             </CardContent>
           </Card>
+          {/* {postCards} */}
         </Grid>
         <Grid className='member-display' sx={{ justifyContent: 'center' }} item xs={3}>
             <Grid sx={{ m: 1, display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
