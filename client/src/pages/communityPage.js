@@ -226,7 +226,7 @@ const CommunityPage = () => {
 
   //!POSTS SECTION
   //display posts
-  const postCards = posts.map((post) => (
+  const postCards = posts?.map((post) => (
     <PostCard key={post.id} post={post} handleEdit={setEdit} edit={edit} postFormik={postFormik} setSelectedPost={setSelectedPost} setRender={setRender} selectedPost={selectedPost}/>
   ))
     console.log(posts)
