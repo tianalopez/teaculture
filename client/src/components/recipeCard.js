@@ -5,7 +5,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import { useAuth } from "../auth/authProvider"
 
-const RecipeCard = ({recipe}) => {
+const RecipeCard = ({recipe, width}) => {
   const auth = useAuth()
   //if there is no user, do not calculate
   const [isRecipeInFavorites, setIsRecipeInFavorites] = useState(
@@ -64,22 +64,22 @@ const RecipeCard = ({recipe}) => {
   };
 
   return (
-    <Card sx={{maxWidth: 345}}>
+    <Card sx={{ width: '100%',maxWidth: width, minHeight:300,maxHeight: 300,overflow: 'hidden', overflowY: 'scroll' }}>
       <CardMedia
         component='img'
         alt='random beverage image'
         height='140'
-        image={recipe.image}
+        image={recipe?.image}
       >
       </CardMedia>
       <CardContent>
       <Typography variant="h7" component='div'>
-        {recipe.title}
+        {recipe?.title}
       </Typography>
       <Typography variant='body2' color='text.secondary'>
-        Creator: {recipe.creator['username']}
+        Creator: {recipe?.creator['username']}
       </Typography>
-      <Rating name='read-only' value={recipe.average_rating ? recipe.average_rating: null} readOnly />
+      <Rating name='read-only' value={recipe?.average_rating ? recipe.average_rating: null} readOnly />
       </CardContent>
       <CardActions>
         {!auth.user ?
@@ -89,7 +89,7 @@ const RecipeCard = ({recipe}) => {
         :
           renderFavoriteButton()
           }
-        <Button component={Link} to={`/drinklab/${recipe.id}`}>
+        <Button component={Link} to={`/drinklab/${recipe?.id}`}>
           View Recipe
         </Button>
       </CardActions>

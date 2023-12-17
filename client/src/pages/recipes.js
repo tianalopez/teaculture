@@ -8,6 +8,7 @@ const Recipes = () => {
   const auth = useAuth()
   const [recipes, setRecipes] = useState([])
   const [selectedTags, setSelectedTags] = useState([])
+  const width = 345;
   const defaultSearchObj = {
     search: "",
     avg_rating: null,
@@ -57,7 +58,7 @@ const Recipes = () => {
   //map each recipe to a recipeCard
   const recipeCards = filteredRecipes.map((recipe) => (
     <Grid key={recipe.id} item xs={12} sm={6} md={4} lg={3}>
-      <RecipeCard key={recipe.id} recipe={recipe}/>
+      <RecipeCard width={width} key={recipe.id} recipe={recipe}/>
     </Grid>
   ))
 

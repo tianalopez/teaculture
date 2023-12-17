@@ -26,7 +26,7 @@ class UserSchema(ma.SQLAlchemySchema):
     password_hash = fields.String(validate=validate.Length(min=12, max=50))
     email = fields.String(required=True, validate=validate.Length(min=2, max=256))
     owned_recipes = fields.List(
-        fields.Nested("RecipeSchema", only=("id", "title", "creator_id"))
+        fields.Nested("RecipeSchema", only=("id", "title", "creator_id", "created_at",))
     )
     communities = fields.List(
         fields.Nested(
