@@ -7,18 +7,21 @@ import { useAuth } from "../auth/authProvider"
 
 const RecipeCard = ({recipe, width}) => {
   const auth = useAuth()
+  const [favorites, setFavorites] = useState()
   //if there is no user, do not calculate
   const [isRecipeInFavorites, setIsRecipeInFavorites] = useState(
-    auth.user ? auth.user.favorites.some((favorite) => favorite.id === recipe.id) : false
+    auth.user && favorites
+      ? favorites.some((favorite) => favorite.recipe_id === recipe?.id && favorite.user_id === auth.user.id)
+      : false
   );
+  console.log(isRecipeInFavorites)
 
-  // useEffect(() => {
-  //   setIsRecipeInFavorites(
-  //     auth.user.favorites.some((favorite) => favorite.id === recipe.id)
-  //   );
-  // }, [auth.user.favorites, recipe.id]);
+  //!fetch favorites in the beginning for no stale data
+  useEffect(() => {
+    fetch('/favorites').then(r => r.json()).then(setFavorites).catch(err => console.log(err))
+  },[])
 
-    const handleAdd = () => {
+  const handleAdd = () => {
     fetch('/favorites', {
       method: 'POST',
       headers: {

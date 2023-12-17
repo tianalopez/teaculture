@@ -6,4 +6,7 @@ class FavoriteSchema(ma.SQLAlchemySchema):
     class Meta:
         model = Favorite
         load_instance = True
-        fields =["id", "user_id", "recipe_id"]
+        fields =["id", "user_id", "user", "recipe_id", "recipe", "created_at",]
+
+    recipe = fields.Nested('RecipeSchema', only=("id", "title","creator_id",))
+    user = fields.Nested('UserSchema', only=("id", "username",))

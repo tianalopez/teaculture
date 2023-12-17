@@ -13,4 +13,4 @@ class ReviewSchema(ma.SQLAlchemySchema):
     rating = fields.Integer(required=True, validate=validate.Range(min=1, max=5))
     comment = fields.String(validate=validate.Length(min=3, max=300))
     user = fields.Nested('UserSchema', only=("id", "username",))
-    recipe = fields.Nested('RecipeSchema', only=("id", "title",))
+    recipe = fields.Nested('RecipeSchema', only=("id", "title","creator_id",))

@@ -12,6 +12,7 @@ const Dashboard = () => {
   const [siphub, setSiphub] = useState([])
   const [quote, setQuote] = useState()
   const [recipe, setRecipe] = useState()
+  const [notifications, setNotifications] = useState([])
   const width = 400
 
 
@@ -57,6 +58,38 @@ const Dashboard = () => {
       })
       .catch(err => console.log(err))
 
+    //*REVIEWS
+    fetch('/reviews').then(r=> r.json())
+    .then((reviews) => {
+      let my_revs = reviews
+        .filter((rev) => rev.recipe.creator_id === auth.user.id)
+        .map((rev) => ({
+          type:'review',
+          user: rev.user.username,
+          recipe: rev.recipe.title,
+          date: new Date(rev.created_at)
+        }))
+      setNotifications((old) => [
+        ...old.filter((item) => item.type !== 'review' || !my_revs.some((review) => review.comment === item.comment)), ...my_revs
+      ])
+    })
+    .catch(err => console.log(err))
+    //*FAVORITES
+    fetch('/favorites').then(r => r.json())
+    .then((favs) => {
+      let my_favs = favs
+        .filter((fav) => fav.recipe.creator_id === auth.user.id)
+        .map((fav) => ({
+          type:'favorite',
+          id: fav.id,
+          user: fav.user.username,
+          recipe: fav.recipe.title,
+          date: new Date(fav.created_at)
+        }))
+      setNotifications((old) => [
+        ...old.filter((item) => item.type !== 'favorite' || !my_favs.some((favor) => favor.id === item.id)), ...my_favs
+      ])
+    } )
     //*QUOTES
     fetch("https://api.quotable.io/random").then(r => r.json())
       .then(setQuote)
@@ -105,6 +138,27 @@ const Dashboard = () => {
       </ListItemText>
     </ListItemButton>
   ));
+  //!NOTIFICATIONS
+  const sortedNotifications = [...notifications].sort((a, b) => b.date - a.date)
+
+  const displayedNotifications = sortedNotifications.map((item) => (
+    <ListItemButton key={item.id}>
+      <ListItemIcon>
+        <PeopleTwoToneIcon />
+      </ListItemIcon>
+      <ListItemText>
+        {item.type === 'community' ? (
+          <Typography>{`New review on ${item.recipe} from ${item.user} on ${item.date.toLocaleString('en-US', {
+            month: 'long', day: 'numeric', year: 'numeric',
+          })}`}</Typography>
+        ) : (
+          <Typography>{`${item.user} liked your recipe, ${item.recipe} on ${item.date.toLocaleString('en-US', {
+            month: 'long', day: 'numeric', year: 'numeric',
+          })}`}</Typography>
+        )}
+      </ListItemText>
+    </ListItemButton>
+  ));
 
 
 
@@ -137,6 +191,7 @@ const Dashboard = () => {
                 <Card sx={{ overflow: 'hidden', overflowY: 'scroll',minHeight: 200, maxHeight: 200, width: '100%', display: 'flex', mr: 1 }}>
                   <CardContent>
                     <Typography variant='h6'>Notifications</Typography>
+                    {displayedNotifications}
                   </CardContent>
                 </Card>
               </Grid>
