@@ -34,15 +34,19 @@ class GAuth(Resource):
 
             # query the data to see if it exists in the database
             user = User.query.filter_by(email=id_info.get("email")).first()
+            # import ipdb; ipdb.set_trace()
             #!LOGIN
             if user:
                 try:
                     #!jwt code
                     jwt = create_access_token(identity=user.id)
+                    # import ipdb; ipdb.set_trace()
                     #!create a refresh token
                     refresh_token = create_refresh_token(identity=user.id)
+                    # import ipdb; ipdb.set_trace()
                     # serialize the user
                     serialized_user = user_schema.dump(user)
+                    # import ipdb; ipdb.set_trace()
                     # prepackage the response
                     response = make_response(serialized_user, 200)
                     #!set cookies on both tokens
@@ -50,7 +54,7 @@ class GAuth(Resource):
                     set_refresh_cookies(response, refresh_token)
                     return response
                 except Exception as e:
-                    return {"error": "Invalid Credentials"}, 401
+                    return {"error": str(e)}, 401
             #!REGISTER
             else:
                 try:

@@ -10,6 +10,7 @@ class UserCommunity(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
     community_id = db.Column(db.Integer, db.ForeignKey("communities.id"))
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
 
     # relationships
     user = db.relationship("User", back_populates="user_communities")

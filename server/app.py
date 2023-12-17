@@ -12,10 +12,12 @@ from routes.communities import Communities
 from routes.community_by_id import CommunityById
 from routes.post_by_id import PostById
 from routes.posts import Posts
+from routes.all_posts import AllPosts
 from routes.recipe_by_id import RecipeById
 from routes.recipes import Recipes
 from routes.review_by_id import ReviewById
 from routes.reviews import Reviews
+from routes.all_reviews import AllReviews
 from routes.user_by_id import UserById
 from routes.user_communities import UserCommunities
 from routes.user_community_by_id import UserCommunityById
@@ -37,9 +39,11 @@ api.add_resource(Communities, "/communities")
 api.add_resource(CommunityById, "/communities/<int:id>")
 api.add_resource(PostById, "/posts/<int:id>")
 api.add_resource(Posts, "/communities/<int:id>/posts")
+api.add_resource(AllPosts, "/posts")
 api.add_resource(RecipeById, "/recipes/<int:id>")
 api.add_resource(Recipes, "/recipes")
 api.add_resource(ReviewById, "/reviews/<int:id>")
+api.add_resource(AllReviews, '/reviews')
 api.add_resource(Reviews, "/reviews/journal<int:recipe_id>")
 api.add_resource(UserById, "/users/<int:id>")
 api.add_resource(UserCommunities, "/usercommunities")
