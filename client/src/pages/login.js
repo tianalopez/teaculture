@@ -3,6 +3,7 @@ import { useFormik } from "formik"
 import * as yup from "yup"
 import { useAuth } from "../auth/authProvider";
 import { Grid, Box, Typography, Button, Fab } from '@mui/material';
+import { Textarea, Input } from '@mui/joy';
 
 
 
@@ -57,21 +58,20 @@ const Login = () => {
 //!make values a use state
 
   return (
-    <>
-    <Box sx={{ flexGrow: 1, ml: 1, mr: 3, mt: 8 , }} >
-      <Grid sx={{mt: 12, ml:0}} container spacing={2} justifyContent='center'>
-          <Grid item xs={6} sx={{ backgroundColor:'#deefd0'}}>
-            <Grid sx={{ pr: '16px' }}container spacing={2}>
+    <Box sx={{ flexGrow: 1, ml: 1, mr: 3, mt: 8 }} >
+      <Grid sx={{ mt: 12, ml: 0, alignItems: 'center',}} container spacing={2} justifyContent='center'>
+        <Grid item xs={6} sx={{ backgroundColor: '#deefd0', minHeight: 700, display: 'flex', alignItems: 'center', borderRadius: '20px', boxShadow: '0 0 30px #DEEFD0' }}>
+            <Grid sx={{ pr: '16px',  }}container spacing={2}>
               <Grid sx={{ pl: 0, display:'flex', flexDirection: 'column', textAlign:'center',justifyContent:'center' }} item xs={12}>
-                <Typography variant='h3'> Welcome Back! </Typography>
-                <Typography variant='h5'>Login or Register to connect with tea and cafe drink enthusiasts!</Typography>
-                <img alt='tea' src='https://cdn.dribbble.com/users/1613082/screenshots/6307314/tea-01_4x.jpg?resize=1600x1200&vertical=center'></img>
+              <Typography fontFamily='Dosis'variant='h3' color='#2B2539'> Welcome Back! </Typography>
+              <Typography fontFamily='Dosis' variant='h5' color='#2B2539'>Login or Register to connect with tea and cafe drink enthusiasts!</Typography>
+                <img alt='tea bag' src='https://cdn.dribbble.com/users/1613082/screenshots/6307314/tea-01_4x.jpg?resize=1600x1200&vertical=center'></img>
               </Grid>
             </Grid>
           </Grid>
-          <Grid item xs={6} sx={{ mx: 'auto', textAlign: 'center', backgroundColor:'#EFC8C8' }} >
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
+        <Grid item xs={6} sx={{ mx: 'auto', textAlign: 'center', alignItems: 'center', backgroundColor: '#EFC8C8', minHeight: 700, display: 'flex', borderRadius: '20px', boxShadow: '0 0 30px #EFC8C8' }} >
+            <Grid sx={{justifyContent:'center'}}container spacing={2}>
+              <Grid item xs={12} >
                 {signUp ?
                   (<Fab sx={{ mr: 1, }} variant='extended' onClick={() => handleClick(true)}>
                     Login
@@ -86,45 +86,66 @@ const Login = () => {
                   (<Fab sx={{ ml: 1,  }} variant='extended' onClick={() => handleClick(false)}>
                     Register
                   </Fab>) }
-                <form>
+                  <Grid container spacing={2}>
+                    <Grid item xs={12} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 3}}>
+                      <Typography variant="caption">Email</Typography>
+                      <Input
+                        placeholder='Input Email'
+                        fontFamily='Dosis'
+                        type='text'
+                        name='email'
+                        value={formik.values.email}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                      />
+                      {formik.errors.email && formik.touched.email ? <div >{formik.errors.email}</div> : null}
+                    </Grid>
+                    {signUp ? (
+                      <Grid item xs={12} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', }}>
+                        <Typography variant="caption">Username</Typography>
+                        <Input
+                          fontFamily='Dosis'
+                          placeholder='Input Username'
+                          type='text'
+                          name='username'
+                          value={formik.values.username}
+                          onChange={formik.handleChange}
+                          onBlur={formik.handleBlur}
+                        />
+                        {formik.errors.username && formik.touched.username ? <div >{formik.errors.username}</div> : null}
+                      </Grid>
 
-                </form>
+                    ) : (null)}
+                    <Grid item xs={12} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', }}>
+                      <Typography variant="caption">Password</Typography>
+                      <Input
+                        placeholder='Input Password'
+                        type='password'
+                        name='password'
+                        value={formik.values.password}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                      />
+                      {formik.errors.password && formik.touched.password ? <div >{formik.errors.password}</div> : null}
+                    </Grid>
+                    <Grid item xs={12} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', }} >
+                      {signUp ? (
+                    <Button type='submit' onClick={formik.handleSubmit} sx={{ backgroundColor: '#deefd0', color:'#2B2539'}}variant='contained'>Sign Up</Button>
+                      ) : (
+                      <Button type='submit' onClick={formik.handleSubmit} sx={{ backgroundColor: '#deefd0', color:'#2B2539'}}variant='contained'>Log in</Button>
+                      )}
+                    <Grid id='signInDiv' item xs={12} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mt:10 }}>
+                    </Grid>
+
+                    </Grid>
+                  </Grid>
+
+
               </Grid>
             </Grid>
           </Grid>
       </Grid>
     </Box>
-    <div id='signInDiv'></div>
-    <div id="account-form">
-      <div id='content'>
-        <h1>Login/Register</h1>
-        <div id="register-switch">
-          {signUp ? <button onClick={() => handleClick(true)} >Login</button> : <button id='underline' >Login</button>}
-          {signUp ? <button id='underline'  >Register</button> : <button onClick={() => handleClick(false)} >Register</button>}
-        </div>
-        <form onSubmit={formik.handleSubmit}>
-          <div >
-            <label htmlFor='email'>Email</label>
-            <input id='email' type='text' name='email' value={formik.values.email} onChange={formik.handleChange} onBlur={formik.handleBlur} />
-            {formik.errors.email && formik.touched.email ? <div >{formik.errors.email}</div> : null}
-          </div>
-          {signUp && (
-            <div >
-              <label htmlFor='username'>Username</label>
-              <input type='text' name='username' value={formik.values.username} onChange={formik.handleChange} onBlur={formik.handleBlur} />
-              {formik.errors.username && formik.touched.username ? <div >{formik.errors.username}</div> : null}
-            </div>
-          )}
-          <div >
-            <label htmlFor='password'>Password</label>
-            <input type='password' name='password' value={formik.values.password} onChange={formik.handleChange} onBlur={formik.handleBlur} />
-            {formik.errors.password && formik.touched.password ? <div >{formik.errors.password}</div> : null}
-          </div>
-          <input id='login' type='submit' value={signUp ? 'Sign Up' : 'Log In'} />
-        </form>
-      </div>
-    </div>
-    </>
   )
 }
 

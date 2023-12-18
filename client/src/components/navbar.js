@@ -4,6 +4,7 @@ import { AppBar, Toolbar,Icon, IconButton, Typography, Stack, Button } from '@mu
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useAuth } from "../auth/authProvider";
 import ProfileModal from "../pages/profileModal";
+import '../styles/index.css';
 
 const Navbar = () => {
   const auth = useAuth()
@@ -16,12 +17,12 @@ const Navbar = () => {
   };
 
   return (
-    <AppBar sx={{ backgroundColor: 'transparent', color: '#6BA6A4'}}position ='sticky'>
+    <AppBar className='nav-bar' elevation={0} position ='sticky'>
       <Toolbar>
         <IconButton component={Link} to='/' size='medium' edge='start' color='inherit' aria-label='logo'>
-          <img alt="icon" src="/images/tea-culture-logo.png" style={{ width: '80px' }} />
+          <img alt="icon" src="/images/green-tea.png" style={{ width: '80px' }} />
         </IconButton>
-        <Typography variant='h5' component='div' sx={{flexGrow: 0, marginRight:2}}>
+        <Typography fontSize={36} fontFamily='Dosis' variant='h5' component='div' sx={{flexGrow: 0, marginRight:4}}>
           TEA Culture
         </Typography>
         <Stack direction='row' spacing={2} justifyContent='flex-start' sx={{ flexGrow: 1 }}>
