@@ -1,11 +1,33 @@
 import React, {useState, useEffect} from 'react';
 import { Modal, Grid, Avatar, Box, Typography, TextField, Card, ListItemText, CardContent, ListItemIcon, ListItemButton, Divider, Button, ListItem, } from '@mui/material';
 import { useAuth } from '../auth/authProvider';
-import "../styles/profile.css"
+import "../styles/profile.css";
+import * as yup from 'yup';
+import { useFormik } from "formik";
 
 const ProfileModal = ({open, handleClose}) => {
   const auth = useAuth()
-  console.log(auth.user)
+  const [edit, setEdit] = useState()
+
+  const profileSchema = yup.object().shape({
+    username: yup.string().required('Please enter a username'),
+    email: yup.string().required('Please enter a valid email'),
+    bio: yup.string(),
+  })
+
+  const formik = useFormik({
+    initialValues: {
+      username: auth.user.username,
+      email: auth.user.email,
+      bio: auth.user.bio,
+    },
+    validationSchema: profileSchema,
+    onSubmit: (values, {resetForm}) => {
+      console.log('submitted')
+    }
+  })
+
+
   return (
     <Modal
       id='profile-modal'
@@ -36,6 +58,14 @@ const ProfileModal = ({open, handleClose}) => {
             <div className='stack-stats'>
               <Typography>{auth.user.owned_communities.length}</Typography>
               <Typography>Communities Created</Typography>
+            </div>
+          </div>
+          <div className='profile-buttons'>
+            <div className='prof-button'>
+              <Button onClick={() => setEdit(true)}>Edit Profile</Button>
+            </div>
+            <div className='prof-button'>
+              <Button>Update Password</Button>
             </div>
           </div>
         </div>

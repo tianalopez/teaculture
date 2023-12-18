@@ -16,7 +16,7 @@ const Navbar = () => {
   };
 
   return (
-    <AppBar sx={{ backgroundColor: '#EDF8EE', color: '#6BA6A4'}}position ='sticky'>
+    <AppBar sx={{ backgroundColor: 'transparent', color: '#6BA6A4'}}position ='sticky'>
       <Toolbar>
         <IconButton component={Link} to='/' size='medium' edge='start' color='inherit' aria-label='logo'>
           <img alt="icon" src="/images/tea-culture-logo.png" style={{ width: '80px' }} />

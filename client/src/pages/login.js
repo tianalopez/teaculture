@@ -58,24 +58,43 @@ const Login = () => {
 
   return (
     <>
-    <div id='signInDiv'></div>
-    <Box sx={{ flexGrow: 1, ml: 4, mr: 4, mt: 8 }}>
-      <Grid sx={{mt: 12}} container spacing={2} justifyContent='center'>
-          <Grid xs={12} sx={{ mx: 'auto', textAlign:'center' }} >
-            <Fab sx={{mr: 1}} variant='extended' onClick={() => handleClick(true)}>
-              Login
-            </Fab>
-            <Fab sx={{ ml: 1 }} variant='extended' onClick={() => handleClick(false)}>
-            Register
-            </Fab>
-        </Grid>
-          <Grid item xs={6} sx={{ mx: 'auto', textAlign: 'center' }}>
-          <Typography>
-            This is where the form would go
-          </Typography>
-        </Grid>
+    <Box sx={{ flexGrow: 1, ml: 1, mr: 3, mt: 8 , }} >
+      <Grid sx={{mt: 12, ml:0}} container spacing={2} justifyContent='center'>
+          <Grid item xs={6} sx={{ backgroundColor:'#deefd0'}}>
+            <Grid sx={{ pr: '16px' }}container spacing={2}>
+              <Grid sx={{ pl: 0, display:'flex', flexDirection: 'column', textAlign:'center',justifyContent:'center' }} item xs={12}>
+                <Typography variant='h3'> Welcome Back! </Typography>
+                <Typography variant='h5'>Login or Register to connect with tea and cafe drink enthusiasts!</Typography>
+                <img alt='tea' src='https://cdn.dribbble.com/users/1613082/screenshots/6307314/tea-01_4x.jpg?resize=1600x1200&vertical=center'></img>
+              </Grid>
+            </Grid>
+          </Grid>
+          <Grid item xs={6} sx={{ mx: 'auto', textAlign: 'center', backgroundColor:'#EFC8C8' }} >
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                {signUp ?
+                  (<Fab sx={{ mr: 1, }} variant='extended' onClick={() => handleClick(true)}>
+                    Login
+                  </Fab>) :
+                  (<Fab sx={{ mr: 1, backgroundColor: '#deefd0' }} variant='extended' onClick={() => handleClick(true)}>
+                    Login
+                  </Fab>)}
+                {signUp ?
+                  (<Fab sx={{ ml: 1 ,backgroundColor: '#deefd0'}} variant='extended' onClick={() => handleClick(false)}>
+                  Register
+                  </Fab>) :
+                  (<Fab sx={{ ml: 1,  }} variant='extended' onClick={() => handleClick(false)}>
+                    Register
+                  </Fab>) }
+                <form>
+
+                </form>
+              </Grid>
+            </Grid>
+          </Grid>
       </Grid>
     </Box>
+    <div id='signInDiv'></div>
     <div id="account-form">
       <div id='content'>
         <h1>Login/Register</h1>
