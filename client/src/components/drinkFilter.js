@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Rating, TextField, Typography, FormControlLabel} from '@mui/material';
+import { Button, Rating, TextField, Typography, FormControlLabel, Grid, Box} from '@mui/material';
 import { MedicinalSwitch, FavoriteSwitch } from '../styles/SwitchStyles';
 import { useAuth } from "../auth/authProvider";
 
@@ -26,31 +26,25 @@ const DrinkFilter = ({recipes, searchObj, handleSearchChange, setSelectedTags, s
   //!toggle for saved
 
   return (
-    <>
+    <Box sx={{ flexGrow: 1, ml: 2, mr:2 }}>
     <form >
+      <Grid container spacing={2}>
+        <Grid item xs={12} sx={{display:'flex', flexDirection:'column'}}>
+
         <TextField
+          fontFamily='Dosis'
           name='search'
           onChange={onChange}
           value={searchObj.search}
           label='Search for Drink'
           type='search'
           variant='standard' />
-        <FormControlLabel
-          label="Medicinal Drink"
-          labelPlacement='start'
-          sx={{ml:0}}
-          control={<MedicinalSwitch
-            name="medicinal"
-            checked={searchObj.medicinal}
-            onChange={onChange}
-          />}
-        />
-        <Typography>Filter by Rating:</Typography>
+        <Typography fontFamily='Dosis' variant='h6'>Filter by Rating:</Typography>
         <Rating
           name='avg_rating'
           value={searchObj.avg_rating}
           onChange={onChange}/>
-        <Typography>Filter by Tags</Typography>
+        <Typography fontFamily='Dosis' >Filter by Tags</Typography>
         <Button
           variant={selectedTags.includes('caffeine') ? 'contained': 'outlined'}
           name="caffeine"
@@ -73,18 +67,33 @@ const DrinkFilter = ({recipes, searchObj, handleSearchChange, setSelectedTags, s
           onClick={handleClick}>Spiced</Button>
         {auth.user ? (
           <FormControlLabel
-            label="Favorited"
-            labelPlacement='start'
-            sx={{ ml: 0 }}
-            control={<FavoriteSwitch
-              name="favorited"
-              checked={searchObj.favorited}
-              onChange={onChange}
+          label="Favorited"
+          labelPlacement='start'
+          sx={{ ml: 0 }}
+          control={<FavoriteSwitch
+            name="favorited"
+            checked={searchObj.favorited}
+            onChange={onChange}
             />}
-          />
-        ): null}
+            />
+            ): null}
+            <FormControlLabel
+              label="Medicinal Drink"
+              labelPlacement='start'
+              sx={{ml:0}}
+              control={<MedicinalSwitch
+                name="medicinal"
+                checked={searchObj.medicinal}
+                onChange={onChange}
+              />}
+            />
+        </Grid>
+
+      </Grid>
     </form>
-    </>
+
+    </Box>
+
   )
 }
 

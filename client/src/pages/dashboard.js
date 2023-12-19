@@ -111,7 +111,7 @@ const Dashboard = () => {
         <PostAddOutlinedIcon />
       </ListItemIcon>
       <ListItemText>
-        <Typography>{recipe.title} ({new Date(recipe.created_at).toLocaleString('en-US', {
+        <Typography fontFamily='Dosis'>{recipe.title} ({new Date(recipe.created_at).toLocaleString('en-US', {
           month: 'long', day: 'numeric', year: 'numeric',
         })})</Typography>
       </ListItemText>
@@ -127,11 +127,11 @@ const Dashboard = () => {
       </ListItemIcon>
       <ListItemText>
         {item.type === 'community' ? (
-          <Typography>{`Joined ${item.name} on ${item.date.toLocaleString('en-US', {
+          <Typography fontFamily='Dosis'>{`Joined ${item.name} on ${item.date.toLocaleString('en-US', {
           month: 'long', day: 'numeric', year: 'numeric',
         })}`}</Typography>
         ) : (
-          <Typography>{`Posted in ${item.community} on ${item.date.toLocaleString('en-US', {
+          <Typography fontFamily='Dosis'>{`Posted in ${item.community} on ${item.date.toLocaleString('en-US', {
           month: 'long', day: 'numeric', year: 'numeric',
         })}`}</Typography>
         )}
@@ -148,11 +148,11 @@ const Dashboard = () => {
       </ListItemIcon>
       <ListItemText>
         {item.type === 'community' ? (
-          <Typography>{`New review on ${item.recipe} from ${item.user} on ${item.date.toLocaleString('en-US', {
+          <Typography fontFamily='Dosis'>{`New review on ${item.recipe} from ${item.user} on ${item.date.toLocaleString('en-US', {
             month: 'long', day: 'numeric', year: 'numeric',
           })}`}</Typography>
         ) : (
-          <Typography>{`${item.user} liked your recipe, ${item.recipe} on ${item.date.toLocaleString('en-US', {
+            <Typography fontFamily='Dosis'>{`${item.user} liked your recipe, ${item.recipe} on ${item.date.toLocaleString('en-US', {
             month: 'long', day: 'numeric', year: 'numeric',
           })}`}</Typography>
         )}
@@ -163,34 +163,34 @@ const Dashboard = () => {
 
 
   return (
-    <Box sx={{ flexGrow: 1, ml: 0, mr: 4, mt: 8, mb:8 }}>
+    <Box sx={{ flexGrow: 1, ml: 0, mr: 4, mt: 4, mb:8 }}>
       <Grid sx={{ml:0}}container spacing={2}>
         <Grid sx={{ pl: '16px' }} item xs={12}>
-          <Typography variant='h3'>Welcome, {auth.user.username}</Typography>
+          <Typography fontFamily='Dosis' variant='h3'>Welcome, {auth.user.username}</Typography>
         </Grid>
         <Grid sx={{mt:3, pl:0}} container spacing={2}>
           <Grid item xs={8} >
             <Grid sx={{ml:0}} container spacing={2}>
               <Grid item xs={6}>
-                <Card sx={{ overflow: 'hidden', overflowY: 'scroll',minHeight: 400, maxHeight: 400,width: '100%', display:'flex', mr:1 }}>
+                <Card sx={{ overflow: 'hidden', overflowY: 'scroll', minHeight: 400, maxHeight: 400, width: '100%', display: 'flex', mr: 1, borderRadius: '20px', backgroundColor:'#EFC8C8' }}>
                   <CardContent>
-                    <Typography variant='h6'>My Recipes</Typography>
+                    <Typography fontFamily='Dosis' fontWeight='400' variant='h5'>My Recipes</Typography>
                     {displayedRecipes}
                   </CardContent>
                 </Card>
               </Grid>
               <Grid item xs={6}>
-                <Card sx={{ overflow: 'hidden', overflowY: 'scroll',minHeight: 400, maxHeight: 400,width: '100%',display: 'flex', mr:1 }}>
+                <Card sx={{ overflow: 'hidden', overflowY: 'scroll', minHeight: 400, maxHeight: 400, width: '100%', display: 'flex', mr: 1, borderRadius: '20px', backgroundColor:'#DEEFD0' }}>
                   <CardContent>
-                    <Typography variant='h6'>SipHub Activity</Typography>
+                    <Typography fontFamily='Dosis' fontWeight='400' variant='h5'>SipHub Activity</Typography>
                     {displayedSiphub}
                   </CardContent>
                 </Card>
               </Grid>
               <Grid item xs={12}>
-                <Card sx={{ overflow: 'hidden', overflowY: 'scroll',minHeight: 200, maxHeight: 200, width: '100%', display: 'flex', mr: 1 }}>
+                <Card sx={{ overflow: 'hidden', overflowY: 'scroll', minHeight: 200, maxHeight: 200, width: '100%', display: 'flex', mr: 1, borderRadius: '20px', backgroundColor: '#EBE9E4' }}>
                   <CardContent>
-                    <Typography variant='h6'>Notifications</Typography>
+                    <Typography fontWeight='400' fontFamily='Dosis' variant='h5'>Notifications</Typography>
                     {displayedNotifications}
                   </CardContent>
                 </Card>
@@ -200,19 +200,19 @@ const Dashboard = () => {
           <Grid sx={{ pt: 0, '&&': { paddingTop: 0 } }} item xs={4}>
             <Grid container spacing={2} sx={{ mt:0,pl:2,display: 'flex', 'flexDirection':'column'}}>
               <Grid item xs={12}>
-                <Card sx={{ overflow: 'hidden', overflowY: 'scroll',minHeight: 200, maxHeight: 200, width: '100%', display: 'flex' }}>
-                  <CardContent>
-                    <Typography variant='h6'>Quote of the Day</Typography>
-                    <Typography sx={{mt:2}}>"{quote?.content}"</Typography>
-                    <Typography sx={{ mt: 2 }}>-{quote?.author}</Typography>
+                <Card sx={{ overflow: 'hidden', overflowY: 'scroll', minHeight: 200, maxHeight: 200, width: '100%', display: 'flex', borderRadius: '20px', backgroundColor:'#EBE9E4' }}>
+                  <CardContent >
+                    <Typography fontFamily='Dosis' fontWeight='400' variant='h5'>Quote of the Day</Typography>
+                    <Typography fontFamily='Dosis' sx={{mt:2}}>"{quote?.content}"</Typography>
+                    <Typography fontFamily='Dosis' sx={{ mt: 2 }}>-{quote?.author}</Typography>
                   </CardContent>
                 </Card>
               </Grid>
               <Grid item xs={12}>
 
-              <Card sx={{ justifyContent: 'center',overflow: 'hidden',  overflowY: 'scroll',minHeight: 400, maxHeight: 400, width: '100%', display: 'flex' }}>
-                <CardContent sx={{pb:0}}>
-                  <Typography variant='h6'>Random Recipe</Typography>
+                <Card sx={{ justifyContent: 'flex-start', overflow: 'hidden', overflowY: 'scroll', minHeight: 400, maxHeight: 400, width: '100%', display: 'flex', borderRadius: '20px', backgroundColor: '#DEEFD0' }}>
+                <CardContent sx={{pb:0,}}>
+                    <Typography fontFamily='Dosis' fontWeight='400' variant='h5'>Random Recipe</Typography>
                   <RecipeCard recipe={recipe} width={width}/>
                 </CardContent>
               </Card>
