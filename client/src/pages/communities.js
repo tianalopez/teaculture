@@ -69,20 +69,20 @@ const Communities = () => {
   })
 
   return (
-    <Box sx={{ flexGrow: 1, ml: 4, mr: 4, mt: 8 }}>
+    <Box sx={{ flexGrow: 1, ml: 0, mr: 4, mt: 4, mb: 8 }}>
       <Grid sx={{ml:0}} container spacing={2}>
         <Grid item xs={12}>
-          <Typography variant='h3'>SipHub</Typography>
-          <Typography variant='h6'>Create connections with other tea and coffee lovers!</Typography>
+          <Typography fontFamily='Dosis' variant='h3' >SipHub</Typography>
+          <Typography fontFamily='Dosis' variant='h6'>Create connections with other tea and coffee lovers!</Typography>
           <Button onClick={handleOpen} variant='outlined'>Create a new community</Button>
           <Modal id='community-modal' open={open} onClose={handleClose}>
             <div className='modal-container'>
               <h1 className="modal-title">Add a New Community</h1>
               <form className='modal-form'>
-                <Typography sx={{mt:2}}>Add the name of your new community</Typography>
+                <Typography fontFamily='Dosis' sx={{mt:2}}>Add the name of your new community</Typography>
                 <Input onBlur={formik.handleBlur} value={formik.values.name} onChange={formik.handleChange} variant='outlined' sx={{mb:2}} placeholder='Community name...' name='name'/>
                 {formik.errors.name && formik.touched.name ? <div>{formik.errors.name}</div> : null}
-                <Typography>Give a short description about your community</Typography>
+                <Typography fontFamily='Dosis'>Give a short description about your community</Typography>
                 <Textarea onBlur={formik.handleBlur} value={formik.values.description} onChange={formik.handleChange} className='com-input' placeholder='Add your description...' variant='outlined' minRows={4} name='description' />
                 {formik.errors.description && formik.touched.description ? <div>{formik.errors.description}</div> : null}
                 <Button onClick={formik.handleSubmit} sx={{mt:2}} variant='contained' type='submit'>Add Community</Button>

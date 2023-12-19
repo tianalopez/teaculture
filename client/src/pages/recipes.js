@@ -77,7 +77,7 @@ const Recipes = () => {
           <DrinkFilter recipes={recipes} searchObj={searchObj} handleSearchChange={handleSearchChange} selectedTags={selectedTags} setSelectedTags={setSelectedTags}/>
         </Grid>
         </Grid>
-        <Grid sx={{ p: 2, backgroundColor: 'white', justifyContent: 'center' }} item xs={9}>
+        <Grid sx={{ p: 2, justifyContent: 'center' }} item xs={9}>
           <Grid container spacing={2}>
           {recipeCards}
           </Grid>

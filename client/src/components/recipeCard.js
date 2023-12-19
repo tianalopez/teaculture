@@ -4,6 +4,7 @@ import { Button, Typography, Card, Rating, CardMedia, CardContent, CardActions, 
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import { useAuth } from "../auth/authProvider"
+import "../styles/recipeCard.css"
 
 const RecipeCard = ({recipe, width}) => {
   const auth = useAuth()
@@ -67,7 +68,7 @@ const RecipeCard = ({recipe, width}) => {
   };
 
   return (
-    <Card sx={{ width: '100%',maxWidth: width, minHeight:300,maxHeight: 300,overflow: 'hidden', overflowY: 'scroll' }}>
+    <Card className='recipe-card' sx={{ boxShadow: '5px 5px #EFC8C8', width: '100%', backgroundColor: '#F6F5F3',borderRadius: '20px',maxWidth: width, minHeight:300,maxHeight: 300,overflow: 'hidden', overflowY: 'scroll' }}>
       <CardMedia
         component='img'
         alt='random beverage image'
@@ -75,7 +76,7 @@ const RecipeCard = ({recipe, width}) => {
         image={recipe?.image}
       >
       </CardMedia>
-      <CardContent>
+      <CardContent sx={{ backgroundColor:'#F6F5F3'}}>
       <Typography variant="h7" component='div'>
         {recipe?.title}
       </Typography>
@@ -84,7 +85,7 @@ const RecipeCard = ({recipe, width}) => {
       </Typography>
       <Rating name='read-only' value={recipe?.average_rating ? recipe.average_rating: null} readOnly />
       </CardContent>
-      <CardActions>
+      <CardActions sx={{ backgroundColor: '#F6F5F3' }}>
         {!auth.user ?
           <IconButton  disabled aria-label='add to favorites' size="small">
             <FavoriteIcon />
