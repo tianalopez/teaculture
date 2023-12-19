@@ -1,0 +1,36 @@
+#profile-modal {
+  position: fixed;
+  z-index: 1300;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.review-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 20px;
+}
+
+#user-info {
+  margin-left: 30px;
+}
+
+#extra-info {
+
+  margin-top: 20px;
+}
+
+.stats {
+  display: flex;
+  flex-direction: row;
+}
+
+.stack-stats {
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 30px;
+}

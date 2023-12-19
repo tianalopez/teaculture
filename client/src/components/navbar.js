@@ -1,10 +1,15 @@
 import { Link, NavLink } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
 import { AppBar, Toolbar,Icon, IconButton, Typography, Stack, Button } from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useAuth } from "../auth/authProvider";
+import ProfileModal from "../pages/profileModal";
 
 const Navbar = () => {
   const auth = useAuth()
+  const [open, setOpen] = useState(false)
+  const handleOpen = () => setOpen(true)
+  const handleClose = () => setOpen(false)
   const handleLogout = () => {
     auth.onLogout()
     //!DO YOU NAVIGATE HERE?
@@ -53,9 +58,10 @@ const Navbar = () => {
             <Button color='inherit' component={Link} to={"/"} onClick={handleLogout}>
               Logout
             </Button>
-            <IconButton aria-label="profile" size="medium"component={Link} to={`/users/${auth.user.id}/profile`}>
+            <IconButton aria-label="profile" size="medium" onClick={handleOpen}>
               <AccountCircleIcon size="inherit" />
             </IconButton>
+            <ProfileModal open={open} handleClose={handleClose}/>
           </>
           )}
         </Stack>
