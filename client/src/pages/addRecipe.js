@@ -90,10 +90,12 @@ const AddRecipe = () => {
   });
 
   return (
-    <Box sx={{ flexGrow: 1, ml: 4, mr: 4, mt: 8, mb:8 }}>
-        <Grid sx={{mb: 5}} item xs={12}>
-          <Typography variant='h3'>Create a New Recipe</Typography>
-        </Grid>
+    <Box sx={{ flexGrow: 1, ml: 'auto', mr: 'auto', mt: 4, mb: 8 }}>
+      <Grid sx={{ ml: 0 }} container spacing={2}>
+          <Grid sx={{mb: 5}} item xs={12}>
+            <Typography fontFamily='Dosis' variant='h3'>Create a New Recipe</Typography>
+          </Grid>
+      </Grid>
       <RecipeForm formik={formik} setEdit={setEdit} setRecipeId={setRecipeId}/>
     </Box>
   )

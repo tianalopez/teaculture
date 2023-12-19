@@ -1,7 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Dosis:wght@200;300;400&family=Gaegu:wght@300;400&family=Indie+Flower&display=swap');
+
+.recipe-form {
+  margin:auto;
+}
 
 .recipe-container {
-  background-color: #F4CBB5;
-  box-shadow: 10px 10px 10px #F77159;
+  background-color: #DEEFD0;
+  border-radius: 20px;
+  /* box-shadow: 10px 10px 10px #F77159; */
+}
+
+.recipe-chip {
+  font-family: "Gaegu";
 }
 
 .ingredients-list {
