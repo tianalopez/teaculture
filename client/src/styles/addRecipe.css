@@ -19,17 +19,17 @@
   overflow-y: auto;
 }
 
-.filledChip {
-  background-color: red;
-}
 
 .selectedImg {
-  box-shadow:0 0 20px green;
+  box-shadow:0 0 20px #EFC8C8;
+  height: 100%;
+  width:100%;
+  object-fit: 'cover';
 }
 
 .allImg {
   cursor: pointer;
 }
 .allImg:hover {
-  box-shadow: 0 0 20px green;
+  box-shadow: 0 0 20px #EFC8C8;
 }

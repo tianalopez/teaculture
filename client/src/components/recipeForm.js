@@ -169,8 +169,12 @@ const RecipeForm = ({formik , setEdit, setRecipeId}) => {
             />
             {formik.errors.title && formik.touched.title ? <div>{formik.errors.title}</div> : null}
           </Typography>
-          {!editingRecipe ? <Button sx={{ mr: 4,alignSelf: 'flex-start', ml: 'auto' }}type='submit'>Add Recipe</Button>
-            : <Button sx={{ alignSelf: 'flex-start', mr: 4, ml: 'auto' }}type='submit'> Update Recipe</Button>}
+          {!editingRecipe ? <Button
+            className='filter-tag-clicked'
+            sx={{ mr: 4,alignSelf: 'flex-start', ml: 'auto' }}type='submit'>Add Recipe</Button>
+            : <Button
+              className='filter-tag-clicked'
+            sx={{ alignSelf: 'flex-start', mr: 4, ml: 'auto' }}type='submit'> Update Recipe</Button>}
         </Grid>
         <Grid sx={{ pl: 2, }} item xs={4}>
           <Paper sx={{ p: 3, backgroundColor:'#F6F5F3', borderRadius:'20px' }} elevation={4}>
@@ -244,10 +248,10 @@ const RecipeForm = ({formik , setEdit, setRecipeId}) => {
             <Grid container spacing={2}>
               <Grid item xs={9}>
                 <Typography fontFamily='Dosis' variant='h6'>Pick Cover Image</Typography>
-                <ImageList sx={{ width: '100%' }} cols={4} rowHeight={164}>
+                <ImageList sx={{ width: '100%' }} cols={4} rowHeight={200}>
                   {randomImage.map((image) => (
                     <ImageListItem
-                      sx={{m:0.5}}
+                      sx={{m:0.5, boxSizing: 'content-box', p:1}}
                       title={image.img} key={image.img}>
                       <img
                         className={selectedImg === image.img ? 'selectedImg' : 'allImg'}
