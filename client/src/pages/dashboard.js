@@ -210,11 +210,13 @@ const Dashboard = () => {
               </Grid>
               <Grid item xs={12}>
 
-                <Card sx={{ justifyContent: 'flex-start', overflow: 'hidden', overflowY: 'scroll', minHeight: 400, maxHeight: 400, width: '100%', display: 'flex', borderRadius: '20px', backgroundColor: '#DEEFD0' }}>
-                <CardContent sx={{pb:0,}}>
+                <Card sx={{ overflow: 'hidden', overflowY: 'scroll', minHeight: 400, maxHeight: 400, width: '100%', display: 'flex', borderRadius: '20px', backgroundColor: '#DEEFD0', flexDirection:'column', flex:0 }}>
+                  <CardContent sx={{pb:0,}}>
                     <Typography fontFamily='Dosis' fontWeight='400' variant='h5'>Random Recipe</Typography>
-                  <RecipeCard recipe={recipe} width={width}/>
-                </CardContent>
+                  </CardContent>
+                  <CardContent sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <RecipeCard recipe={recipe} width={width}/>
+                  </CardContent>
               </Card>
               </Grid>
             </Grid>

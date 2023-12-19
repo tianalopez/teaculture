@@ -25,7 +25,7 @@ const Communities = () => {
   },[])
 
     const communityCards = communities && communities.map((community) => (
-      <Grid key={community.id} item xs={12} sm={6} md={4} lg={3}>
+      <Grid sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }} key={community.id} item xs={12} sm={6} md={4} lg={3}>
         <CommunityCard key={community.id} community={community}/>
       </Grid>
     ))
@@ -71,9 +71,11 @@ const Communities = () => {
   return (
     <Box sx={{ flexGrow: 1, ml: 0, mr: 4, mt: 4, mb: 8 }}>
       <Grid sx={{ml:0}} container spacing={2}>
-        <Grid item xs={12}>
-          <Typography fontFamily='Dosis' variant='h3' >SipHub</Typography>
-          <Typography fontFamily='Dosis' variant='h6'>Create connections with other tea and coffee lovers!</Typography>
+        <Grid sx={{ pl:'16px',display: 'flex', alignItems: 'center', justifyContent: 'space-between' }} item xs={12}>
+          <div>
+            <Typography fontFamily='Dosis' variant='h3' >SipHub</Typography>
+            <Typography fontFamily='Dosis' variant='h6'>Create connections with other tea and coffee lovers!</Typography>
+          </div>
           <Button onClick={handleOpen} variant='outlined'>Create a new community</Button>
           <Modal id='community-modal' open={open} onClose={handleClose}>
             <div className='modal-container'>
@@ -91,7 +93,7 @@ const Communities = () => {
           </Modal>
         </Grid>
         <Grid sx={{ mt: 4, p: 2, justifyContent: 'center' }} item xs={12}>
-          <Grid sx={{ml:0}} container spacing={2}>
+          <Grid sx={{ml:0, justifyContent:'center'}} container spacing={2}>
             {communityCards}
           </Grid>
         </Grid>

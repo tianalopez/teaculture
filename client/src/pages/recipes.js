@@ -79,7 +79,7 @@ const Recipes = () => {
         </Grid>
         <Grid sx={{ p: 2, justifyContent: 'center' }} item xs={9}>
           <Grid container spacing={2}>
-          {recipeCards}
+            {recipeCards}
           </Grid>
         </Grid>
       </Grid>
