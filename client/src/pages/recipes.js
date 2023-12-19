@@ -64,20 +64,22 @@ const Recipes = () => {
 
 
   return (
-    <Box sx={{flexGrow: 1, ml: 4, mr: 4, mt: 8}}>
-      <Grid container spacing={2}>
+    <Box sx={{ flexGrow: 1, ml: 0, mr: 4, mt: 4, mb: 8 }}>
+      <Grid sx={{ ml: 0 }} container spacing={2}>
         <Grid item xs={12}>
-          <Typography variant='h3'>
+          <Typography fontFamily='Dosis' variant='h3'>
             Drink Lab
           </Typography>
         </Grid>
-        <Grid item xs={3}>
-          <Typography>Filter</Typography>
+        <Grid item xs={3} sx={{ display: 'flex', flexDirection: 'column' }} >
+        <Grid container spacing={2} sx={{display: 'flex', flexDirection:'column'}}>
+
           <DrinkFilter recipes={recipes} searchObj={searchObj} handleSearchChange={handleSearchChange} selectedTags={selectedTags} setSelectedTags={setSelectedTags}/>
         </Grid>
-        <Grid sx={{ p: 2, backgroundColor: 'white', justifyContent: 'center' }} item xs={9}>
+        </Grid>
+        <Grid sx={{ p: 2, justifyContent: 'center' }} item xs={9}>
           <Grid container spacing={2}>
-          {recipeCards}
+            {recipeCards}
           </Grid>
         </Grid>
       </Grid>

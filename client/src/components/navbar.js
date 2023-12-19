@@ -17,7 +17,7 @@ const Navbar = () => {
   };
 
   return (
-    <AppBar className='nav-bar' elevation={0} position ='sticky'>
+    <AppBar sx={{ backgroundColor: '#EDD9D6', color:'#2B2539'}} elevation={0} position ='sticky'>
       <Toolbar>
         <IconButton component={Link} to='/' size='medium' edge='start' color='inherit' aria-label='logo'>
           <img alt="icon" src="/images/green-tea.png" style={{ width: '80px' }} />

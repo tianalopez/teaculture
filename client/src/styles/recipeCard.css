@@ -1,0 +1,21 @@
+.recipe-card {
+  transition: transform 0.3s ease-in-out
+}
+
+.recipe-card:hover {
+  transform: scale(1.05);
+}
+
+/* Drink Filter */
+
+.filter-tag {
+  color:#2B2539 !important;
+  border-color: #2B2539 !important;
+  margin: 0.3em;
+}
+
+.filter-tag-clicked {
+  color: #F6F5F3 !important;
+  background-color: #2B2539 !important;
+  margin: 0.3em;
+}
