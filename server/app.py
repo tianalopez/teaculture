@@ -5,6 +5,7 @@
 # Local imports
 from app_setup import app, db, ma, api, jwt
 from models.user import User
+from flask import render_template
 
 # Route Imports
 # from routes.check_session import CheckSession
@@ -43,7 +44,7 @@ api.add_resource(AllPosts, "/posts")
 api.add_resource(RecipeById, "/recipes/<int:id>")
 api.add_resource(Recipes, "/recipes")
 api.add_resource(ReviewById, "/reviews/<int:id>")
-api.add_resource(AllReviews, '/reviews')
+api.add_resource(AllReviews, "/reviews")
 api.add_resource(Reviews, "/reviews/journal<int:recipe_id>")
 api.add_resource(UserById, "/users/<int:id>")
 api.add_resource(UserCommunities, "/usercommunities")
@@ -66,6 +67,11 @@ api.add_resource(Refresh, "/refresh")
 def user_lookup_callback(_jwt_header, jwt_data):
     identity = jwt_data["sub"]
     return db.session.get(User, identity)
+
+
+@app.route("/")
+def index(id=0):
+    return render_template("index.html")
 
 
 if __name__ == "__main__":
