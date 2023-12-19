@@ -1,7 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Dosis:wght@200;300;400&family=Gaegu:wght@300;400&family=Indie+Flower&display=swap');
+
 :root {
   --bg: #282c34;
   --header: #fff;
   --link: #61dafb;
   --text: hsla(0, 0%, 100%, 0.88);
-  background-color: #EDF8EE;
+  background-color: #EDD9D6;
+}
+
+.nav-bar {
+  font-family: 'Dosis', sans-serif;
+  font-weight: 300;
+  background-color:#EDD9D6 ;
+  color:#2B2539;
+}
+
+.typography {
+  font-family: 'Dosis', sans-serif;
+    font-weight: 400;
 }

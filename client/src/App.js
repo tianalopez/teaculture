@@ -6,7 +6,7 @@ import AlertBar from './components/alertbar';
 
 
 //page imports
-import Welcome from './pages/welcome';
+// import Welcome from './pages/welcome';
 import Login from './pages/login';
 import Recipes from './pages/recipes';
 import RecipePage from './pages/recipePage';
@@ -29,7 +29,7 @@ function App() {
       <Navbar />
       <AlertBar />
       <Routes>
-        <Route path="/" element={<Welcome />}/>
+        <Route path="/" element={<Login />}/>
         <Route path="login" element={<Login />} />
         <Route path="drinklab" element={<Recipes />} />
         <Route path="drinklab/:id" element={<RecipePage />} />
