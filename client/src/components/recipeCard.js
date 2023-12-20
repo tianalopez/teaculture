@@ -77,10 +77,10 @@ const RecipeCard = ({recipe, width}) => {
       >
       </CardMedia>
       <CardContent sx={{ backgroundColor:'#F6F5F3'}}>
-      <Typography variant="h7" component='div'>
+      <Typography fontSize={'1.05rem'} fontFamily= 'Dosis' component='div'>
         {recipe?.title}
       </Typography>
-      <Typography variant='body2' color='text.secondary'>
+        <Typography fontFamily='Dosis' variant='body2' color='text.secondary'>
         Creator: {recipe?.creator['username']}
       </Typography>
       <Rating name='read-only' value={recipe?.average_rating ? recipe.average_rating: null} readOnly />
@@ -93,7 +93,7 @@ const RecipeCard = ({recipe, width}) => {
         :
           renderFavoriteButton()
           }
-        <Button component={Link} to={`/drinklab/${recipe?.id}`}>
+        <Button className='filter-tag-clicked'component={Link} to={`/drinklab/${recipe?.id}`}>
           View Recipe
         </Button>
       </CardActions>
