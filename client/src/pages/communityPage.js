@@ -22,6 +22,24 @@ const CommunityPage = () => {
   const [edit, setEdit] = useState(false)
   const [selectedPost, setSelectedPost] = useState()
   const { handleNewAlert, handleAlertType } = useUI()
+  const [teas, setTeas] = useState([]);
+  const [randomTeaIndex, setRandomTeaIndex] = useState(null);
+
+  //!RANDOM TEA DISCUSSION
+  useEffect(() => {
+    fetch('https://boonakitea.cyclic.app/api/all')
+      .then((r) => r.json())
+      .then((teas) => {
+        setTeas(teas);
+        setRandomTeaIndex(Math.floor(Math.random() * teas.length));
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  const handleNewTopic = () => {
+    setRandomTeaIndex(Math.floor(Math.random() * teas.length));
+  };
+
 
 
 
@@ -45,6 +63,8 @@ const CommunityPage = () => {
     .catch((err) => console.log(err))
 
   },[id, render])
+
+
 
   //!COMMUNITY ACTIONS
   const communitySchema = yup.object().shape({
@@ -141,7 +161,7 @@ const CommunityPage = () => {
       }
     }
   })
-  console.log(edit)
+
   // fill form if editing
   useEffect(() => {
     postFormik.setValues({
@@ -149,10 +169,13 @@ const CommunityPage = () => {
       author_id: auth.user.id
     })
   }, [edit])
-  console.log(postFormik.values)
-  if (!community ) {
+
+  if (!community || !teas) {
     return <CircularProgress />
   }
+
+  const currentTea = teas[randomTeaIndex] || {};
+  console.log(currentTea)
 
   const members = community.users.map((user) => (
     <Grid key={user.id} sx={{ m: 1, display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
@@ -226,10 +249,12 @@ const CommunityPage = () => {
 
   //!POSTS SECTION
   //display posts
-  const postCards = posts?.map((post) => (
+  const postCards = posts?.sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+    .map((post) => (
     <PostCard key={post.id} post={post} handleEdit={setEdit} edit={edit} postFormik={postFormik} setSelectedPost={setSelectedPost} setRender={setRender} selectedPost={selectedPost}/>
   ))
-    console.log(posts)
+
+
   return (
     <Box sx={{ flexGrow: 1, ml: 2, mr: 4, mt: 4, mb: 8 }}>
       <Grid sx={{ ml: 0 }} container spacing={2}>
@@ -246,26 +271,71 @@ const CommunityPage = () => {
         </Grid>
       <Grid sx={{mt:3}} container spacing={2}>
         <Grid sx={{}}item xs={3}>
-          <Paper sx={{p:2, minHeight:'50vh',backgroundColor: '#F6F5F3', borderRadius: '20px' }}>
+          <Paper sx={{p:2, height: '25vh',backgroundColor: '#F6F5F3', borderRadius: '20px' }}>
               <Typography fontFamily='Dosis' variant='h6'>About</Typography>
               <Typography fontFamily='Dosis' sx={{p: 1}}>{community.description}</Typography>
           </Paper>
+            <Paper sx={{
+              mt: 2,
+              p: 2,
+              height: '45vh',
+              backgroundColor: '#F6F5F3',
+              borderRadius: '20px',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+              position: 'relative',
+              overflowY: 'hidden',
+            }}>
+              <div style={{ textAlign: 'left', width: '100%', overflowY:'scroll' }}>
+                <Typography fontFamily='Dosis' variant='h6'>
+                  Topic of Discussion
+                </Typography>
+                <Typography fontFamily='Dosis'>Tea Name: {currentTea.name}</Typography>
+                <Typography fontFamily='Dosis'>Origin: {currentTea.origin}</Typography>
+                <Typography fontFamily='Dosis'>Description: {currentTea.description}</Typography>
+              </div>
+              <img
+                alt='tea selection'
+                src={currentTea.image}
+                style={{
+                  width: '60%',
+                  height: '50%',
+                  objectFit: 'cover',
+                  borderRadius: '10px',
+                }}
+              />
+              <Button sx={{mt:1}}className='filter-tag-clicked' onClick={handleNewTopic}>New Topic</Button>
+          </Paper>
         </Grid>
-        <Grid item xs={6} sx={{pr:2, display: 'flex', flexDirection:'column'}}>
-          <Card sx={{p:1, mb:3}}>
+        <Grid item xs={6} sx={{pt: 0,pr:2, display: 'flex', flexDirection:'column'}}>
+            <Card sx={{ p: 1, mb: 3, backgroundColor: '#F6F5F3', borderRadius: '20px' }}>
             <CardContent sx={{ pb: 0,display: 'flex', alignItems: 'center' }}>
               <Avatar size='lg' variant='outlined' />
                 <Textarea
                   disabled={community.users.find((userObj) => userObj.id === auth.user.id) ? false : true}
-                  name='content' onChange={postFormik.handleChange} value={edit?"":postFormik.values.content} sx={{ flexGrow: 1, ml: 2 }} minRows={2} placeholder="What's on your mind?" aria-label='input text'/>
+                  name='content' onChange={postFormik.handleChange} value={edit ? "" : postFormik.values.content} sx={{
+                    flexGrow: 1, ml: 2, mr: 1, fontFamily: 'Dosis',
+                    '& textarea::placeholder': {
+                      fontFamily: 'Dosis',
+                      fontSize: '1.2rem'
+                    } }} minRows={2} placeholder="What's on your mind?" aria-label='input text'/>
                 <Button
+                  className='filter-tag-clicked'
                   disabled={community.users.find((userObj) => userObj.id === auth.user.id)? false: true}
                   onClick={postFormik.handleSubmit} type='submit' sx={{ marginLeft: 'auto' }}>Post</Button>
             </CardContent>
           </Card>
-          {postCards}
+          <Grid container spacing={2}>
+            <Grid item xs={12} sx={{overflow: 'scroll', height: '65vh'}}>
+
+            {postCards}
+            </Grid>
+
+          </Grid>
         </Grid>
-        <Grid className='member-display' sx={{flexDirection:'column', display:'flex',justifyContent: 'center',   pr:'16px', pb:'16px' }} item xs={3}>
+          <Grid className='member-display' sx={{ flexDirection: 'column', display: 'flex', justifyContent: 'center', pr: '16px', pb: '16px', height: '80vh', }} item xs={3}>
             <Grid item xs={12} >
               <Grid sx={{ m: 1, display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
                 <Avatar size='lg' variant ='outlined' />

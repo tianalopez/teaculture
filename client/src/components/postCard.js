@@ -30,20 +30,20 @@ const PostCard = ({post, handleEdit, edit, postFormik, setSelectedPost, setRende
       handleAlertType('error')
     })
   }
-  console.log(edit, thisPost, post)
+
   return (
-    <Card sx={{ mb:2, p: 1 }}>
+    <Card sx={{ mb: 2, p: 1, backgroundColor: '#F6F5F3', borderRadius: '20px' }}>
       <CardContent sx={{ pb: 0, display: 'flex', alignItems: 'center' }}>
         <Avatar size='lg' variant='outlined' />
-        <Typography sx={{ pl: 3 }}>{post.author.username}</Typography>
-        <Typography sx={{ marginLeft: 'auto' }}>{new Date(post.created_at).toLocaleString('en-US', {
+        <Typography sx={{ fontFamily: 'Dosis', fontSize: '1.2rem',pl: 3 , fontWeight:'bold'}}>{post.author.username}</Typography>
+        <Typography sx={{ fontFamily: 'Dosis', fontSize: '1.2rem' ,marginLeft: 'auto' }}>{new Date(post.created_at).toLocaleString('en-US', {
           month: 'long', day: 'numeric', year: 'numeric',
         })}</Typography>
       </CardContent>
       <CardContent >
         {edit && thisPost && thisPost.id === post.id ? <Textarea name='content' onChange={postFormik.handleChange} value={postFormik.values.content} sx={{ flexGrow: 1, ml: 2 }} minRows={2} onBlur={postFormik.handleSubmit} aria-label='input text' />
 
-        :<Typography>{post.content}</Typography>}
+          : <Typography sx={{ fontFamily: 'Gaegu', fontSize: '1.2rem' }}>{post.content}</Typography>}
       </CardContent>
       <Divider></Divider>
       <CardContent style={{ paddingBottom: 2 }} sx={{ pb: 0, display: 'flex', alignItems: 'center' }}>

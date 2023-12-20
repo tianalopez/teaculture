@@ -15,7 +15,7 @@ const RecipeCard = ({recipe, width}) => {
       ? favorites.some((favorite) => favorite.recipe_id === recipe?.id && favorite.user_id === auth.user.id)
       : false
   );
-  console.log(isRecipeInFavorites)
+
 
   //!fetch favorites in the beginning for no stale data
   useEffect(() => {
