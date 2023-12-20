@@ -47,12 +47,16 @@ const PostCard = ({post, handleEdit, edit, postFormik, setSelectedPost, setRende
       </CardContent>
       <Divider></Divider>
       <CardContent style={{ paddingBottom: 2 }} sx={{ pb: 0, display: 'flex', alignItems: 'center' }}>
-        {auth.user && auth.user.id === post.author_id ? <Button sx={{ marginLeft: 'auto' }} onClick={() => {
+        {auth.user && auth.user.id === post.author_id ? <Button
+          className='filter-tag-clicked'
+          sx={{ marginLeft: 'auto' }} onClick={() => {
           handleEdit(true)
           setSelectedPost(post)
           setThisPost(post)
           }}>Edit</Button> : null}
         {auth.user && auth.user.id === post.author_id ? <Button
+          sx={{ml:1}}
+          className='filter-tag-clicked'
           onClick={handleDelete}
         >Delete</Button> : null}
       </CardContent>

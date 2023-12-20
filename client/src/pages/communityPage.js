@@ -157,7 +157,7 @@ const CommunityPage = () => {
   const members = community.users.map((user) => (
     <Grid key={user.id} sx={{ m: 1, display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
       <Avatar size='sm' variant='outlined' />
-      <Typography sx={{ pl: 3 }}>{user.username} </Typography>
+      <Typography fontFamily='Dosis' sx={{ pl: 3 }}>{user.username} </Typography>
     </Grid>
   ))
 
@@ -231,11 +231,11 @@ const CommunityPage = () => {
   ))
     console.log(posts)
   return (
-    <Box sx={{ flexGrow: 1, ml: 4, mr: 4, mt: 8 }}>
-      <Grid container spacing={2}>
+    <Box sx={{ flexGrow: 1, ml: 2, mr: 4, mt: 4, mb: 8 }}>
+      <Grid sx={{ ml: 0 }} container spacing={2}>
         <Grid item xs={9}>
-          <Typography variant='h4'>{community.name}</Typography>
-          <Typography variant ='h6'>{community.users.length} Member(s) | Created: {new Date(community.created_at).toLocaleString('en-US', {
+          <Typography sx={{ml:0}} fontFamily='Dosis' variant='h3'>{community.name}</Typography>
+          <Typography fontFamily='Dosis' variant ='h6'>{community.users.length} Member(s) | Created: {new Date(community.created_at).toLocaleString('en-US', {
             month: 'long', day: 'numeric', year: 'numeric',})}</Typography>
         </Grid>
         <Grid sx={{display: 'flex', alignSelf:'center', alignContent:'flex-end'}} item xs={3}>
@@ -246,9 +246,9 @@ const CommunityPage = () => {
         </Grid>
       <Grid sx={{mt:3}} container spacing={2}>
         <Grid sx={{}}item xs={3}>
-          <Paper sx={{p:2, minHeight:'50vh'}}>
-            <Typography variant='h6'>About</Typography>
-            <Typography sx={{p: 1}}>{community.description}</Typography>
+          <Paper sx={{p:2, minHeight:'50vh',backgroundColor: '#F6F5F3', borderRadius: '20px' }}>
+              <Typography fontFamily='Dosis' variant='h6'>About</Typography>
+              <Typography fontFamily='Dosis' sx={{p: 1}}>{community.description}</Typography>
           </Paper>
         </Grid>
         <Grid item xs={6} sx={{pr:2, display: 'flex', flexDirection:'column'}}>
@@ -265,17 +265,21 @@ const CommunityPage = () => {
           </Card>
           {postCards}
         </Grid>
-        <Grid className='member-display' sx={{ justifyContent: 'center' }} item xs={3}>
-            <Grid sx={{ m: 1, display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-              <Avatar size='lg' variant ='outlined' />
-              <Typography sx={{pl:3}}>{community.owner.username} (Owner)</Typography>
+        <Grid className='member-display' sx={{flexDirection:'column', display:'flex',justifyContent: 'center',   pr:'16px', pb:'16px' }} item xs={3}>
+            <Grid item xs={12} >
+              <Grid sx={{ m: 1, display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+                <Avatar size='lg' variant ='outlined' />
+                <Typography fontFamily='Dosis' sx={{pl:3}}>{community.owner.username} (Owner)</Typography>
+              </Grid>
+              <Divider >Members</Divider>
+              {members}
             </Grid>
-            <Divider>Members</Divider>
-            {members}
-            {community.users.find((userObj) => userObj.id === auth.user.id) ?
-            null: <Button onClick={handleJoin}>Join Community</Button>}
-            {community.users.find((userObj) => userObj.id === auth.user.id) && community.owner_id !== auth.user.id ?
-            <Button name='leave' onClick={(e) => handleLeave(e)} >Leave Community</Button> : null}
+            <Grid sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', textAlign: 'center' }} item xs={12}>
+              {community.users.find((userObj) => userObj.id === auth.user.id) ?
+                null : <Button sx={{ alignSelf: 'center' }} className='filter-tag-clicked' onClick={handleJoin}>Join Community</Button>}
+              {community.users.find((userObj) => userObj.id === auth.user.id) && community.owner_id !== auth.user.id ?
+                <Button className='filter-tag-clicked' sx={{ alignSelf: 'center' }} name='leave' onClick={(e) => handleLeave(e)} >Leave Community</Button> : null}
+            </Grid>
         </Grid>
 
         </Grid>
@@ -284,9 +288,9 @@ const CommunityPage = () => {
         <div className='modal-container'>
           <h1 className="modal-title">Edit Community</h1>
           <form className='modal-form'>
-            <Typography sx={{ mt: 2 }}>Edit name</Typography>
+            <Typography fontFamily='Dosis' sx={{ mt: 2 }}>Edit name</Typography>
             <Input value={formik.values.name} onChange={formik.handleChange} variant='outlined' sx={{ mb: 2 }} placeholder='Community name...' name='name' />
-            <Typography>Edit description</Typography>
+            <Typography fontFamily='Dosis'>Edit description</Typography>
             <Textarea value={formik.values.description} onChange={formik.handleChange} className='com-input' placeholder='Edit your description...' variant='outlined' minRows={4} name='description' />
             <Button onClick={formik.handleSubmit} sx={{ mt: 2 }} variant='contained' type='submit'>Update Community</Button>
           </form>
