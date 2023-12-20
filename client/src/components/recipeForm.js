@@ -8,6 +8,8 @@ import { MedicinalSwitch } from '../styles/SwitchStyles';
 import {useAuth} from "../auth/authProvider"
 import { useLocation } from 'react-router-dom';
 
+
+
 const RecipeForm = ({formik , setEdit, setRecipeId}) => {
   const auth = useAuth()
   const location = useLocation()
@@ -147,23 +149,36 @@ const RecipeForm = ({formik , setEdit, setRecipeId}) => {
 
   return (
     <form onSubmit={formik.handleSubmit}>
-      <Grid className='recipe-container' container spacing={2}>
-        <Grid item xs={12}>
-          <TextField
-            required
-            label='Add Title'
-            defaultValue='Add Title'
-            helperText='Cannot leave title blank'
-            value={formik.values.title}
-            name='title'
-            onChange={formik.handleChange}
-          />
-          {/* {formik.errors.title && formik.touched.title ? <div>{formik.errors.title}</div> : null} */}
-          {!editingRecipe ? <Button type='submit'>Add Recipe</Button>: <Button type='submit'> Update Recipe</Button>}
+      <Grid sx={{margin:'auto', width:'95%'}}className='recipe-container' container spacing={2}>
+        <Grid sx={{display:'flex', flexDirection:'row'}}item xs={12}>
+          <Typography fontFamily='Gaegu'>
+            <TextField
+              InputProps={{
+                style: { fontSize: '1.3rem', fontFamily: 'Gaegu' },
+              }}
+              InputLabelProps={{
+                style: { fontSize: '1.3rem', fontFamily: 'Gaegu' },
+              }}
+              required
+              label='Add Title'
+              defaultValue='Add Title'
+              value={formik.values.title}
+              name='title'
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+            />
+            {formik.errors.title && formik.touched.title ? <div>{formik.errors.title}</div> : null}
+          </Typography>
+          {!editingRecipe ? <Button
+            className='filter-tag-clicked'
+            sx={{ mr: 4,alignSelf: 'flex-start', ml: 'auto' }}type='submit'>Add Recipe</Button>
+            : <Button
+              className='filter-tag-clicked'
+            sx={{ alignSelf: 'flex-start', mr: 4, ml: 'auto' }}type='submit'> Update Recipe</Button>}
         </Grid>
         <Grid sx={{ pl: 2, }} item xs={4}>
-          <Paper sx={{ p: 3 }} elevation={4}>
-            <Typography variant='h6'>
+          <Paper sx={{ p: 3, backgroundColor:'#F6F5F3', borderRadius:'20px' }} elevation={4}>
+            <Typography fontFamily='Dosis' variant='h6'>
               Add Ingredients
             </Typography>
             <List sx={{ ml: 1, mr: 1 }} className='ingredients-list'>
@@ -175,6 +190,12 @@ const RecipeForm = ({formik , setEdit, setRecipeId}) => {
                   </ListItemIcon>
                   <ListItemText>
                     <TextField
+                      InputProps={{
+                        style: { fontSize: '1.3rem', fontFamily: 'Gaegu' },
+                      }}
+                      InputLabelProps={{
+                        style: { fontSize: '1.3rem', fontFamily: 'Gaegu' },
+                      }}
                       onChange={(e) => handleChange(e, index)}
                       value={ingredients[index].value}
                       name='ingredients'
@@ -190,8 +211,8 @@ const RecipeForm = ({formik , setEdit, setRecipeId}) => {
           </Paper>
         </Grid>
         <Grid sx={{ pl: 2, pr: 2 }} item xs={8}>
-          <Paper sx={{ p: 3 }} elevation={4}>
-            <Typography variant='h6'>
+          <Paper sx={{ p: 3, backgroundColor: '#F6F5F3', borderRadius: '20px' }} elevation={4}>
+            <Typography fontFamily='Dosis' variant='h6'>
               Add Instructions
             </Typography>
             <List sx={{ ml: 1, mr: 1 }} className='ingredients-list'>
@@ -202,6 +223,12 @@ const RecipeForm = ({formik , setEdit, setRecipeId}) => {
                   </ListItemIcon>
                   <ListItemText>
                     <TextField
+                      InputProps={{
+                        style: { fontSize: '1.3rem', fontFamily: 'Gaegu' },
+                      }}
+                      InputLabelProps={{
+                        style: { fontSize: '1.3rem', fontFamily: 'Gaegu' },
+                      }}
                       onChange={(e) => handleChange(e, index)}
                       value={instructions[index].value}
                       name='instructions'
@@ -217,14 +244,14 @@ const RecipeForm = ({formik , setEdit, setRecipeId}) => {
           </Paper>
         </Grid>
         <Grid sx={{ pr: 2, mb: 2 }} item xs={12}>
-          <Paper sx={{ p: 3 }} elevation={4}>
+          <Paper sx={{ p: 3, backgroundColor: '#F6F5F3', borderRadius: '20px' }} elevation={4}>
             <Grid container spacing={2}>
               <Grid item xs={9}>
-                <Typography variant='h6'>Pick Cover Image</Typography>
-                <ImageList sx={{ width: '100%' }} cols={4} rowHeight={164}>
+                <Typography fontFamily='Dosis' variant='h6'>Pick Cover Image</Typography>
+                <ImageList sx={{ width: '100%' }} cols={4} rowHeight={200}>
                   {randomImage.map((image) => (
                     <ImageListItem
-                      sx={{m:0.5}}
+                      sx={{m:0.5, boxSizing: 'content-box', p:1}}
                       title={image.img} key={image.img}>
                       <img
                         className={selectedImg === image.img ? 'selectedImg' : 'allImg'}
@@ -238,32 +265,36 @@ const RecipeForm = ({formik , setEdit, setRecipeId}) => {
                   ))}
                 </ImageList>
               </Grid>
-              <Grid item xs={3}>
-                <Typography variant='h6'>Select Relevant Tags</Typography>
-                <Grid sx={{ mt: 1, mb: 4 }} container spacing={2}>
+              <Grid item xs={3} sx={{ textAlign: 'center' }}>
+                <Typography fontFamily='Dosis' variant='h6'>Select Relevant Tags</Typography>
+                <Grid sx={{ mt: 1, mb: 4, justifyContent:'center' }} container spacing={2}>
                   {chipStates.map((chipObj, index) => (
-                    <Grid item key={index}>
+                    <Grid item sx={12} key={index}>
                       <Chip
+                        className='recipe-chip'
                         name={tags[index]}
                         label={tags[index]}
                         onClick={(e) => handleChange(e, index)}
                         variant='outlined'
                         icon={chipObj.value ? <DoneIcon /> : null}
-                        style={{ padding: '15px', fontSize: '18px', borderColor: '#9C9C9C', backgroundColor: chipObj.value ? 'rgba(172, 207, 201, 0.5)' : '' }}
+                        style={{ padding: '15px', fontSize: '20px', borderColor: '#9C9C9C', backgroundColor: chipObj.value ? 'rgba(239, 200, 200, 0.5)' : '' }}
                       />
                     </Grid>
                   ))}
                 </Grid>
-                <FormControlLabel
-                  label="Medicinal Drink"
-                  labelPlacement='start'
-                  sx={{ ml: 0 }}
-                  control={<MedicinalSwitch
-                    name="medicinal"
-                    checked={formik.values.medicinal}
-                    onChange={(e) => formik.setFieldValue('medicinal', e.target.checked)}
-                  />}
-                />
+                <Grid item sx={{ mt: 1, mb: 4, textAlign:'center' }}>
+
+                  <FormControlLabel
+                    sx={{ ml: 0, typography: 'body1',  }}
+                    label={<Typography variant="h6" fontFamily= 'Dosis'>Medicinal Drink</Typography>}
+                    labelPlacement='start'
+                    control={<MedicinalSwitch
+                      name="medicinal"
+                      checked={formik.values.medicinal}
+                      onChange={(e) => formik.setFieldValue('medicinal', e.target.checked)}
+                    />}
+                  />
+                </Grid>
               </Grid>
             </Grid>
           </Paper>

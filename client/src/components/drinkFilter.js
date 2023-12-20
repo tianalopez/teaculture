@@ -95,7 +95,7 @@ const DrinkFilter = ({recipes, searchObj, handleSearchChange, setSelectedTags, s
 
             {auth.user ? (
               <FormControlLabel
-              label="Favorited"
+              label={<Typography fontSize={'1.2rem'} fontFamily= 'Dosis'>Favorited</Typography>}
               labelPlacement='start'
               sx={{ ml: 0, mr: 2 }}
               control={<FavoriteSwitch
@@ -106,7 +106,7 @@ const DrinkFilter = ({recipes, searchObj, handleSearchChange, setSelectedTags, s
                 />
                 ): null}
                 <FormControlLabel
-                  label="Medicinal Drink"
+                  label={<Typography fontSize={'1.2rem'} fontFamily='Dosis'>Medicinal Drink</Typography>}
                   labelPlacement='start'
                   sx={{ml:0}}
                   control={
