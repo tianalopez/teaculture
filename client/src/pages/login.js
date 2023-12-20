@@ -60,7 +60,7 @@ const Login = () => {
   return (
     <Box sx={{ flexGrow: 1, ml: 1, mr: 3, mt: 2 }} >
       <Grid sx={{ mt: 3, ml: 0, alignItems: 'center',}} container spacing={2} justifyContent='center'>
-        <Grid item xs={6} sx={{ backgroundColor: '#deefd0', minHeight: 700, display: 'flex', alignItems: 'center', borderRadius: '20px', boxShadow: '0 0 30px #DEEFD0' }}>
+        <Grid item xs={6} sx={{ backgroundColor: '#deefd0', minHeight: '50rem', display: 'flex', alignItems: 'center', borderRadius: '20px', boxShadow: '0 0 30px #DEEFD0' }}>
             <Grid sx={{ pr: '16px',  }}container spacing={2}>
               <Grid sx={{ pl: 0, display:'flex', flexDirection: 'column', textAlign:'center',justifyContent:'center' }} item xs={12}>
               <Typography fontFamily='Dosis'variant='h3' color='#2B2539'> Welcome Back! </Typography>
@@ -69,7 +69,7 @@ const Login = () => {
               </Grid>
             </Grid>
           </Grid>
-        <Grid item xs={6} sx={{ mx: 'auto', textAlign: 'center', alignItems: 'center', backgroundColor: '#EFC8C8', minHeight: 700, display: 'flex', borderRadius: '20px', boxShadow: '0 0 30px #EFC8C8' }} >
+        <Grid item xs={6} sx={{ mx: 'auto', textAlign: 'center', alignItems: 'center', backgroundColor: '#EFC8C8', minHeight: '50rem', display: 'flex', borderRadius: '20px', boxShadow: '0 0 30px #EFC8C8' }} >
             <Grid sx={{justifyContent:'center'}}container spacing={2}>
               <Grid item xs={12} >
                 {signUp ?
