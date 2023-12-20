@@ -59,16 +59,23 @@ const ReviewModal = ({
             sx={{ mt: 2, alignSelf: 'flex-start' }} />
           {errorRating && touchedRating ? <div>{errorRating}</div> : null}
           <TextField
+            InputProps={{
+              style: { fontSize: '1.3rem', fontFamily: 'Dosis' },
+            }}
             name='comment'
             onBlur={handleBlur}
             onChange={(e) => handleChangeComment(e)}
             value={comment}
-            sx={{ mt: 2 }} multiline rows={3} placeholder="Add your review here" />
+            sx={{
+              mt: 2, fontFamily: 'Dosis',
+              '& textarea::placeholder': {
+                fontFamily: 'Dosis',
+              }, }} multiline rows={3} placeholder="Add your review here" />
           {errorComment && touchedComment ? <div>{errorComment}</div> : null}
           {edit ? (
-            <Button name='editButton' type='submit' onClick={handleSubmit} sx={{ mt: 2 }} variant='contained'>Update Review</Button>
+            <Button className='filter-tag-clicked' name='editButton' type='submit' onClick={handleSubmit} sx={{ mt: 2 }} variant='contained'>Update Review</Button>
           ) : (
-            <Button type='submit' onClick={handleSubmit} sx={{ mt: 2 }} variant='contained'>Post Review</Button>
+            <Button className='filter-tag-clicked'type='submit' onClick={handleSubmit} sx={{ mt: 2 }} variant='contained'>Post Review</Button>
 
           )}
         </form>
