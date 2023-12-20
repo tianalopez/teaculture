@@ -6,7 +6,7 @@ import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlin
 import { useAuth } from "../auth/authProvider"
 import "../styles/recipeCard.css"
 
-const RecipeCard = ({recipe, width}) => {
+const RecipeCard = ({recipe, width, setFetch}) => {
   const auth = useAuth()
   const [favorites, setFavorites] = useState([])
   //if there is no user, do not calculate
@@ -47,6 +47,7 @@ const RecipeCard = ({recipe, width}) => {
 
       // Update local state
       setIsRecipeInFavorites(true);
+      setFetch((status) => !status)
     } catch (error) {
       console.error(error);
     }
@@ -64,6 +65,7 @@ const RecipeCard = ({recipe, width}) => {
 
       // Update local state
       setIsRecipeInFavorites(false);
+      setFetch((status) => !status)
     } catch (error) {
       console.error(error);
     }

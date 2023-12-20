@@ -8,11 +8,9 @@ const DrinkFilter = ({recipes, searchObj, handleSearchChange, setSelectedTags, s
   {
   const auth = useAuth()
   const onChange = (e) => {
-    console.log('clicked')
     const name = e.target.name
     const value = (name === 'medicinal' || name === 'favorited' ? e.target.checked: e.target.value)
     handleSearchChange(name, value)
-    console.log(name,value)
   }
 
   const handleClick = (e) => {
