@@ -8,48 +8,66 @@ import "../styles/recipeCard.css"
 
 const RecipeCard = ({recipe, width}) => {
   const auth = useAuth()
-  const [favorites, setFavorites] = useState()
+  const [favorites, setFavorites] = useState([])
   //if there is no user, do not calculate
-  const [isRecipeInFavorites, setIsRecipeInFavorites] = useState(
-    auth.user && favorites
-      ? favorites.some((favorite) => favorite.recipe_id === recipe?.id && favorite.user_id === auth.user.id)
-      : false
-  );
+  const [isRecipeInFavorites, setIsRecipeInFavorites] = useState(false);
 
 
   //!fetch favorites in the beginning for no stale data
   useEffect(() => {
-    fetch('/favorites').then(r => r.json()).then(setFavorites).catch(err => console.log(err))
-  },[])
+    const fetchFavorites = async () => {
+      try {
+        const response = await fetch('/favorites');
+        const data = await response.json();
+        setFavorites(data);
 
-  const handleAdd = () => {
-    fetch('/favorites', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      body: JSON.stringify({user_id: auth.user.id, recipe_id: recipe.id})
-    })
-    .then(r => r.json())
-    .then((data) => console.log(data))
-    .catch(err => console.log(err))
-    setIsRecipeInFavorites(true)
-
-  }
-
-  const handleDelete = () => {
-    fetch(`/favorites/${auth.user.id}/${recipe.id}`, {
-      method: "DELETE",
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
+        // Check if the current recipe is in favorites
+        const recipeInFavorites = data.some(
+          (favorite) => favorite.recipe_id === recipe?.id && favorite.user_id === auth.user.id
+        );
+        setIsRecipeInFavorites(recipeInFavorites);
+      } catch (error) {
+        console.error(error);
       }
-    })
-    .then(r => r.json())
-    .catch(err => console.log(err))
-    setIsRecipeInFavorites(false)
-  }
+    };
+
+    fetchFavorites();
+  }, [auth.user, recipe?.id]);
+
+  const handleAdd = async () => {
+    try {
+      await fetch('/favorites', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({ user_id: auth.user.id, recipe_id: recipe.id })
+      });
+
+      // Update local state
+      setIsRecipeInFavorites(true);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleDelete = async () => {
+    try {
+      await fetch(`/favorites/${auth.user.id}/${recipe.id}`, {
+        method: "DELETE",
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }
+      });
+
+      // Update local state
+      setIsRecipeInFavorites(false);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const renderFavoriteButton = () => {
     if (isRecipeInFavorites) {

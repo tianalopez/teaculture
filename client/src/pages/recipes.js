@@ -39,7 +39,7 @@ const Recipes = () => {
         if (searchObj.favorited === false) {
           return true;
         }
-        return auth.user.favorites.some((favorite) => favorite.recipe_id === recipe.id)
+        return auth.user.favorites.some((favorite) => favorite.user_id === auth.user.id)
       })
 
 
