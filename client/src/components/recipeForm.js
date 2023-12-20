@@ -76,35 +76,6 @@ const RecipeForm = ({formik , setEdit, setRecipeId}) => {
     formik.setFieldValue('creator_id', auth.user.id)
   },[chipStates, ingredients,instructions,selectedImg])
 
-  //set the formik form with the gathered values as they change
-
-  // const handleSubmit = (e) => {
-  //   e.preventDefault()
-
-  //     const ingredientString = ingredients.map((item) => item.value.trim()).filter(Boolean).map((ingredient) => ingredient.replace(/[.,]$/, '')).join(",")
-  //     const instructionString = instructions.map((item) => item.value.trim()).filter(Boolean).map((ingredient) => ingredient.replace(/[.,]$/, '')).join(".")
-  //     const tagString = chipStates.filter((chipObj) => chipObj.value === true).map(chipObj => chipObj.name).join(",")
-  //     formik.setFieldValue('ingredients', ingredientString);
-  //     formik.setFieldValue('instructions', instructionString);
-  //     formik.setFieldValue('tags', tagString);
-  //     formik.setFieldValue('image', selectedImg);
-  //     formik.setFieldValue('creator_id', auth.user.id)
-
-  //     formik.submitForm()
-  //     // formik.handleSubmit()
-  //     // setChipStates(initialChips)
-  //     // setIngredients(initialIngredients)
-  //     // setInstructions(initialInstructions)
-  //     // setSelectedImg(null)
-  // }
-  // useEffect(() => {
-  //   if (formik.errors.ingredients && formik.touched.ingredients) {
-  //     handleNewAlert('Please fill in ');
-  //     handleAlertType('error')
-  //   }
-
-  // }, [formik.errors.ingredients, formik.touched.ingredients, handleNewAlert]);
-
 
   //!When you navigate here, after clicking edit recipe button
   useEffect(() => {

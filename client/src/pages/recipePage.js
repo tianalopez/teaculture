@@ -111,7 +111,7 @@ const RecipePage = () => {
     ]
   ))
   //!MUST PUT USER INSTRUCTIONS FOR EDITING (USE SNACKBAR?POPUP)
-  const instructionsArray = instructions.split(/\.\s+/).filter(instruction => instruction.trim() !== "").map((instruction, index) => (
+  const instructionsArray = instructions.split(".").filter(instruction => instruction.trim() !== "").map((instruction, index) => (
     [
       <ListItem key={index} disablePadding>
         <Typography component="span">• {instruction.trim()}</Typography>
@@ -142,8 +142,8 @@ const RecipePage = () => {
 
       console.log(reviews)
   const reviewDisplay = reviews.map((review) => (
-    <Card key={review.id} sx={{ mt: 2, mb: 2, display: 'flex', alignItems: 'center', padding: 2, width: '100%', justifyContent: 'space-between' }}>
-      <CardContent style={{ padding: '5px', display: 'flex', flex: 1}}>
+    <Card key={review.id} sx={{ pt: 1, pb:1,mt: 2, mb: 2, alignItems: 'center', width: '100%', justifyContent: 'space-between' }}>
+      <CardContent style={{ padding: '15px', display: 'flex', flex: 1}}>
         <div className=".edit-review">
           <Rating value={review.rating} readOnly />
           <Typography fontSize='1.1rem' fontFamily='Dosis'>Author: {review.user.username}</Typography>
@@ -235,6 +235,8 @@ const RecipePage = () => {
         </Grid>
         <Grid item xs={12}>
           <Typography fontFamily='Dosis' variant='h5'>
+            <img style={{ marginRight: '8px', width: '30px', height: '30px' }} src="/images/tea-leaf.png" alt='whisk'>
+            </img>
             Comments
           </Typography>
         </Grid>
