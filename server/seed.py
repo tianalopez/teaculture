@@ -418,21 +418,165 @@ if __name__ == "__main__":
 
         print("Seeding reviews...")
         reviews = []
-        for u in users:
-            for r in recipes:
-                for i in range(1):
-                    reviews.append(
-                        Review(
-                            rating=fake.random_int(min=1, max=5),
-                            comment=fake.paragraph(nb_sentences=2),
-                            user_id=u.id,
-                            recipe_id=r.id,
-                        )
-                    )
-                    if len(reviews) >= 10:
-                        break
-            if len(reviews) >= 10:
-                break
+
+        # Realistic Medicinal Recipe Reviews
+        reviews.append(
+            Review(
+                rating=4,
+                comment="This goji berry & red date tea is a hidden gem! The natural sweetness of the red dates is perfect.",
+                user_id=random.choice(users).id,
+                recipe_id=recipes[0].id,
+            )
+        )
+
+        reviews.append(
+            Review(
+                rating=3,
+                comment="Goji berry & red date tea didn't meet my expectations. The taste was somewhat bland, but maybe I need to add more sugar.",
+                user_id=random.choice(users).id,
+                recipe_id=recipes[0].id,
+            )
+        )
+
+        # Fun Drink Recipe Reviews
+        reviews.append(
+            Review(
+                rating=5,
+                comment="Matcha latte is a matcha made in heaven! Creamy, rich, and simply delightful.",
+                user_id=random.choice(users).id,
+                recipe_id=recipes[1].id,
+            )
+        )
+
+        reviews.append(
+            Review(
+                rating=3,
+                comment="The matcha latte was interesting, but I found the flavor a bit too intense for my liking.",
+                user_id=random.choice(users).id,
+                recipe_id=recipes[1].id,
+            )
+        )
+
+        # Additional Realistic Recipe Reviews
+        reviews.append(
+            Review(
+                rating=4,
+                comment="Lemon ginger infusion is a refreshing pick-me-up! The ginger adds a lovely kick to it.",
+                user_id=random.choice(users).id,
+                recipe_id=recipes[2].id,
+            )
+        )
+
+        reviews.append(
+            Review(
+                rating=2,
+                comment="Lemon ginger infusion was too gingery for me. Not my cup of tea.",
+                user_id=random.choice(users).id,
+                recipe_id=recipes[2].id,
+            )
+        )
+
+        reviews.append(
+            Review(
+                rating=5,
+                comment="Turmeric golden milk is liquid gold! A comforting and delicious beverage.",
+                user_id=random.choice(users).id,
+                recipe_id=recipes[3].id,
+            )
+        )
+
+        reviews.append(
+            Review(
+                rating=4,
+                comment="Turmeric golden milk was good, the spices were great.",
+                user_id=random.choice(users).id,
+                recipe_id=recipes[3].id,
+            )
+        )
+
+        reviews.append(
+            Review(
+                rating=4,
+                comment="Hibiscus tea is a burst of summer in a cup! The orange slice is a brilliant addition.",
+                user_id=random.choice(users).id,
+                recipe_id=recipes[4].id,
+            )
+        )
+
+        reviews.append(
+            Review(
+                rating=2,
+                comment="Hibiscus tea was too sour for my taste buds. Didn't enjoy it much.",
+                user_id=random.choice(users).id,
+                recipe_id=recipes[4].id,
+            )
+        )
+
+        reviews.append(
+            Review(
+                rating=5,
+                comment="Mango mint green tea is a tropical paradise in a glass! So fruity and refreshing.",
+                user_id=random.choice(users).id,
+                recipe_id=recipes[5].id,
+            )
+        )
+
+        reviews.append(
+            Review(
+                rating=3,
+                comment="Mango mint green tea had an unusual taste. Couldn't quite get used to it.",
+                user_id=random.choice(users).id,
+                recipe_id=recipes[5].id,
+            )
+        )
+
+        reviews.append(
+            Review(
+                rating=5,
+                comment="Spicy chai latte is a spicy symphony with a creamy finish. Truly satisfying.",
+                user_id=random.choice(users).id,
+                recipe_id=recipes[6].id,
+            )
+        )
+
+        reviews.append(
+            Review(
+                rating=5,
+                comment="Blueberry lavender lemonade is a delightful concoction! The lavender adds a unique floral note.",
+                user_id=random.choice(users).id,
+                recipe_id=recipes[7].id,
+            )
+        )
+
+        reviews.append(
+            Review(
+                rating=5,
+                comment="Chamomile honey vanilla latte is a warm hug in a cup. Perfect blend of flavors!",
+                user_id=random.choice(users).id,
+                recipe_id=recipes[9].id,
+            )
+        )
+
+        # Make some recipes only have negative reviews
+        reviews.append(
+            Review(
+                rating=2,
+                comment="Pineapple mint sparkler tasted odd. The combination didn't work for me.",
+                user_id=random.choice(users).id,
+                recipe_id=recipes[8].id,
+            )
+        )
+
+        reviews.append(
+            Review(
+                rating=1,
+                comment="Pineapple mint sparkler was a disaster. I couldn't even finish it.",
+                user_id=random.choice(users).id,
+                recipe_id=recipes[8].id,
+            )
+        )
+
+        # Add reviews to the database
         db.session.add_all(reviews)
         db.session.commit()
 
