@@ -70,26 +70,13 @@ def user_lookup_callback(_jwt_header, jwt_data):
 
 
 @app.route("/")
+@app.route("/login")
+@app.route("/drinklab")
+@app.route("/drinklab/<int:id>")
+@app.route("/users/<int:id>/dashboard")
 @app.route("/communities")
 @app.route("/communities/<int:id>")
-@app.route("/posts/<int:id>")
-@app.route("/communities/<int:id>/posts")
-@app.route("/posts")
-@app.route("/reviews/<int:id>")
-@app.route("/reviews")
-@app.route("/reviews/journal<int:recipe_id>")
-@app.route("/users/<int:id>")
-@app.route("/usercommunities")
-@app.route("/usercommunities/<int:user_id>/<int:community_id>")
-@app.route("/users")
-@app.route("/favorites")
-@app.route("/favorites/<int:user_id>/<int:recipe_id>")
-@app.route("/register")
-@app.route("/login")
-@app.route("/googleauth")
-@app.route("/logout")
-@app.route("/current-user")
-@app.route("/refresh")
+
 def index(id=0):
     return render_template("index.html")
 
