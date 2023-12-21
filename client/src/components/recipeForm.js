@@ -88,8 +88,8 @@ const RecipeForm = ({formik , setEdit, setRecipeId}) => {
       setRecipeId(editingRecipe.id)
       setIngredients((oldIngredients) => {
         return oldIngredients.map((obj, index) => {
-          if (editingRecipe.ingredients.split(",")[index]) {
-            obj.value = editingRecipe.ingredients.split(",")[index];
+          if (editingRecipe.ingredients.split(";")[index]) {
+            obj.value = editingRecipe.ingredients.split(";")[index];
           }
           return obj;
         });
