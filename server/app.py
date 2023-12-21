@@ -87,9 +87,9 @@ def user_lookup_callback(_jwt_header, jwt_data):
 @app.route("/register")
 @app.route("/login")
 @app.route("/googleauth")
-@app.route("/logout")
+@app.route("logout")
 @app.route("/current-user")
-@app.route("/refresh")
+@app.route("refresh")
 def index(id=0):
     return render_template("index.html")
 
