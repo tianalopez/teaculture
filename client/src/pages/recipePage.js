@@ -102,7 +102,7 @@ const RecipePage = () => {
   }
   //after you have recipe and reviews, destructure
   const {title, creator, average_rating, ingredients, image, instructions, tags, medicinal} = recipe
-  const ingredientArray = ingredients.split(",").map((ingredient, index) => (
+  const ingredientArray = ingredients.split(";").map((ingredient, index) => (
     [
       <ListItem key={index} disablePadding>
         <Typography component="span">• {ingredient}</Typography>
