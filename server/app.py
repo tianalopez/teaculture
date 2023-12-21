@@ -76,7 +76,6 @@ def user_lookup_callback(_jwt_header, jwt_data):
 @app.route("/users/<int:id>/dashboard")
 @app.route("/communities")
 @app.route("/communities/<int:id>")
-
 def index(id=0):
     return render_template("index.html")
 
