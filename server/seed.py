@@ -292,20 +292,127 @@ if __name__ == "__main__":
             "/images/img5.jpg",
             "/images/img6.jpg",
         ]
-        for u in users:
-            for i in range(1):
-                selected_tags = random.sample(tags_options, 2)
-                recipes.append(
-                    Recipe(
-                        title=fake.catch_phrase(),
-                        instructions=fake.paragraph(nb_sentences=7),
-                        tags=",".join(selected_tags),
-                        ingredients=",".join(fake.words(nb=3)),
-                        medicinal=fake.random_element(elements=(True, False)),
-                        image=random.choice(randomImage),
-                        creator_id=u.id,
-                    )
-                )
+
+        recipes.append(
+            Recipe(
+                title="Goji Berry & Red Date Tea",
+                instructions="Rinse the goji berries and red dates under cool water. Combine the goji berries and red dates in a pot with water. Bring the water to a boil, then let simmer for an hour. You can add sugar if you would prefer this drink to be sweet. Enjoy this herbal tea hot or cold!",
+                ingredients="8 dried Chinese red dates;1/2 cup dried goji berries;water",
+                medicinal=True,
+                tags="herbal",
+                creator_id=random.choice(users).id,
+                image=random.choice(randomImage),
+            )
+        )
+        recipes.append(
+            Recipe(
+                title="Matcha Latte",
+                instructions="Sift the matcha powder into your matcha bowl. Add around 2 tbs of hot water and whisk until there are no clumps and there are small bubbles at the top. Add sugar and whisk again until there are no clumps. Add ice and milk into a cup. Pour the frothed matcha into the cup and enjoy!",
+                ingredients="1 tsp matcha;hot water;sugar (to taste);milk",
+                medicinal=False,
+                tags="creamy,caffeine",
+                creator_id=random.choice(users).id,
+                image=random.choice(randomImage),
+            )
+        )
+
+        # Additional Realistic Recipes
+        recipes.append(
+            Recipe(
+                title="Lemon Ginger Infusion",
+                instructions="Slice fresh ginger and lemon. Steep them in hot water for a refreshing and immune-boosting tea. Add honey if desired.",
+                ingredients="fresh ginger;lemon;hot water;honey (optional)",
+                medicinal=True,
+                tags="citrusy,herbal",
+                creator_id=random.choice(users).id,
+                image=random.choice(randomImage),
+            )
+        )
+
+        recipes.append(
+            Recipe(
+                title="Turmeric Golden Milk",
+                instructions="Mix turmeric, cinnamon, and ginger into warm milk. Sweeten with honey for a comforting and anti-inflammatory beverage.",
+                ingredients="turmeric;cinnamon;ginger;warm milk;honey",
+                medicinal=True,
+                tags="spiced",
+                creator_id=random.choice(users).id,
+                image=random.choice(randomImage),
+            )
+        )
+
+        recipes.append(
+            Recipe(
+                title="Iced Hibiscus Tea",
+                instructions="Brew hibiscus tea and let it cool. Serve over ice with a slice of orange for a refreshing summer drink.",
+                ingredients="hibiscus tea;ice;orange slice",
+                medicinal=False,
+                tags="citrusy",
+                creator_id=random.choice(users).id,
+                image=random.choice(randomImage),
+            )
+        )
+
+        recipes.append(
+            Recipe(
+                title="Mango Mint Green Tea",
+                instructions="Brew green tea and add fresh mango slices and mint leaves. Chill in the fridge for a fruity and cooling beverage.",
+                ingredients="green tea;mango slices;mint leaves",
+                medicinal=False,
+                tags="fruity,herbal",
+                creator_id=random.choice(users).id,
+                image=random.choice(randomImage),
+            )
+        )
+
+        recipes.append(
+            Recipe(
+                title="Spicy Chai Latte",
+                instructions="Prepare chai tea with black tea, spices, and milk. Add a pinch of cayenne pepper for a spicy kick.",
+                ingredients="black tea;spices (cinnamon,cardamom,cloves);milk;cayenne pepper",
+                medicinal=False,
+                tags="spiced,creamy",
+                creator_id=random.choice(users).id,
+                image=random.choice(randomImage),
+            )
+        )
+
+        recipes.append(
+            Recipe(
+                title="Blueberry Lavender Lemonade",
+                instructions="Make a lavender-infused simple syrup. Mix with fresh blueberry puree and lemon juice. Serve over ice for a delightful summer drink.",
+                ingredients="lavender;blueberries;lemon juice;sugar;water;ice",
+                medicinal=False,
+                tags="fruity,floral",
+                creator_id=random.choice(users).id,
+                image=random.choice(randomImage),
+            )
+        )
+
+        recipes.append(
+            Recipe(
+                title="Pineapple Mint Sparkler",
+                instructions="Blend fresh pineapple with mint leaves. Mix with sparkling water and ice for a tropical and fizzy mocktail.",
+                ingredients="pineapple;mint leaves;sparkling water;ice",
+                medicinal=False,
+                tags="fruity,herbal",
+                creator_id=random.choice(users).id,
+                image=random.choice(randomImage),
+            )
+        )
+
+        recipes.append(
+            Recipe(
+                title="Chamomile Honey Vanilla Latte",
+                instructions="Brew chamomile tea and mix with warm milk, honey, and a dash of vanilla extract. Perfect for a cozy evening.",
+                ingredients="chamomile tea;warm milk;honey;vanilla extract",
+                medicinal=True,
+                tags="creamy,floral",
+                creator_id=random.choice(users).id,
+                image=random.choice(randomImage),
+            )
+        )
+
         db.session.add_all(recipes)
         db.session.commit()
 
