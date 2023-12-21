@@ -3,6 +3,7 @@ import { AuthProvider } from './auth/authProvider';
 import { UIProvider } from './components/UIContext';
 import {useEffect } from "react";
 import AlertBar from './components/alertbar';
+import Footer from './components/footer';
 
 
 //page imports
@@ -40,6 +41,7 @@ function App() {
         <Route path="siphub/:id" element={<RequireAuth><CommunityPage /></RequireAuth>} />
         <Route path="*" element={<Error404 />} />
       </Routes>
+      <Footer />
     </AuthProvider>
   </UIProvider>
 
