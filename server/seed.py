@@ -24,13 +24,13 @@ if __name__ == "__main__":
 
         # Seed code goes here!
         print("Clearing db...")
-        User.query.delete()
-        Community.query.delete()
-        Post.query.delete()
-        UserCommunity.query.delete()
+        Favorite.query.delete()
         Review.query.delete()
         Recipe.query.delete()
-        Favorite.query.delete()
+        Post.query.delete()
+        UserCommunity.query.delete()
+        Community.query.delete()
+        User.query.delete()
 
         print("Seeding users...")
         users = [
@@ -87,8 +87,8 @@ if __name__ == "__main__":
         ]
         for user in users:
             user.password_hash = "passwordpass"
-            db.session.add(user)
 
+        db.session.add_all(users)
         db.session.commit()
 
         print("Seeding user_communities...")
@@ -96,55 +96,57 @@ if __name__ == "__main__":
             Community(
                 name="Coffee Corner",
                 description="Join this community to talk all things coffee! If you love having coffee, and I don't mean just in the morning, then this is the perfect place for you!",
-                owner_id=1,
+
             ),
             Community(
                 name="Health Teas",
                 description="Let's discuss teas that can help improve our mental and physical health.",
-                owner_id=2,
+
             ),
             # Add more communities with names and descriptions as needed
             Community(
                 name="Tea Blends",
                 description="Explore unique tea blends and share your favorite recipes with fellow enthusiasts.",
-                owner_id=1,
+
             ),
             Community(
                 name="Culinary Tea",
                 description="For those who appreciate the culinary aspect of tea—share and discover delicious tea-infused recipes!",
-                owner_id=2,
+
             ),
             Community(
                 name="Green Tea Lovers",
                 description="A space dedicated to the wonders of green tea and its health benefits.",
-                owner_id=5,
+
             ),
             Community(
                 name="Chai Enthusiasts",
                 description="Join fellow chai lovers in celebrating the rich and aromatic world of chai tea.",
-                owner_id=6,
+
             ),
             Community(
                 name="Herbal Infusions",
                 description="Explore the world of herbal infusions and their natural remedies for a healthier lifestyle.",
-                owner_id=7,
+
             ),
             Community(
                 name="Tea and Wellness",
                 description="Discover teas that contribute to overall wellness and mindfulness practices.",
-                owner_id=8,
+
             ),
             Community(
                 name="Tea Tasting Club",
                 description="A community for tea connoisseurs to share tasting notes and recommendations.",
-                owner_id=9,
+
             ),
             Community(
                 name="Tea Artistry",
                 description="Explore the art of tea preparation and presentation with fellow tea artists.",
-                owner_id=9,
+
             ),
         ]
+        for community in communities:
+            community.owner_id = random.choice(users).id
 
         db.session.add_all(communities)
         db.session.commit()
@@ -161,6 +163,7 @@ if __name__ == "__main__":
                 user_communities.append(
                     UserCommunity(user_id=u.id, community_id=com.id)
                 )
+
         db.session.add_all(user_communities)
         db.session.commit()
 
