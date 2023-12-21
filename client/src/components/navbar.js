@@ -39,10 +39,10 @@ const Navbar = () => {
             <Button color='inherit' component={Link} to={"/drinklab"}>
               Drink Lab
             </Button>
-            <Button color='inherit' component={Link} to={"/communities"}>
+            <Button color='inherit' component={Link} to={"/siphub"}>
               Sip Hub
             </Button>
-            <Button color='inherit' component={Link} to={`/users/${auth.user.id}/adddrink`}>
+            <Button color='inherit' component={Link} to={`/users/${auth.user.id}/addrecipe`}>
               Add Drink
             </Button>
               </>

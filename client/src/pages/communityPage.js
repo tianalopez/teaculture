@@ -220,7 +220,7 @@ const CommunityPage = () => {
           setRender((status) => !status)
           handleNewAlert('Community Deleted!')
           handleAlertType('success')
-          navigate('/communities')
+          navigate('/siphub')
         })
         .catch(err => {
           handleNewAlert(err.error)
