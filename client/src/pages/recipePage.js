@@ -175,7 +175,7 @@ const RecipePage = () => {
   }
   const handleEditRecipe = () => {
     const recipeObj = recipe
-    navigate(`/users/${auth.user.id}/adddrink`, {state: {recipeObj}})
+    navigate(`/users/${auth.user.id}/addrecipe`, {state: {recipeObj}})
   }
 
 

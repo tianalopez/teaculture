@@ -35,9 +35,9 @@ function App() {
         <Route path="drinklab/:id" element={<RecipePage />} />
         <Route path="users/:id/dashboard" element={<RequireAuth><Dashboard /></RequireAuth> } />
         {/* <Route path="users/:id/profile" element={<RequireAuth><Profile /></RequireAuth>} /> */}
-        <Route path="users/:id/adddrink" element={<RequireAuth><AddRecipe /></RequireAuth>} />
-        <Route path="communities" element={<RequireAuth><Communities /></RequireAuth>} />
-        <Route path="communities/:id" element={<RequireAuth><CommunityPage /></RequireAuth>} />
+        <Route path="users/:id/addrecipe" element={<RequireAuth><AddRecipe /></RequireAuth>} />
+        <Route path="siphub" element={<RequireAuth><Communities /></RequireAuth>} />
+        <Route path="siphub/:id" element={<RequireAuth><CommunityPage /></RequireAuth>} />
         <Route path="*" element={<Error404 />} />
       </Routes>
     </AuthProvider>
