@@ -201,9 +201,6 @@ Project Link: [https://github.com/tianalopez/teaculture](https://github.com/tian
 
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
-
-Use this space to list resources you find helpful and would like to give credit to. I've included a few of my favorites to kick things off!
-
 * [Choose an Open Source License](https://choosealicense.com)
 * [Google OAuth Blog](https://tianalopez.hashnode.dev/beginners-guide-to-google-oauth-with-react-and-flask)
 * [Tea API](https://github.com/boonaki/boonakis-tea-api)
