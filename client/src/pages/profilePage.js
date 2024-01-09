@@ -3,22 +3,14 @@ import { Grid, Box, Typography, Button, Fab } from '@mui/material';
 
 const ProfilePage = () => {
   return (
-    <Box sx={{ flexGrow: 1, ml: 1, mr: 3, mt: 2 }} >
+    <Box sx={{ flexGrow: 1, ml: 0, mr: 4, mt: 4, mb: 8 }} >
       <Grid sx={{ mt: 3, ml: 0, alignItems: 'center', }} container spacing={2} justifyContent='center'>
-        <Grid item xs={6} sx={{ mx: 'auto', textAlign: 'center', alignItems: 'center', minHeight: '50rem', display: 'flex'}} >
-          <Grid sx={{ justifyContent: 'center' }} container spacing={2}>
+        <Grid item xs={6} sx={{ mx: 'auto', textAlign: 'left', alignItems: 'left', minHeight: '50rem', display: 'flex'}} >
+          <Grid sx={{ justifyContent: 'top' }} container spacing={2}>
             <Grid item xs={12} >
               <Grid container spacing={2}>
-                <Grid item xs={12} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 3 }}>
-                  <Typography variant="caption">Email</Typography>
-                </Grid>
-                <Grid item xs={12} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', }}>
-                  <Typography variant="caption">Password</Typography>
-                </Grid>
-                <Grid item xs={12} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', }} >
-                  <Grid id='signInDiv' item xs={12} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 10 }}>
-                  </Grid>
-
+                <Grid sx={{ pl: '16px' }} item xs={12}>
+                  <Typography fontFamily='Dosis' variant='h3'>Profile</Typography>
                 </Grid>
               </Grid>
             </Grid>
