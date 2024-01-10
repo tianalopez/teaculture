@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { Grid, Box, Typography, Button, Fab } from '@mui/material';
+import { Modal, Grid, Avatar, Box, TextField, Typography, Divider, Button, } from '@mui/material';
 import * as yup from 'yup';
 import { useFormik } from "formik";
 import { useUI } from '../components/UIContext';
@@ -70,8 +70,81 @@ const ProfilePage = () => {
                   <Typography fontFamily='Dosis' variant='h3'>Profile</Typography>
                 </Grid>
                 <Grid sx={{ background: '#F6F5F3', borderRadius: '20px', mt: '32px',mr: '32px', ml: '32px' }} item xs={12}>
-                  <Typography fontFamily='Dosis' fontSize='1.2rem'>Username</Typography>
+                  {edit ? (
+                    <Typography fontFamily='Dosis' fontSize='1.2rem'><b>USERNAME:</b> <TextField
+                      InputProps={{
+                        style: { fontSize: '1.1rem', fontFamily: 'Dosis' },
+                      }}
+                      InputLabelProps={{
+                        style: { fontSize: '1.1rem', fontFamily: 'Dosis' },
+                      }}
+                      onChange={formik.handleChange}
+                      value={formik.values.username}
+                      name='username'
+                      fullWidth
+                      placeholder="Update Username"
 
+                    /></Typography>
+                  ) : (<Typography fontFamily='Dosis' fontSize='1.2rem'><b>USERNAME:</b> {auth.user.username}</Typography>)}
+                  <Typography fontFamily='Dosis' fontSize='1.2rem'><b>JOINED:</b> {new Date(auth.user.created_at).toLocaleString('en-US', {
+                    month: 'long', day: 'numeric', year: 'numeric',
+                  })}</Typography>
+                  {edit ? (
+                    <Typography fontFamily='Dosis' fontSize='1.2rem'><b>EMAIL:</b> <TextField
+                      InputProps={{
+                        style: { fontSize: '1.1rem', fontFamily: 'Dosis' },
+                      }}
+                      InputLabelProps={{
+                        style: { fontSize: '1.1rem', fontFamily: 'Dosis' },
+                      }}
+                      onChange={formik.handleChange}
+                      value={formik.values.email}
+                      name='email'
+                      fullWidth
+                      placeholder="Update Email"
+
+                    /></Typography>
+                  ) : (<Typography fontFamily='Dosis' fontSize='1.2rem'><b>EMAIL:</b> {auth.user.email}</Typography>)}
+                  <div id='extra-info'>
+                    {edit ? (<TextField
+                      InputProps={{
+                        style: { fontSize: '1.1rem', fontFamily: 'Dosis' },
+                      }}
+                      InputLabelProps={{
+                        style: { fontSize: '1.1rem', fontFamily: 'Dosis' },
+                      }}
+                      onChange={formik.handleChange}
+                      value={formik.values.bio}
+                      name='bio'
+                      fullWidth
+                      placeholder="Update Bio"
+                    />) : (
+                      <Typography fontSize='1.2rem' fontFamily='Dosis' sx={{ ml: '10px' }}><b>BIO:</b> {auth.user.bio}</Typography>
+                    )}
+                    <Divider sx={{ mb: 1, mt: 1 }} />
+                    <div className='stats'>
+
+                      <div className='stack-stats'>
+                        <Typography fontSize='1.2rem' fontFamily='Dosis'> {auth.user.owned_recipes.length}</Typography>
+                        <Typography fontSize='1.2rem' fontFamily='Dosis'>Recipes Created</Typography>
+                      </div>
+                      <div className='stack-stats'>
+                        <Typography fontSize='1.2rem' fontFamily='Dosis'>{auth.user.owned_communities.length}</Typography>
+                        <Typography fontSize='1.2rem' fontFamily='Dosis'>Communities Created</Typography>
+                      </div>
+                      <div className='profile-buttons'>
+                        <div className='prof-button'>
+                          {!edit ? (<Button sx={{ color: '#F6F5F3' }} onClick={() => setEdit(true)}>Edit Profile</Button>
+                          ) : (
+                            <Button sx={{ color: '#F6F5F3' }} type='submit' onClick={formik.handleSubmit}>Update Profile</Button>
+                          )}
+                        </div>
+                        <div className='prof-button'>
+                <Button>Update Password</Button>
+              </div>
+                      </div>
+                    </div>
+                  </div>
                 </Grid>
               </Grid>
             </Grid>
