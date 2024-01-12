@@ -34,7 +34,6 @@ const Footer = () => {
               <InstagramIcon fontSize="large" />
             </Link>
           </Box>
-
         </Grid>
       </Grid>
     </Box>
