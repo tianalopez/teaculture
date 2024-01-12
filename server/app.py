@@ -70,6 +70,14 @@ def user_lookup_callback(_jwt_header, jwt_data):
 
 
 @app.route("/")
+@app.route("/login")
+@app.route("/drinklab")
+@app.route("/drinklab/<int:id>")
+@app.route("/users/<int:id>/dashboard")
+@app.route("/users/<int:id>/addrecipe")
+@app.route("/siphub")
+@app.route("/siphub/<int:id>")
+@app.route("/users/:id/profile")
 def index(id=0):
     return render_template("index.html")
 

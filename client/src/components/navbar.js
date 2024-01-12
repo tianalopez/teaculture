@@ -39,10 +39,10 @@ const Navbar = () => {
             <Button color='inherit' component={Link} to={"/drinklab"}>
               Drink Lab
             </Button>
-            <Button color='inherit' component={Link} to={"/communities"}>
+            <Button color='inherit' component={Link} to={"/siphub"}>
               Sip Hub
             </Button>
-            <Button color='inherit' component={Link} to={`/users/${auth.user.id}/adddrink`}>
+            <Button color='inherit' component={Link} to={`/users/${auth.user.id}/addrecipe`}>
               Add Drink
             </Button>
               </>
@@ -59,7 +59,7 @@ const Navbar = () => {
             <Button color='inherit' component={Link} to={"/"} onClick={handleLogout}>
               Logout
             </Button>
-            <IconButton aria-label="profile" size="medium" onClick={handleOpen}>
+            <IconButton aria-label="profile" size="medium" component={Link} to={"users/:id/profile"}>
               <AccountCircleIcon size="inherit" />
             </IconButton>
             <ProfileModal open={open} handleClose={handleClose}/>

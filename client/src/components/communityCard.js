@@ -11,7 +11,7 @@ const CommunityCard = ({community}) => {
         <Typography variant='body2' color='text.secondary'>{community.description}</Typography>
       </CardContent>
       <CardActions sx={{justifyContent: 'center', mt:'auto'}}>
-        <Button className='filter-tag-clicked' component={Link} to={`/communities/${community.id}`}>
+        <Button className='filter-tag-clicked' component={Link} to={`/siphub/${community.id}`}>
           Visit Community
         </Button>
       </CardActions>

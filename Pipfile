@@ -15,6 +15,13 @@ flask-cors = "*"
 faker = "*"
 flask-jwt-extended = "*"
 gunicorn = "*"
+marshmallow-sqlalchemy = "==0.29.0"
+flask-marshmallow = "*"
+flask-bcrypt = "*"
+python-dotenv = "*"
+psycopg2-binary = "*"
+google-auth = "*"
+requests = "*"
 
 [requires]
 python_full_version = "3.8.13"

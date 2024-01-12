@@ -201,12 +201,60 @@ Project Link: [https://github.com/tianalopez/teaculture](https://github.com/tian
 
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
+
+Use this space to list resources you find helpful and would like to give credit to. I've included a few of my favorites to kick things off!
+
 * [Choose an Open Source License](https://choosealicense.com)
 * [Google OAuth Blog](https://tianalopez.hashnode.dev/beginners-guide-to-google-oauth-with-react-and-flask)
 * [Tea API](https://github.com/boonaki/boonakis-tea-api)
 * [Quote API](https://github.com/lukePeavey/quotable)
 * [Google OAuth Youtube Guide](https://www.youtube.com/watch?v=roxC8SMs7HU&t=0s)
 * [Dribble](https://dribbble.com/shots/6307314-Green-Tea)
+
+=======
+
+## Contributing
+
+Any contributions you make are **greatly appreciated**.
+
+If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
+Don't forget to give the project a star! Thanks again!
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<!-- LICENSE -->
+## License
+
+Distributed under the MIT License. See `LICENSE.txt` for more information.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<!-- CONTACT -->
+## Contact
+
+Tiana Lopez - [LinkedIn](https://www.linkedin.com/in/tiana-lopez-728863180/) - lopez.y.tiana@gmail.com
+
+Project Link: [https://github.com/tianalopez/teaculture](https://github.com/tianalopez/teaculture)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+<!-- ACKNOWLEDGMENTS -->
+## Acknowledgments
+* [Choose an Open Source License](https://choosealicense.com)
+* [Google OAuth Blog](https://tianalopez.hashnode.dev/beginners-guide-to-google-oauth-with-react-and-flask)
+* [Tea API](https://github.com/boonaki/boonakis-tea-api)
+* [Quote API](https://github.com/lukePeavey/quotable)
+* [Google OAuth Youtube Guide](https://www.youtube.com/watch?v=roxC8SMs7HU&t=0s)
+* [Dribble](https://dribbble.com/shots/6307314-Green-Tea)
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

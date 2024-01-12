@@ -220,7 +220,7 @@ const CommunityPage = () => {
           setRender((status) => !status)
           handleNewAlert('Community Deleted!')
           handleAlertType('success')
-          navigate('/communities')
+          navigate('/siphub')
         })
         .catch(err => {
           handleNewAlert(err.error)
@@ -265,9 +265,9 @@ const CommunityPage = () => {
         </Grid>
         <Grid sx={{display: 'flex', alignSelf:'center', alignContent:'flex-end'}} item xs={3}>
           {community.users.find((userObj) => userObj.id === auth.user.id) && community.owner_id === auth.user.id?
-          <Button name='delete' onClick={(e) => handleLeave(e)}>Delete Community</Button> : null}
+          <Button sx={{mr:1}}className='filter-tag-clicked' name='delete' onClick={(e) => handleLeave(e)}>Delete Community</Button> : null}
           {community.users.find((userObj) => userObj.id === auth.user.id) && community.owner_id === auth.user.id ?
-            <Button onClick={handleOpen}>Edit Community</Button> : null}
+            <Button className='filter-tag-clicked' onClick={handleOpen}>Edit Community</Button> : null}
         </Grid>
       <Grid sx={{mt:3}} container spacing={2}>
         <Grid sx={{}}item xs={3}>

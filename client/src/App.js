@@ -12,7 +12,7 @@ import Login from './pages/login';
 import Recipes from './pages/recipes';
 import RecipePage from './pages/recipePage';
 import Dashboard from './pages/dashboard';
-// import Profile from './pages/profile';
+import ProfilePage from './pages/profilePage';
 import AddRecipe from './pages/addRecipe';
 import Communities from './pages/communities';
 import CommunityPage from './pages/communityPage';
@@ -35,10 +35,10 @@ function App() {
         <Route path="drinklab" element={<Recipes />} />
         <Route path="drinklab/:id" element={<RecipePage />} />
         <Route path="users/:id/dashboard" element={<RequireAuth><Dashboard /></RequireAuth> } />
-        {/* <Route path="users/:id/profile" element={<RequireAuth><Profile /></RequireAuth>} /> */}
-        <Route path="users/:id/adddrink" element={<RequireAuth><AddRecipe /></RequireAuth>} />
-        <Route path="communities" element={<RequireAuth><Communities /></RequireAuth>} />
-        <Route path="communities/:id" element={<RequireAuth><CommunityPage /></RequireAuth>} />
+        <Route path="users/:id/profile" element={<RequireAuth><ProfilePage /></RequireAuth>} />
+        <Route path="users/:id/addrecipe" element={<RequireAuth><AddRecipe /></RequireAuth>} />
+        <Route path="siphub" element={<RequireAuth><Communities /></RequireAuth>} />
+        <Route path="siphub/:id" element={<RequireAuth><CommunityPage /></RequireAuth>} />
         <Route path="*" element={<Error404 />} />
       </Routes>
       <Footer />
